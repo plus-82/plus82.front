@@ -10,5 +10,12 @@
   "trailingComma": "all",
   "useTabs": false,
   "quoteProps": "as-needed",
-  "proseWrap": "preserve"
+  "proseWrap": "preserve",
+  "plugins": [
+    "prettier-plugin-tailwindcss"
+  ],
+  "tailwindConfig": "./tailwind.config.ts",
+  "tailwindFunctions": [
+    "clsx"
+  ]
 }
