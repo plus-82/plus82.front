@@ -75,6 +75,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.0.0
         version: 7.18.0(eslint@8.57.0)(typescript@5.5.4)
+      chromatic:
+        specifier: ^11.7.1
+        version: 11.7.1
       eslint:
         specifier: ^8
         version: 8.57.0
