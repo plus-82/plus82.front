@@ -1,0 +1,1 @@
+export { SpoqaHanSansNeo } from './font'
