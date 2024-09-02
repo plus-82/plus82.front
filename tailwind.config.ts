@@ -36,6 +36,15 @@ const config: Config = {
           900: '#3047C1',
         },
       },
+      fontSize: {
+        xs: '0.75rem', // 12
+        sm: '0.875rem', // 14
+        base: '1rem', // 16
+        lg: '1.125rem', // 18
+        xl: '1.5rem', // 24
+        '2xl': '1.75rem', // 28
+        '3xl': '2rem', // 32
+      },
     },
   },
   plugins: [],
