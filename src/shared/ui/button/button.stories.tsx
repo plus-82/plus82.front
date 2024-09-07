@@ -36,4 +36,40 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Primary: Story = {}
+
+export const Tonal: Story = {
+  args: {
+    variant: 'tonal',
+  },
+}
+
+export const Lined: Story = {
+  args: {
+    variant: 'lined',
+  },
+}
+
+export const Text: Story = {
+  args: {
+    variant: 'text',
+  },
+}
+
+export const Small: Story = {
+  args: {
+    size: 'small',
+  },
+}
+
+export const Medium: Story = {
+  args: {
+    size: 'medium',
+  },
+}
+
+export const Large: Story = {
+  args: {
+    size: 'large',
+  },
+}
