@@ -16,6 +16,9 @@
   ],
   "tailwindConfig": "./tailwind.config.ts",
   "tailwindFunctions": [
-    "clsx"
+    "clsx",
+    "cn",
+    "twmerge",
+    "cva"
   ]
 }

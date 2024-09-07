@@ -25,7 +25,7 @@ const config: Config = {
         },
         blue: {
           50: '#F0F4FF',
-          100: '#BDE1FF',
+          100: '#D9E8FF',
           200: '#92CFFF',
           300: '#64BBFF',
           400: '#41ABFF',
@@ -33,7 +33,7 @@ const config: Config = {
           600: '#2D8DFF',
           700: '#2F7AF3',
           800: '#3068E0',
-          900: '#3047C1',
+          900: '#0054D1',
         },
       },
       fontSize: {
