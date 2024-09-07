@@ -7,6 +7,7 @@ import {
 } from 'react'
 
 import { cn, useFocus } from 'shared/lib'
+import { createSlot } from 'shared/lib'
 import {
   textField,
   input,
@@ -28,6 +29,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
       readOnly = false,
       disabled = false,
       maxLength = 255,
+      children,
       autoComplete = 'off',
       onClick,
       onFocus,
@@ -36,6 +38,24 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
     },
     ref,
   ) => {
+    const { slots, hasSlot } = createSlot(children, ['left', 'right'])
+
+    const slotClass = (() => {
+      if (hasSlot('left') && hasSlot('right')) {
+        return 'both'
+      }
+
+      if (hasSlot('left')) {
+        return 'left'
+      }
+
+      if (hasSlot('right')) {
+        return 'right'
+      }
+
+      return null
+    })()
+
     const {
       focused,
       elementRef,
@@ -74,10 +94,15 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
         )}
         onClick={handleClick}
       >
+        {slots?.left && <div className="py-3 pl-2.5">{slots.left}</div>}
         <input
           {...restProps}
           type={type}
-          className={cn(input())}
+          className={cn(
+            input({
+              slots: slotClass,
+            }),
+          )}
           autoComplete={autoComplete}
           readOnly={readOnly}
           disabled={disabled}
@@ -87,6 +112,7 @@ export const TextField = forwardRef<HTMLInputElement, Props>(
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
+        {slots?.right && <div className="py-3 pr-2.5">{slots.right}</div>}
       </div>
     )
   },
