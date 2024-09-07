@@ -16,18 +16,23 @@ export const textField = cva(
         true: 'bg-gray-100 text-gray-500',
         false: '',
       },
+      focused: {
+        true: 'border-2',
+        false: '',
+      },
     },
 
     compoundVariants: [
       {
         error: false,
         disabled: false,
-        class: 'has-[:focus]:border-2 has-[:focus]:border-blue-800',
+        focused: true,
+        class: 'border-blue-800',
       },
       {
         error: true,
         disabled: false,
-        class: 'border-error has-[:focus]:border-2',
+        class: 'border-error',
       },
     ],
   },
