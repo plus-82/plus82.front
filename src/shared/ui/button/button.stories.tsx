@@ -16,6 +16,10 @@ const meta = {
       options: ['small', 'medium', 'large'],
       description: 'The size of the button',
     },
+    fullWidth: {
+      control: 'boolean',
+      description: 'Whether the button should be full width',
+    },
     disabled: {
       control: 'boolean',
       description: 'Whether the button is disabled',
@@ -28,6 +32,7 @@ const meta = {
   args: {
     variant: 'primary',
     size: 'medium',
+    fullWidth: false,
     disabled: false,
     children: 'Button',
   },
@@ -71,5 +76,11 @@ export const Medium: Story = {
 export const Large: Story = {
   args: {
     size: 'large',
+  },
+}
+
+export const FullWidth: Story = {
+  args: {
+    fullWidth: true,
   },
 }

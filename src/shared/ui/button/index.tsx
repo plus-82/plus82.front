@@ -1,13 +1,21 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react'
+import { ButtonHTMLAttributes } from 'react'
 
 import { cn } from 'shared/lib'
 import { button, ButtonVariants } from 'shared/ui/button/variants'
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> &
-  ButtonVariants & {
-    children: ReactNode
-  }
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & ButtonVariants
 
-export const Button = ({ variant, size, ...restProps }: Props) => {
-  return <button className={cn(button({ variant, size }))} {...restProps} />
+export const Button = ({
+  variant = 'primary',
+  size = 'medium',
+  fullWidth = false,
+  className,
+  ...restProps
+}: Props) => {
+  return (
+    <button
+      className={cn(button({ variant, size, fullWidth, className }))}
+      {...restProps}
+    />
+  )
 }

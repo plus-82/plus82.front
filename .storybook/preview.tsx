@@ -30,7 +30,14 @@ const preview: Preview = {
   decorators: [
     Story => (
       <div
-        className={clsx(SpoqaHanSansNeo.variable, 'font-spoqa-han-sans-neo')}
+        className={clsx(
+          SpoqaHanSansNeo.variable,
+          'font-spoqa-han-sans-neo',
+          'w-[500px]',
+          'flex',
+          'justify-center',
+          'items-center',
+        )}
       >
         <Story />
       </div>
