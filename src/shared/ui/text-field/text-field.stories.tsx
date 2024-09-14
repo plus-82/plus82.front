@@ -85,7 +85,7 @@ const meta = {
     },
   },
   args: {
-    type: 'text',
+    type: 'number',
     placeholder: 'placeholder',
     fullWidth: false,
     error: false,
