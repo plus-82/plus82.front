@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { IconComponent } from 'shared/ui/icon/assets'
+import { IconComponent } from './assets'
 
 import { colors, Icon } from '.'
 

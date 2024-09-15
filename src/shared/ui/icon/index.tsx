@@ -2,9 +2,9 @@ import { flatMap, values } from 'lodash-es'
 
 import { colors as colorTokens } from 'shared/config'
 import { cn } from 'shared/lib'
-import { icon, IconVariants } from 'shared/ui/icon/variants'
 
 import { IconComponent, IconType } from './assets'
+import { icon, IconVariants } from './variants'
 
 export const colors = flatMap(values(colorTokens), value =>
   typeof value === 'object' ? values(value) : value,
