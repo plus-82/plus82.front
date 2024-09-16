@@ -1,7 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority'
 
 export const button = cva(
-  'flex items-center gap-1 transition-all focus:border-2 focus:border-blue-800 disabled:bg-gray-100 disabled:text-gray-500',
+  'flex items-center justify-center gap-1 transition-all focus:border-2 focus:border-blue-800 disabled:bg-gray-100 disabled:text-gray-500',
   {
     variants: {
       variant: {
@@ -18,10 +18,10 @@ export const button = cva(
         medium: 'title-small h-10 rounded-md px-3.5 py-2.5',
         large: 'title-medium h-12 rounded-lg px-4 py-3',
       },
-    },
-    defaultVariants: {
-      variant: 'primary',
-      size: 'medium',
+      fullWidth: {
+        true: 'w-full',
+        false: '',
+      },
     },
   },
 )
