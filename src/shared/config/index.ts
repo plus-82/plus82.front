@@ -1,1 +1,1 @@
-export { colors, fontSize } from './tokens'
+export { colors, fontSize, zIndex } from './tokens'

@@ -36,4 +36,17 @@ export const fontSize = {
   xl: '1.5rem', // 24
   '2xl': '1.75rem', // 28
   '3xl': '2rem', // 32
-}
+} as const
+
+export const zIndex = {
+  deepdive: '-99999',
+  default: '1',
+  tooltip: '6000',
+  docked: '4',
+  dropdown: '7000',
+  modal: '9000',
+  overlay: '8000',
+  spinner: '9050',
+  sticky: '100',
+  snackbar: '10000',
+} as const
