@@ -1,6 +1,6 @@
-import type { Config } from 'tailwindcss'
+import { Config } from 'tailwindcss'
 
-import { colors, fontSize } from './src/shared/config'
+import { colors, fontSize, zIndex } from './src/shared/config'
 
 const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
@@ -11,8 +11,10 @@ const config: Config = {
       },
       colors,
       fontSize,
+      zIndex,
     },
   },
   plugins: [],
 }
+
 export default config
