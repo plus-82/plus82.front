@@ -1,5 +1,6 @@
 import BookMarkOff from './bookmark-off.svg'
 import BookMarkOn from './bookmark-on.svg'
+import Check from './check.svg'
 import ChevronDown from './chevron-down.svg'
 import ChevronLeft from './chevron-left.svg'
 import ChevronRight from './chevron-right.svg'
@@ -17,6 +18,7 @@ import Search from './search.svg'
 export const IconComponent = {
   BookMarkOff,
   BookMarkOn,
+  Check,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
