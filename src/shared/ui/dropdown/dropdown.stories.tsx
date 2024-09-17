@@ -22,15 +22,26 @@ const meta = {
       },
     },
   },
-  args: {
-    displayLimit: 5,
-  },
   argTypes: {
     displayLimit: {
       control: 'number',
       description:
         'Sets the number of items that can be displayed at once in the dropdown.',
+      table: {
+        type: { summary: 'number' },
+      },
     },
+    role: {
+      control: 'text',
+      description: 'Sets the ARIA role for the dropdown.',
+      table: {
+        type: { summary: 'string' },
+      },
+    },
+  },
+  args: {
+    displayLimit: 5,
+    role: 'menu',
   },
 } satisfies Meta<typeof Dropdown>
 
