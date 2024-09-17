@@ -46,3 +46,23 @@ button {
     @apply text-xs font-medium leading-4;
   }
 }
+
+.scrollbar {
+  overflow: auto;
+}
+
+.scrollbar::-webkit-scrollbar {
+  @apply h-3 w-3 bg-white;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply rounded-full border border-solid border-transparent bg-gray-700 bg-clip-content;
+}
+
+.scrollbar::-webkit-scrollbar:vertical {
+  @apply border-0 border-l border-solid border-l-gray-300;
+}
+
+.scrollbar::-webkit-scrollbar:horizontal {
+  @apply border-0 border-t border-solid border-t-gray-300;
+}
