@@ -41,7 +41,7 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownRootProps>(
         <ul
           className={cn(dropdown())}
           role={role}
-          style={{ height: `${dropdownHeight}rem` }}
+          style={{ maxHeight: `${dropdownHeight}rem` }}
           {...restProps}
         >
           {children}
