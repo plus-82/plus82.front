@@ -29,13 +29,15 @@ export const colors = {
 } as const
 
 export const fontSize = {
-  xs: '0.75rem', // 12
+  xxs: '0.75rem', // 12
+  xs: '0.8125rem', // 13
   sm: '0.875rem', // 14
-  base: '1rem', // 16
+  md: '1rem', // 16
   lg: '1.125rem', // 18
-  xl: '1.5rem', // 24
+  xl: '1.25rem', // 20
   '2xl': '1.75rem', // 28
-  '3xl': '2rem', // 32
+  '3xl': '2.125rem', // 34
+  '4xl': '2.5rem', // 40
 } as const
 
 export const zIndex = {
