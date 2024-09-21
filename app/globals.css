@@ -11,39 +11,39 @@ button {
 
 @layer components {
   .display-large {
-    @apply text-3xl font-medium leading-10;
+    @apply text-4xl font-medium leading-10;
   }
 
   .display-medium {
-    @apply text-2xl font-medium leading-9;
+    @apply text-3xl font-medium leading-9;
   }
 
   .display-small {
-    @apply text-xl font-medium leading-8;
+    @apply text-2xl font-medium leading-8;
   }
 
   .title-large {
-    @apply text-lg font-medium leading-6;
+    @apply text-xl font-medium leading-6;
   }
 
   .title-medium {
-    @apply text-base font-medium leading-6;
+    @apply text-lg font-medium leading-6;
   }
 
   .title-small {
-    @apply text-sm font-medium leading-5;
+    @apply text-md font-medium leading-5;
   }
 
   .body-large {
-    @apply text-base font-medium leading-6;
+    @apply text-sm font-medium leading-6;
   }
 
   .body-medium {
-    @apply text-sm font-medium leading-5;
+    @apply text-xs font-medium leading-5;
   }
 
   .body-small {
-    @apply text-xs font-medium leading-4;
+    @apply text-xxs font-medium leading-4;
   }
 }
 

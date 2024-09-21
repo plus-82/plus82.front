@@ -8,6 +8,7 @@ const config: Config = {
   theme: {
     data: {
       selected: 'selected~=true',
+      readOnly: 'readOnly~=true',
     },
     extend: {
       fontFamily: {
@@ -21,6 +22,7 @@ const config: Config = {
   plugins: [
     plugin(function ({ addVariant }) {
       addVariant('not-last', '&:not(:last-child)')
+      addVariant('not-checked', '&:not(:checked)')
     }),
   ],
 }
