@@ -1,4 +1,5 @@
 export { Slot, createSlot } from './slot'
+export { useCheckbox } from './checkbox'
 export { cn } from './classname'
 export { useClickAway } from './click-away'
 export { useDropdown } from './dropdown'
