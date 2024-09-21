@@ -14,7 +14,7 @@ export const switchWrapper = cva('flex items-center gap-2', {
 })
 
 export const switchComponent = cva(
-  'block h-8 w-[56px] rounded-full p-1 outline-none transition-all focus:outline-none',
+  'block h-8 w-14 rounded-full p-1 outline-none transition-all focus:outline-none',
   {
     variants: {
       checked: {
