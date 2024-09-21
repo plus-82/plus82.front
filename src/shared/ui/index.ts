@@ -1,4 +1,5 @@
 export { Button } from './button'
+export { Checkbox, type CheckboxValue } from './checkbox'
 export { Icon } from './icon'
 export { TextField } from './text-field'
 export { Dropdown } from './dropdown'
