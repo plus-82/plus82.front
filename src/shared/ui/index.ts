@@ -1,6 +1,8 @@
 export { Button } from './button'
 export { Checkbox, type CheckboxValue } from './checkbox'
+export { DatePicker } from './date-picker'
 export { Dropdown } from './dropdown'
+export { Header } from './header'
 export { Icon } from './icon'
 export { Radio } from './radio'
 export { Select, type SelectValue, type SelectRootProps } from './select-field'
