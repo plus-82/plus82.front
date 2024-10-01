@@ -111,6 +111,7 @@ export const Calendar = ({
 
   return (
     <DatePicker
+      {...restProps}
       ref={datePickerRef}
       wrapperClassName={css.wrapper()}
       calendarClassName={css.calendar()}
@@ -128,7 +129,7 @@ export const Calendar = ({
       onKeyDown={handleKeyDown}
       onFocus={handleFocus}
       onBlur={handleBlur}
-      {...restProps}
+      readOnly={readOnly}
     />
   )
 }
