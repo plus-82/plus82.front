@@ -2,8 +2,12 @@ import { getYear } from 'date-fns'
 import { range } from 'lodash-es'
 import { SyntheticEvent, useState } from 'react'
 import DatePicker, { type DatePickerProps } from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 import { CustomHeader } from 'shared/ui/calendar/header'
+
+import * as css from './variants'
+import './calendar.css'
 
 export type Props = Pick<
   DatePickerProps,
@@ -40,6 +44,9 @@ export const Calendar = ({}: Props) => {
 
   return (
     <DatePicker
+      wrapperClassName={css.wrapper()}
+      calendarClassName={css.calendar()}
+      weekDayClassName={() => css.weekDay()}
       renderCustomHeader={props => <CustomHeader {...props} years={years} />}
       selected={startDate}
       onChange={date => date && setStartDate(date)}
