@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { useRadio } from 'shared/lib'
 
-import { Radio, RadioProps } from '.'
+import { Radio, type Props } from '.'
 
 type Story = StoryObj<typeof meta>
 
@@ -82,7 +82,7 @@ const RadioStory = ({
   error,
   disabled,
   readOnly,
-}: RadioProps) => {
+}: Props) => {
   const { isChecked, updateCheckedValue } = useRadio()
 
   return (
@@ -101,7 +101,7 @@ const RadioStory = ({
   )
 }
 
-const RadioGroupStory = ({ name, error, disabled, readOnly }: RadioProps) => {
+const RadioGroupStory = ({ name, error, disabled, readOnly }: Props) => {
   const { isChecked, updateCheckedValue } = useRadio()
 
   return (
