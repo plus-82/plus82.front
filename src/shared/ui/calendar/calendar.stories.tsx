@@ -10,7 +10,7 @@ const meta: Meta<typeof Calendar> = {
   component: Calendar,
   decorators: [
     Story => (
-      <div style={{ width: '32rem', height: '350px' }}>
+      <div style={{ height: '350px' }}>
         <Story />
       </div>
     ),
