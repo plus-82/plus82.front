@@ -54,6 +54,7 @@ const SelectRoot = ({
   readOnly = false,
   placeholder: customPlaceholder,
   children,
+  defaultValue,
   value,
   onChange = () => {},
   onBlur,
@@ -83,6 +84,7 @@ const SelectRoot = ({
     handleSelectedValueClickInRenderProp,
   } = useSelect({
     value,
+    defaultValue,
     disabled,
     readOnly,
     multiple,

@@ -15,12 +15,16 @@ type Props = Required<
     'multiple' | 'selectionLimit' | 'disabled' | 'readOnly' | 'nullable'
   >
 > &
-  Pick<SelectRootProps, 'value' | 'onChange' | 'displayValue'> & {
+  Pick<
+    SelectRootProps,
+    'value' | 'defaultValue' | 'onChange' | 'displayValue'
+  > & {
     selectRef: RefObject<HTMLDivElement>
   }
 
 export const useSelect = ({
   value: externalValue,
+  defaultValue,
   disabled,
   readOnly,
   multiple,
@@ -31,6 +35,8 @@ export const useSelect = ({
   selectRef,
 }: Props) => {
   const getDefaultSelectedValues = () => {
+    if (defaultValue) return castArray(defaultValue)
+
     if (isEmptyString(externalValue) || isUndefined(externalValue)) return []
     if (!nullable && isNull(externalValue)) return []
 
