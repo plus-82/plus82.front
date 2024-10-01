@@ -10,13 +10,13 @@ export const button = cva(
         tonal:
           'bg-blue-50 text-blue-800 hover:bg-blue-100 focus:border-blue-800',
         lined:
-          'border border-gray-300 bg-white text-gray-700 hover:bg-gray-100',
+          'border border-gray-300 bg-white text-gray-900 hover:bg-gray-100',
         text: 'bg-white text-gray-900 hover:text-blue-800 disabled:bg-white',
       },
       size: {
-        small: 'body-small h-8 rounded-md px-2.5 py-2',
-        medium: 'title-small h-10 rounded-md px-3.5 py-2.5',
-        large: 'title-medium h-12 rounded-lg px-4 py-3',
+        small: 'body-small h-8 rounded-md px-3 py-2',
+        medium: 'title-small h-10 rounded-md px-4 py-2.5',
+        large: 'title-medium h-12 rounded-lg px-5 py-3',
       },
       fullWidth: {
         true: 'w-full',
