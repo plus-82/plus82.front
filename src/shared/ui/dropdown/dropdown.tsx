@@ -90,7 +90,9 @@ const DropdownItem = forwardRef<
       >
         <div className={cn(dropdownItemContent())}>
           {children}
-          {selected && <Icon name="Check" color={colors.gray['700']} />}
+          {selected && (
+            <Icon name="Check" size="medium" color={colors.gray['700']} />
+          )}
         </div>
       </li>
     )

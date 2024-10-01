@@ -14,7 +14,7 @@ import {
   TextFieldVariants,
 } from 'shared/ui/text-field/variants'
 
-type Props = InputHTMLAttributes<HTMLInputElement> &
+export type Props = InputHTMLAttributes<HTMLInputElement> &
   TextFieldVariants & {
     error?: boolean
   }
