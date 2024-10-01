@@ -16,18 +16,22 @@ type Props = {
 export const CustomHeader = ({
   date,
   years,
+  decreaseMonth,
+  increaseMonth,
   changeYear,
   changeMonth,
+  prevMonthButtonDisabled,
+  nextMonthButtonDisabled,
 }: Props) => {
   return (
     <div className="flex gap-4">
       {/* TODO: IconButton으로 교체 */}
-      <button>
+      <button onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
         <Icon name="ChevronLeft" size="large" color={colors.gray['700']} />
       </button>
       <div className="flex gap-3">
         <Select
-          value={months[getMonth(date)]}
+          defaultValue={months[getMonth(date)]}
           onChange={(_, month) => {
             if (isString(month)) {
               changeMonth(months.indexOf(month as string))
@@ -43,7 +47,7 @@ export const CustomHeader = ({
           ))}
         </Select>
         <Select
-          value={getYear(date)}
+          defaultValue={getYear(date)}
           onChange={(_, year) => isNumber(year) && changeYear(year)}
           className="w-[5.375rem]"
           displayLimit={3}
@@ -56,7 +60,7 @@ export const CustomHeader = ({
         </Select>
       </div>
       {/* TODO: IconButton으로 교체 */}
-      <button>
+      <button onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
         <Icon name="ChevronRight" size="large" color={colors.gray['700']} />
       </button>
     </div>
