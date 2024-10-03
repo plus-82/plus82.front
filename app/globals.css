@@ -87,15 +87,3 @@ button {
     @apply border-0 border-t border-solid border-t-gray-300;
   }
 }
-
-@layer components {
-  .narrow-layout {
-    width: 360px;
-    margin: 0 auto;
-    padding: 50px 0;
-  }
-
-  .wide-layout {
-    width: 100%; /* 수정될 수 있음 */
-  }
-}

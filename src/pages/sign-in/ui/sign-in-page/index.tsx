@@ -1,10 +1,10 @@
-import { Button, Label, Link, TextField } from 'shared/ui'
+import { Button, Label, Layout, Link, TextField } from 'shared/ui'
 
 import * as css from './variants'
 
 export const SignInPage = () => {
   return (
-    <div className={css.layout()}>
+    <Layout className={css.layout()}>
       <h1 className={css.heading()}>Login</h1>
       <form>
         <div className={css.fields()}>
@@ -33,6 +33,6 @@ export const SignInPage = () => {
         <p>Not a member yet?</p>
         <Link href="/">Create an account</Link>
       </div>
-    </div>
+    </Layout>
   )
 }

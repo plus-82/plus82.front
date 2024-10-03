@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-export const layout = cva('narrow-layout flex flex-col items-center')
+export const layout = cva('flex flex-col items-center')
 
 export const heading = cva('display-small mb-10 text-gray-900')
 
