@@ -1,7 +1,7 @@
 import { cva, VariantProps } from 'class-variance-authority'
 
 export const textField = cva(
-  'body-medium flex h-12 w-[22.5rem] items-center gap-2 rounded-lg border border-gray-300 bg-white transition-all',
+  'body-medium flex h-12 w-[22.5rem] items-center gap-2 overflow-hidden rounded-lg border border-gray-300 bg-white transition-all',
   {
     variants: {
       fullWidth: {
