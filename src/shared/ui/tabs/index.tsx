@@ -1,3 +1,5 @@
+'use client'
+
 import { isUndefined } from 'lodash-es'
 import {
   PropsWithChildren,

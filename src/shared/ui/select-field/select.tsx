@@ -1,3 +1,5 @@
+'use client'
+
 import { PropsWithChildren, useRef } from 'react'
 import type { MouseEvent, ReactNode, SelectHTMLAttributes } from 'react'
 

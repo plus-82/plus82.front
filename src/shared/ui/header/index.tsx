@@ -1,5 +1,9 @@
+'use client'
+
 import { cn } from 'shared/lib'
-import { Button, Tabs } from 'shared/ui'
+
+import { Button } from '../button'
+import { Tabs } from '../tabs'
 
 import Logo from './assets/Logo.svg'
 import * as css from './variants'

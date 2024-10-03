@@ -1,3 +1,5 @@
+'use client'
+
 import { castArray, isEqual, isNull, isUndefined } from 'lodash-es'
 import { useCallback, useEffect, useState } from 'react'
 import type { KeyboardEvent, MouseEvent, RefObject } from 'react'

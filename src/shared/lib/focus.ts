@@ -1,3 +1,5 @@
+'use client'
+
 import { useRef, useState } from 'react'
 
 export const useFocus = <T extends HTMLElement>() => {

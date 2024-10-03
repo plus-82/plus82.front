@@ -1,3 +1,5 @@
+'use client'
+
 import { isEqual } from 'lodash-es'
 import { useEffect, useState } from 'react'
 
