@@ -11,39 +11,58 @@ button {
 
 @layer components {
   .display-large {
-    @apply text-4xl font-medium leading-10;
+    font-size: 2.5rem; /* 40px */
+    font-weight: 500;
+    line-height: 3rem; /* 48px */
   }
 
   .display-medium {
-    @apply text-3xl font-medium leading-9;
+    font-size: 2.125rem; /* 34px */
+    font-weight: 500;
+    line-height: 2.625rem; /* 42px */
   }
 
   .display-small {
-    @apply text-2xl font-medium leading-8;
+    font-size: 1.75rem; /* 28px */
+    font-weight: 500;
+    line-height: 2.25rem; /* 36px */
   }
 
   .title-large {
-    @apply text-xl font-medium leading-6;
+    font-size: 1.25rem; /* 20px */
+    font-weight: 500;
+    line-height: 1.75rem; /* 28px */
   }
 
   .title-medium {
-    @apply text-lg font-medium leading-6;
+    font-size: 1.125rem; /* 18px */
+    font-weight: 500;
+    line-height: 1.625rem; /* 26px */
   }
 
   .title-small {
-    @apply text-md font-medium leading-5;
+    /* 16px */
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5rem; /* 24px */
   }
 
   .body-large {
-    @apply text-sm font-medium leading-6;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
+    line-height: 1.25rem; /* 20px */
   }
 
   .body-medium {
-    @apply text-xs font-medium leading-5;
+    font-size: 0.8125rem; /* 13px */
+    font-weight: 500;
+    line-height: 1.125rem; /* 18px */
   }
 
   .body-small {
-    @apply text-xxs font-medium leading-4;
+    font-size: 0.75rem; /* 12px */
+    font-weight: 500;
+    line-height: 1rem; /* 16px */
   }
 }
 
