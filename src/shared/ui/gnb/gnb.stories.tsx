@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Header } from '.'
+import { GNB } from '.'
 
 const meta = {
-  title: 'Component/Header',
-  component: Header,
+  title: 'Component/GNB',
+  component: GNB,
   decorators: [
     Story => (
-      <div style={{ width: '1440px' }}>
+      <div style={{ width: '80vw' }}>
         <Story />
       </div>
     ),
   ],
-} satisfies Meta<typeof Header>
+} satisfies Meta<typeof GNB>
 
 export default meta
 type Story = StoryObj<typeof meta>

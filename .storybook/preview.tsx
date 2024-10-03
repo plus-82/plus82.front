@@ -33,7 +33,6 @@ const preview: Preview = {
         className={clsx(
           SpoqaHanSansNeo.variable,
           'font-spoqa-han-sans-neo',
-          'w-[500px]',
           'flex',
           'justify-center',
           'items-center',

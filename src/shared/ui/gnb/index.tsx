@@ -3,20 +3,15 @@
 import { cn } from 'shared/lib'
 
 import { Button } from '../button'
-import { Tabs } from '../tabs'
 
 import Logo from './assets/Logo.svg'
 import * as css from './variants'
 
-export const Header = () => {
+export const GNB = () => {
   return (
     <header className={cn(css.wrapper())}>
       <div className={cn(css.leftSection())}>
         <Logo />
-        <Tabs>
-          <Tabs.Trigger value="one">Job board</Tabs.Trigger>
-          <Tabs.Trigger value="two">Job board</Tabs.Trigger>
-        </Tabs>
       </div>
       <div className={cn(css.rightSection())}>
         <div className={cn(css.textButtons())}>
