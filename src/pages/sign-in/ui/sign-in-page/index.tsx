@@ -1,22 +1,40 @@
+'use client'
+
+import { useForm } from 'react-hook-form'
+
+import { hasError } from 'shared/lib'
 import { Button, Label, Layout, Link, TextField } from 'shared/ui'
 
 import * as css from './variants'
 
+interface SignInFieldValues {
+  email: string
+  password: string
+}
+
 export const SignInPage = () => {
+  const { register, getFieldState } = useForm<SignInFieldValues>()
+
   return (
     <Layout className={css.layout()}>
       <h1 className={css.heading()}>Login</h1>
-      <form>
+      <form onSubmit={event => event.preventDefault()}>
         <div className={css.fields()}>
           <div className={css.field()}>
             <Label>Email</Label>
-            <TextField placeholder="Please enter your email" />
+            <TextField
+              {...register('email', { required: true })}
+              placeholder="Please enter your email"
+              error={hasError(getFieldState('email').error)}
+            />
           </div>
           <div className={css.field()}>
             <Label>Password</Label>
             <TextField
+              {...register('password', { required: true })}
               type="password"
               placeholder="Please enter your password"
+              error={hasError(getFieldState('password').error)}
             />
           </div>
         </div>
