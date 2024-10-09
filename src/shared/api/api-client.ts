@@ -1,4 +1,14 @@
+import { SuccessResponse } from 'shared/api/common-response'
+
+import { HttpError } from './http-error'
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || ''
+
+const DEFAULT_ERROR_MESSAGE = '기술팀에 문의해주세요'
+
+const ERROR_MESSAGES: { [key: number]: string } = {
+  500: '기술팀에 문의해주세요',
+}
 
 export class ApiClient {
   private baseUrl: string
@@ -7,17 +17,24 @@ export class ApiClient {
     this.baseUrl = url
   }
 
-  // TODO: Add error handling
   private async handleResponse<TResult>(response: Response): Promise<TResult> {
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`)
+    const body = await response.json()
+    const { status } = response
+
+    if (status >= 400 && status < 500) {
+      const { code, data, message } = body
+      throw new HttpError({ code, data, message, status })
     }
 
-    try {
-      return await response.json()
-    } catch (error) {
-      throw new Error('Error parsing JSON response')
+    if (status >= 500) {
+      throw new HttpError({
+        code: status,
+        message: ERROR_MESSAGES[status] ?? DEFAULT_ERROR_MESSAGE,
+        status,
+      })
     }
+
+    return (body as SuccessResponse<TResult>).data
   }
 
   public async get<TResult = unknown>(
