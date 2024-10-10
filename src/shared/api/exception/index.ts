@@ -10,6 +10,7 @@ export enum AuthExceptionCode {
   EXPIRED_TOKEN = 'AE-004',
   INVALID_TOKEN_TYPE = 'AE-005',
   INVALID_TOKEN = 'AE-006',
+  DELETED_USER = 'AE-007',
 }
 
 export type ResponseCode = CommonResponseCode | AuthExceptionCode
