@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Slot } from 'shared/lib'
 
-import { TextField } from '.'
+import { TextField } from './text-field'
 
 const meta = {
   title: 'Component/TextField',
