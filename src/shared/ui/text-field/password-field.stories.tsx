@@ -1,12 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Slot } from 'shared/lib'
-
-import { TextField } from './text-field'
+import { PasswordField } from './password-field'
 
 const meta = {
-  title: 'Component/TextField',
-  component: TextField,
+  title: 'Component/PasswordField',
+  component: PasswordField,
   decorators: [
     Story => (
       <div className="flex w-[500px] justify-center">
@@ -16,7 +14,7 @@ const meta = {
   ],
   parameters: {
     componentSubtitle:
-      'TextField is an interactive element that displays the user input.',
+      'PasswordField is an interactive element that displays the user input.',
   },
   argTypes: {
     type: {
@@ -83,6 +81,13 @@ const meta = {
         type: { summary: 'string' },
       },
     },
+    showToggle: {
+      control: 'boolean',
+      description: 'Whether to show the password visibility toggle',
+      table: {
+        type: { summary: 'boolean' },
+      },
+    },
   },
   args: {
     type: 'text',
@@ -93,8 +98,9 @@ const meta = {
     disabled: false,
     maxLength: 255,
     autoComplete: 'off',
+    showToggle: true,
   },
-} satisfies Meta<typeof TextField>
+} satisfies Meta<typeof PasswordField>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -119,18 +125,8 @@ export const Disabled: Story = {
   },
 }
 
-// TODO: 아이콘으로 교체
-export const WithSlot: Story = {
+export const NoToggle: Story = {
   args: {
-    children: (
-      <>
-        <Slot name="left">
-          <p>Left</p>
-        </Slot>
-        <Slot name="right">
-          <p>Right</p>
-        </Slot>
-      </>
-    ),
+    showToggle: false,
   },
 }
