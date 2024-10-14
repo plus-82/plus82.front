@@ -28,7 +28,12 @@ export const HelperText = ({
   return (
     <div className={cn(css.wrapper({ className }))}>
       {hasIcon && (
-        <Icon name="Check" color={ICON_COLOR[variant!]} size="small" />
+        <Icon
+          name="Check"
+          color={ICON_COLOR[variant!]}
+          size="small"
+          className="shrink-0"
+        />
       )}
       <p className={cn(css.helperText({ variant }))}>{children}</p>
     </div>

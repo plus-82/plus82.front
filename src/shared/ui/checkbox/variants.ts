@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority'
 
 export const checkboxWrapper = cva(
-  'flex w-fit cursor-pointer items-center gap-2 focus:outline-none',
+  'flex w-fit cursor-pointer items-start gap-2 focus:outline-none',
   {
     variants: {
       readOnly: {
@@ -17,7 +17,7 @@ export const checkboxWrapper = cva(
 )
 
 export const checkbox = cva(
-  'relative h-6 w-6 rounded-[0.25rem] border-2 border-gray-500 bg-white transition-all',
+  'relative h-6 w-6 shrink-0 rounded-[0.25rem] border-2 border-gray-500 bg-white transition-all',
   {
     variants: {
       checked: {
@@ -72,4 +72,4 @@ export const checkboxIcon = cva(
 
 export const input = cva('absolute left-0 top-0 cursor-pointer opacity-0')
 
-export const label = cva('body-large text-gray-900')
+export const label = cva('body-large leading-6 text-gray-900')
