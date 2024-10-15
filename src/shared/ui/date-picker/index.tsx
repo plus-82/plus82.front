@@ -9,7 +9,7 @@ import { Calendar, type Props as CalendarProps } from '../calendar'
 import { Icon } from '../icon'
 import { TextField, type Props as TextFieldProps } from '../text-field'
 
-export type Props = Omit<CalendarProps, 'placeholderText'> &
+export type Props = Omit<CalendarProps, 'placeholderText' | 'popperPlacement'> &
   Pick<TextFieldProps, 'error' | 'fullWidth' | 'placeholder'>
 
 export const DatePicker = ({
@@ -26,6 +26,7 @@ export const DatePicker = ({
       onChange={date => setSelectedDate(date)}
       selected={selectedDate}
       placeholderText={placeholder}
+      popperPlacement="bottom-center"
       customInput={
         <TextField error={error} fullWidth={fullWidth}>
           <Slot name="left">

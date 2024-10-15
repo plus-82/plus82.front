@@ -15,8 +15,8 @@ export const button = cva(
       },
       size: {
         small: 'body-small h-8 rounded-md px-3 py-2',
-        medium: 'title-small h-10 rounded-md px-4 py-2.5',
-        large: 'title-medium h-12 rounded-lg px-5 py-3',
+        medium: 'body-large h-10 rounded-md px-4 py-2.5',
+        large: 'title-small h-12 rounded-lg px-5 py-3',
       },
       fullWidth: {
         true: 'w-full',

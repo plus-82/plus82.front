@@ -1,4 +1,5 @@
-import type { InputHTMLAttributes, KeyboardEvent } from 'react'
+import { isString } from 'lodash-es'
+import type { InputHTMLAttributes, KeyboardEvent, ReactNode } from 'react'
 import { forwardRef } from 'react'
 
 import { colors } from 'shared/config'
@@ -14,7 +15,7 @@ export type Props = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'onChange' | 'value' | 'size'
 > & {
-  label?: string
+  label?: string | ((className: string) => ReactNode)
   value?: CheckboxValue
   error?: boolean
   indeterminate?: boolean | null
@@ -87,11 +88,12 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>(
             />
           )}
         </div>
-        {label && (
+        {label && isString(label) && (
           <span className={cn(css.label())} id={labelId}>
             {label}
           </span>
         )}
+        {label && !isString(label) && label(css.label())}
       </div>
     )
   },
