@@ -7,17 +7,17 @@ import {
   Checkbox,
   DatePicker,
   Heading,
-  HelperText,
   Label,
   Layout,
   Link,
-  PasswordField,
   Radio,
   Select,
   TextField,
 } from 'shared/ui'
 
 import { FormValues, defaultValues } from '../../model/form-values'
+import * as commonCss from '../../style/variants'
+import { Account } from '../account'
 
 import * as css from './variants'
 
@@ -41,57 +41,19 @@ export const SignUpPage = () => {
       </div>
       <FormProvider {...form}>
         <form>
-          <div className="mb-[50px]">
-            <Heading as="h3" size="medium" className="mb-6">
-              Account
-            </Heading>
-            <div>
-              <div className={css.field()}>
-                <Label required>Email</Label>
-                <div className={css.textFieldWrapper()}>
-                  <TextField
-                    placeholder="example@email.com"
-                    autoComplete="one-time-code"
-                  />
-                  <Button variant="lined" size="large">
-                    Code
-                  </Button>
-                </div>
-              </div>
-              <div className={css.field()}>
-                <Label required>Password</Label>
-                <div className={css.passwordFieldWrapper()}>
-                  <PasswordField
-                    placeholder="Enter the password"
-                    autoComplete="one-time-code"
-                  />
-                  <HelperText hasIcon>9 ~ 28 characters long</HelperText>
-                  <HelperText hasIcon>
-                    Consist of a combination of three types of Upper & lower
-                    case letters, Numbers, and Special characters
-                  </HelperText>
-                </div>
-              </div>
-              <div className={css.field()}>
-                <Label required>Confirm Password</Label>
-                <div>
-                  <TextField placeholder="Check the password" />
-                </div>
-              </div>
-            </div>
-          </div>
+          <Account />
           <div className="mb-10">
             <Heading as="h3" size="medium" className="mb-6">
               Personal information
             </Heading>
             <div>
-              <div className={css.field()}>
+              <div className={commonCss.field()}>
                 <Label required>Full Name</Label>
                 <div>
                   <TextField placeholder="Enter your name" />
                 </div>
               </div>
-              <div className={css.field()}>
+              <div className={commonCss.field()}>
                 <Label required>Nationality</Label>
                 <div>
                   <Select
@@ -102,14 +64,14 @@ export const SignUpPage = () => {
                   </Select>
                 </div>
               </div>
-              <div className={css.field()}>
+              <div className={commonCss.field()}>
                 <Label required>Gender</Label>
                 <div className={css.radioFieldWrapper()}>
                   <Radio label="Female" value="Female" checked={true} />
                   <Radio label="Male" value="Male" />
                 </div>
               </div>
-              <div className={css.field()}>
+              <div className={commonCss.field()}>
                 <Label required>Birth</Label>
                 <div>
                   <DatePicker
