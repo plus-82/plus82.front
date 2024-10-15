@@ -1,13 +1,14 @@
 'use client'
 
-import { useFormContext } from 'react-hook-form'
+import { useRef } from 'react'
+import { useFormContext, useWatch } from 'react-hook-form'
 
 import {
   EmailVerificationCodeExceptionCode,
   HttpError,
   UserExceptionCode,
 } from 'shared/api'
-import { hasError } from 'shared/lib'
+import { hasError, isEmptyString } from 'shared/lib'
 import {
   Button,
   Heading,
@@ -28,12 +29,30 @@ export const Account = () => {
   const {
     register,
     trigger,
-    getValues,
     setError,
     formState: { errors },
+    control,
   } = useFormContext<FormValues>()
 
+  const emailRef = useRef('')
+
+  const email = useWatch({
+    name: 'email',
+    control,
+  })
+
   const requestVerification = useRequestVerification()
+
+  // TODO: 정확한 조건 확인 필요
+  const isCodeButtonDisabled = (() => {
+    let isDisabled = false
+
+    if (!requestVerification.isSuccess) return isDisabled
+
+    isDisabled = !isEmptyString(emailRef.current) && emailRef.current === email
+
+    return isDisabled
+  })()
 
   const handleRequestVerificationError = (error: HttpError) => {
     if (error.code === EmailVerificationCodeExceptionCode.TOO_MANY_REQUEST) {
@@ -50,7 +69,8 @@ export const Account = () => {
 
     if (!isEmailValid) return
 
-    const data = { email: getValues('email') }
+    const data = { email }
+    emailRef.current = email
 
     requestVerification.mutate(data, {
       onError: handleRequestVerificationError,
@@ -82,7 +102,7 @@ export const Account = () => {
               variant="lined"
               size="large"
               onClick={handleCodeButtonClick}
-              disabled={requestVerification.isSuccess}
+              disabled={isCodeButtonDisabled}
               className="w-[95px]"
             >
               Code
