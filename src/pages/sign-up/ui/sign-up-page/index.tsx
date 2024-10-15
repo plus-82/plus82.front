@@ -37,7 +37,7 @@ export const SignUpPage = () => {
           </Heading>
           <div>
             <div className={css.field()}>
-              <Label>Email</Label>
+              <Label required>Email</Label>
               <div className={css.textFieldWrapper()}>
                 <TextField
                   placeholder="example@email.com"
@@ -49,7 +49,7 @@ export const SignUpPage = () => {
               </div>
             </div>
             <div className={css.field()}>
-              <Label>Password</Label>
+              <Label required>Password</Label>
               <div className={css.passwordFieldWrapper()}>
                 <PasswordField
                   placeholder="Enter the password"
@@ -63,7 +63,7 @@ export const SignUpPage = () => {
               </div>
             </div>
             <div className={css.field()}>
-              <Label>Confirm Password</Label>
+              <Label required>Confirm Password</Label>
               <div>
                 <TextField placeholder="Check the password" />
               </div>
@@ -76,13 +76,13 @@ export const SignUpPage = () => {
           </Heading>
           <div>
             <div className={css.field()}>
-              <Label>Full Name</Label>
+              <Label required>Full Name</Label>
               <div>
                 <TextField placeholder="Enter your name" />
               </div>
             </div>
             <div className={css.field()}>
-              <Label>Nationality</Label>
+              <Label required>Nationality</Label>
               <div>
                 <Select
                   onChange={() => {}}
@@ -93,14 +93,14 @@ export const SignUpPage = () => {
               </div>
             </div>
             <div className={css.field()}>
-              <Label>Gender</Label>
+              <Label required>Gender</Label>
               <div className={css.radioFieldWrapper()}>
                 <Radio label="Female" value="Female" checked={true} />
                 <Radio label="Male" value="Male" />
               </div>
             </div>
             <div className={css.field()}>
-              <Label>Birth</Label>
+              <Label required>Birth</Label>
               <div>
                 <DatePicker
                   onChange={() => {}}
