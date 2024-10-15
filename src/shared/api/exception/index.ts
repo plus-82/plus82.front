@@ -13,4 +13,24 @@ export enum AuthExceptionCode {
   DELETED_USER = 'AE-007',
 }
 
-export type ResponseCode = CommonResponseCode | AuthExceptionCode
+export enum EmailVerificationCodeExceptionCode {
+  TOO_MANY_REQUEST = 'EM-001',
+  ALREADY_VERIFIED_CODE = 'EM-002',
+  EXPIRED_CODE = 'EM-003',
+}
+
+export enum UserExceptionCode {
+  ALREADY_USED_EMAIL = 'UE-001',
+  NOT_VERIFIED_EMAIL = 'UE-002',
+}
+
+export enum InvalidInputValueExceptionCode {
+  INVALID_INPUT_VALUE = 'IIV-001',
+}
+
+export type ResponseCode =
+  | CommonResponseCode
+  | AuthExceptionCode
+  | EmailVerificationCodeExceptionCode
+  | UserExceptionCode
+  | InvalidInputValueExceptionCode
