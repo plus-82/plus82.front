@@ -1,5 +1,8 @@
 'use client'
 
+import { useFormContext } from 'react-hook-form'
+
+import { hasError } from 'shared/lib'
 import {
   Button,
   Heading,
@@ -9,11 +12,18 @@ import {
   TextField,
 } from 'shared/ui'
 
+import { FormValues } from '../../model/form-values'
+import * as rules from '../../model/rules'
 import * as commonCss from '../../style/variants'
 
 import * as css from './variants'
 
 export const Account = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<FormValues>()
+
   return (
     <div className="mb-[50px]">
       <Heading as="h3" size="medium" className="mb-6">
@@ -25,10 +35,15 @@ export const Account = () => {
           <div className={css.textFieldWrapper()}>
             <div className={commonCss.field({ className: 'grow' })}>
               <TextField
+                {...register('email', rules.email)}
                 placeholder="example@email.com"
                 autoComplete="one-time-code"
+                error={hasError(errors?.email)}
                 fullWidth
               />
+              {hasError(errors?.email) && (
+                <HelperText variant="error">{errors.email.message}</HelperText>
+              )}
             </div>
             <Button variant="lined" size="large">
               Code
