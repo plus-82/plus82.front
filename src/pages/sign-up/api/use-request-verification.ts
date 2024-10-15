@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 
-import { requestVerification } from 'entities/auth/api/request-verification'
+import { requestVerification } from 'entities/auth'
 
 export const useRequestVerification = () => {
   return useMutation({
