@@ -2,6 +2,11 @@
 
 import { useFormContext } from 'react-hook-form'
 
+import {
+  EmailVerificationCodeExceptionCode,
+  HttpError,
+  UserExceptionCode,
+} from 'shared/api'
 import { hasError } from 'shared/lib'
 import {
   Button,
@@ -12,6 +17,7 @@ import {
   TextField,
 } from 'shared/ui'
 
+import { useRequestVerification } from '../../api/use-request-verification'
 import { FormValues } from '../../model/form-values'
 import * as rules from '../../model/rules'
 import * as commonCss from '../../style/variants'
@@ -21,8 +27,35 @@ import * as css from './variants'
 export const Account = () => {
   const {
     register,
+    trigger,
+    getValues,
+    setError,
     formState: { errors },
   } = useFormContext<FormValues>()
+
+  const requestVerification = useRequestVerification()
+
+  const handleRequestVerificationError = (error: HttpError) => {
+    if (error.code === EmailVerificationCodeExceptionCode.TOO_MANY_REQUEST) {
+      // TODO: Show toast message
+    } else if (error.code === UserExceptionCode.ALREADY_USED_EMAIL) {
+      setError('email', {
+        message: 'An account with that email already exists',
+      })
+    }
+  }
+
+  const handleCodeButtonClick = async () => {
+    const isEmailValid = await trigger('email')
+
+    if (!isEmailValid) return
+
+    const data = { email: getValues('email') }
+
+    requestVerification.mutate(data, {
+      onError: handleRequestVerificationError,
+    })
+  }
 
   return (
     <div className="mb-[50px]">
@@ -45,10 +78,37 @@ export const Account = () => {
                 <HelperText variant="error">{errors.email.message}</HelperText>
               )}
             </div>
-            <Button variant="lined" size="large">
+            <Button
+              variant="lined"
+              size="large"
+              onClick={handleCodeButtonClick}
+              disabled={requestVerification.isSuccess}
+              className="w-[95px]"
+            >
               Code
             </Button>
           </div>
+          {requestVerification.isSuccess && (
+            <div className={css.textFieldWrapper()}>
+              <div className={commonCss.field({ className: 'grow' })}>
+                <TextField
+                  {...register('code')}
+                  placeholder="Enter the code"
+                  error={hasError(errors?.email)}
+                  fullWidth
+                />
+                <HelperText>Please enter the code sent to the email</HelperText>
+              </div>
+              <Button
+                variant="lined"
+                size="large"
+                onClick={handleCodeButtonClick}
+                className="w-[95px]"
+              >
+                Check
+              </Button>
+            </div>
+          )}
         </div>
         <div className={commonCss.fieldWrapper()}>
           <Label required>Password</Label>

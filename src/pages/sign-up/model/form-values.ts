@@ -1,5 +1,6 @@
 export type FormValues = {
   email: string
+  code: string
   password: string
   name: string
   country: string
@@ -9,6 +10,7 @@ export type FormValues = {
 
 export const defaultValues: FormValues = {
   email: '',
+  code: '',
   password: '',
   name: '',
   country: '',
