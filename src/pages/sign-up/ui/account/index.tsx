@@ -20,19 +20,22 @@ export const Account = () => {
         Account
       </Heading>
       <div>
-        <div className={commonCss.field()}>
+        <div className={commonCss.fieldWrapper()}>
           <Label required>Email</Label>
           <div className={css.textFieldWrapper()}>
-            <TextField
-              placeholder="example@email.com"
-              autoComplete="one-time-code"
-            />
+            <div className={commonCss.field({ className: 'grow' })}>
+              <TextField
+                placeholder="example@email.com"
+                autoComplete="one-time-code"
+                fullWidth
+              />
+            </div>
             <Button variant="lined" size="large">
               Code
             </Button>
           </div>
         </div>
-        <div className={commonCss.field()}>
+        <div className={commonCss.fieldWrapper()}>
           <Label required>Password</Label>
           <div className={css.passwordFieldWrapper()}>
             <PasswordField
