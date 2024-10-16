@@ -28,9 +28,16 @@ export enum InvalidInputValueExceptionCode {
   INVALID_INPUT_VALUE = 'IIV-001',
 }
 
+export enum ResourceNotFoundExceptionCode {
+  EMAIL_VERIFICATION_CODE_NOT_FOUND = 'RNF-001',
+  USER_NOT_FOUND = 'RNF-002',
+  COUNTRY_NOT_FOUND = 'RNF-003',
+}
+
 export type ResponseCode =
   | CommonResponseCode
   | AuthExceptionCode
   | EmailVerificationCodeExceptionCode
   | UserExceptionCode
   | InvalidInputValueExceptionCode
+  | ResourceNotFoundExceptionCode

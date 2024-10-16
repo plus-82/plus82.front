@@ -6,6 +6,7 @@ import { useFormContext, useWatch } from 'react-hook-form'
 import {
   EmailVerificationCodeExceptionCode,
   HttpError,
+  ResourceNotFoundExceptionCode,
   UserExceptionCode,
 } from 'shared/api'
 import { hasError, isEmptyString } from 'shared/lib'
@@ -19,6 +20,7 @@ import {
 } from 'shared/ui'
 
 import { useRequestVerification } from '../../api/use-request-verification'
+import { useVerifyCode } from '../../api/use-verify-code'
 import { FormValues } from '../../model/form-values'
 import * as rules from '../../model/rules'
 import * as commonCss from '../../style/variants'
@@ -29,6 +31,7 @@ export const Account = () => {
   const {
     register,
     trigger,
+    getValues,
     setError,
     formState: { errors },
     control,
@@ -42,6 +45,7 @@ export const Account = () => {
   })
 
   const requestVerification = useRequestVerification()
+  const verifyCode = useVerifyCode()
 
   // TODO: 정확한 조건 확인 필요
   const isCodeButtonDisabled = (() => {
@@ -74,6 +78,39 @@ export const Account = () => {
 
     requestVerification.mutate(data, {
       onError: handleRequestVerificationError,
+    })
+  }
+
+  const handleVerifyCodeError = (error: HttpError) => {
+    if (
+      error.code === EmailVerificationCodeExceptionCode.ALREADY_VERIFIED_CODE
+    ) {
+      setError('code', {
+        message: 'The verification code you entered has already been used',
+      })
+    } else if (error.code === EmailVerificationCodeExceptionCode.EXPIRED_CODE) {
+      setError('code', {
+        message: 'The verification code has expired. Please request a new one.',
+      })
+    } else if (
+      error.code ===
+      ResourceNotFoundExceptionCode.EMAIL_VERIFICATION_CODE_NOT_FOUND
+    ) {
+      setError('code', {
+        message: 'The verification code you entered is incorrect',
+      })
+    }
+  }
+
+  const handleCheckButtonClick = async () => {
+    const isCodeValid = await trigger('code')
+
+    if (!isCodeValid) return
+
+    const data = { email, code: getValues('code') }
+
+    verifyCode.mutate(data, {
+      onError: handleVerifyCodeError,
     })
   }
 
@@ -112,17 +149,24 @@ export const Account = () => {
             <div className={css.textFieldWrapper()}>
               <div className={commonCss.field({ className: 'grow' })}>
                 <TextField
-                  {...register('code')}
+                  {...register('code', rules.code)}
                   placeholder="Enter the code"
                   error={hasError(errors?.email)}
                   fullWidth
                 />
-                <HelperText>Please enter the code sent to the email</HelperText>
+                {!hasError(errors?.code) && (
+                  <HelperText>
+                    Please enter the code sent to the email
+                  </HelperText>
+                )}
+                {hasError(errors?.code) && (
+                  <HelperText variant="error">{errors.code.message}</HelperText>
+                )}
               </div>
               <Button
                 variant="lined"
                 size="large"
-                onClick={handleCodeButtonClick}
+                onClick={handleCheckButtonClick}
                 className="w-[95px]"
               >
                 Check

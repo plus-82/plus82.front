@@ -12,3 +12,7 @@ export const email = {
     message: "Invalid email format. Please use the format 'example@domain.com'",
   },
 }
+
+export const code = {
+  required: 'Please enter your email verification code',
+}
