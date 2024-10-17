@@ -151,10 +151,15 @@ export const Account = () => {
                 <TextField
                   {...register('code', rules.code)}
                   placeholder="Enter the code"
-                  error={hasError(errors?.email)}
+                  error={hasError(errors?.code)}
                   fullWidth
                 />
-                {!hasError(errors?.code) && (
+                {!hasError(errors?.code) && verifyCode.isSuccess && (
+                  <HelperText variant="success">
+                    Authentication completed
+                  </HelperText>
+                )}
+                {!hasError(errors?.code) && !verifyCode.isSuccess && (
                   <HelperText>
                     Please enter the code sent to the email
                   </HelperText>
@@ -168,6 +173,7 @@ export const Account = () => {
                 size="large"
                 onClick={handleCheckButtonClick}
                 className="w-[95px]"
+                disabled={verifyCode.isSuccess}
               >
                 Check
               </Button>
