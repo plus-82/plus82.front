@@ -228,7 +228,12 @@ export const Account = () => {
         <div className={commonCss.field()}>
           <Label required>Confirm Password</Label>
           <div>
-            <TextField placeholder="Check the password" />
+            <PasswordField
+              {...register('confirmPassword', rules.confirmPassword)}
+              placeholder="Check the password"
+              autoComplete="one-time-code"
+              showToggle
+            />
           </div>
         </div>
       </div>
