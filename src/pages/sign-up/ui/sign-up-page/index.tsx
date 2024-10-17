@@ -2,22 +2,11 @@
 
 import { FormProvider, useForm } from 'react-hook-form'
 
-import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Heading,
-  Label,
-  Layout,
-  Link,
-  Radio,
-  Select,
-  TextField,
-} from 'shared/ui'
+import { Button, Checkbox, Layout, Link } from 'shared/ui'
 
 import { FormValues, defaultValues } from '../../model/form-values'
-import * as commonCss from '../../style/variants'
 import { Account } from '../account'
+import { PersonalInformation } from '../personal-information'
 
 import * as css from './variants'
 
@@ -42,46 +31,7 @@ export const SignUpPage = () => {
       <FormProvider {...form}>
         <form>
           <Account />
-          <div className="mb-10">
-            <Heading as="h3" size="medium" className="mb-6">
-              Personal information
-            </Heading>
-            <div>
-              <div className={commonCss.fieldWrapper()}>
-                <Label required>Full Name</Label>
-                <div>
-                  <TextField placeholder="Enter your name" />
-                </div>
-              </div>
-              <div className={commonCss.fieldWrapper()}>
-                <Label required>Nationality</Label>
-                <div>
-                  <Select
-                    onChange={() => {}}
-                    placeholder="Choose your nationality"
-                  >
-                    <Select.Item value="Korea">Korea</Select.Item>
-                  </Select>
-                </div>
-              </div>
-              <div className={commonCss.fieldWrapper()}>
-                <Label required>Gender</Label>
-                <div className={css.radioFieldWrapper()}>
-                  <Radio label="Female" value="Female" checked={true} />
-                  <Radio label="Male" value="Male" />
-                </div>
-              </div>
-              <div className={commonCss.fieldWrapper()}>
-                <Label required>Birth</Label>
-                <div>
-                  <DatePicker
-                    onChange={() => {}}
-                    placeholder="Choose your birth"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          <PersonalInformation />
           <Checkbox
             className={css.checkbox()}
             label={className => (
