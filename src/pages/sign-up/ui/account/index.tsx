@@ -23,6 +23,12 @@ import { useRequestVerification } from '../../api/use-request-verification'
 import { useVerifyCode } from '../../api/use-verify-code'
 import { FormValues } from '../../model/form-values'
 import * as rules from '../../model/rules'
+import {
+  isCorrectLength,
+  hasLowercaseAndUppercaseLetter,
+  hasNumber,
+  hasSpecialChar,
+} from '../../model/rules'
 import * as commonCss from '../../style/variants'
 
 import * as css from './variants'
@@ -39,8 +45,8 @@ export const Account = () => {
 
   const emailRef = useRef('')
 
-  const email = useWatch({
-    name: 'email',
+  const [email, password] = useWatch({
+    name: ['email', 'password'],
     control,
   })
 
@@ -57,6 +63,13 @@ export const Account = () => {
 
     return isDisabled
   })()
+
+  const checkPasswordCondition = (condition: (value: string) => boolean) => {
+    if (isEmptyString(password)) return 'default'
+    if (condition(password)) return 'success'
+
+    return 'error'
+  }
 
   const handleRequestVerificationError = (error: HttpError) => {
     if (error.code === EmailVerificationCodeExceptionCode.TOO_MANY_REQUEST) {
@@ -184,13 +197,31 @@ export const Account = () => {
           <Label required>Password</Label>
           <div className={css.passwordFieldWrapper()}>
             <PasswordField
+              {...register('password', rules.password)}
               placeholder="Enter the password"
               autoComplete="one-time-code"
+              showToggle
             />
-            <HelperText hasIcon>9 ~ 28 characters long</HelperText>
-            <HelperText hasIcon>
-              Consist of a combination of three types of Upper & lower case
-              letters, Numbers, and Special characters
+            <HelperText
+              hasIcon
+              variant={checkPasswordCondition(isCorrectLength)}
+            >
+              9 ~ 28 characters long
+            </HelperText>
+            <HelperText
+              hasIcon
+              variant={checkPasswordCondition(hasLowercaseAndUppercaseLetter)}
+            >
+              Upper & lower case letters
+            </HelperText>
+            <HelperText hasIcon variant={checkPasswordCondition(hasNumber)}>
+              At least one number
+            </HelperText>
+            <HelperText
+              hasIcon
+              variant={checkPasswordCondition(hasSpecialChar)}
+            >
+              At least special character
             </HelperText>
           </div>
         </div>
