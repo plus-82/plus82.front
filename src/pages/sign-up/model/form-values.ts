@@ -3,10 +3,11 @@ export type FormValues = {
   code: string
   password: string
   confirmPassword: string
-  name: string
-  country: string
+  firstName: string
+  lastName: string
+  country: string | null
   genderType: 'MALE' | 'FEMALE'
-  birthDate: string
+  birthDate: string | null
 }
 
 export const defaultValues: FormValues = {
@@ -14,8 +15,9 @@ export const defaultValues: FormValues = {
   code: '',
   password: '',
   confirmPassword: '',
-  name: '',
-  country: '',
+  firstName: '',
+  lastName: '',
+  country: null,
   genderType: 'FEMALE',
-  birthDate: '',
+  birthDate: null,
 }
