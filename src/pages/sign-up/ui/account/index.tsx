@@ -10,16 +10,9 @@ import {
   UserExceptionCode,
 } from 'shared/api'
 import { isEmptyString } from 'shared/lib'
-import {
-  Button,
-  Heading,
-  HelperText,
-  Label,
-  PasswordField,
-  TextField,
-} from 'shared/ui'
+import { Button, Heading, HelperText, Label } from 'shared/ui'
 
-import { hasError } from 'features/form'
+import { Form, hasError } from 'features/form'
 
 import { useRequestVerification } from '../../api/use-request-verification'
 import { useVerifyCode } from '../../api/use-verify-code'
@@ -37,7 +30,6 @@ import * as css from './variants'
 
 export const Account = () => {
   const {
-    register,
     trigger,
     getValues,
     setError,
@@ -134,21 +126,20 @@ export const Account = () => {
       <Heading as="h3" size="medium" className="mb-6">
         Account
       </Heading>
+
       <div>
         <div className={commonCss.fieldWrapper()}>
           <Label required>Email</Label>
           <div className={css.textFieldWrapper()}>
             <div className={commonCss.field({ className: 'grow' })}>
-              <TextField
-                {...register('email', rules.email)}
-                placeholder="example@email.com"
-                autoComplete="one-time-code"
-                error={hasError(errors?.email)}
-                fullWidth
-              />
-              {hasError(errors?.email) && (
-                <HelperText variant="error">{errors.email.message}</HelperText>
-              )}
+              <Form.Control name="email" rules={rules.email}>
+                <Form.TextField
+                  placeholder="example@email.com"
+                  autoComplete="one-time-code"
+                  fullWidth
+                />
+                <Form.ErrorMessage />
+              </Form.Control>
             </div>
             <Button
               variant="lined"
@@ -160,15 +151,14 @@ export const Account = () => {
               Code
             </Button>
           </div>
+
           {requestVerification.isSuccess && (
             <div className={css.textFieldWrapper()}>
               <div className={commonCss.field({ className: 'grow' })}>
-                <TextField
-                  {...register('code', rules.code)}
-                  placeholder="Enter the code"
-                  error={hasError(errors?.code)}
-                  fullWidth
-                />
+                <Form.Control name="code" rules={rules.code}>
+                  <Form.TextField placeholder="Enter the code" fullWidth />
+                  <Form.ErrorMessage />
+                </Form.Control>
                 {!hasError(errors?.code) && verifyCode.isSuccess && (
                   <HelperText variant="success">
                     Authentication completed
@@ -178,9 +168,6 @@ export const Account = () => {
                   <HelperText>
                     Please enter the code sent to the email
                   </HelperText>
-                )}
-                {hasError(errors?.code) && (
-                  <HelperText variant="error">{errors.code.message}</HelperText>
                 )}
               </div>
               <Button
@@ -195,11 +182,13 @@ export const Account = () => {
             </div>
           )}
         </div>
+
         <div className={commonCss.fieldWrapper()}>
           <Label required>Password</Label>
           <div className={css.passwordFieldWrapper()}>
-            <PasswordField
-              {...register('password', rules.password)}
+            <Form.PasswordField
+              name="password"
+              rules={rules.password}
               placeholder="Enter the password"
               autoComplete="one-time-code"
               showToggle
@@ -227,16 +216,17 @@ export const Account = () => {
             </HelperText>
           </div>
         </div>
+
         <div className={commonCss.field()}>
           <Label required>Confirm Password</Label>
-          <div>
-            <PasswordField
-              {...register('confirmPassword', rules.confirmPassword)}
+          <Form.Control name="confirmPassword" rules={rules.confirmPassword}>
+            <Form.PasswordField
               placeholder="Check the password"
               autoComplete="one-time-code"
               showToggle
             />
-          </div>
+            <Form.ErrorMessage />
+          </Form.Control>
         </div>
       </div>
     </div>

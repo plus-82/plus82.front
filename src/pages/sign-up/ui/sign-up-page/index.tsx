@@ -1,8 +1,10 @@
 'use client'
 
-import { FormProvider, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 import { Button, Checkbox, Layout, Link } from 'shared/ui'
+
+import { Form } from 'features/form'
 
 import { FormValues, defaultValues } from '../../model/form-values'
 import { Account } from '../account'
@@ -28,27 +30,25 @@ export const SignUpPage = () => {
           <Link href="/">Sign In</Link>
         </div>
       </div>
-      <FormProvider {...form}>
-        <form>
-          <Account />
-          <PersonalInformation />
-          <Checkbox
-            className={css.checkbox()}
-            label={className => (
-              <p className={className}>
-                I have read and agree to the Plus 82&apos;s
-                <br />
-                <Link href="/" variant="secondary">
-                  Terms and Conditions of Use. (Essential)
-                </Link>
-              </p>
-            )}
-          />
-          <Button size="large" fullWidth disabled>
-            Sign Up
-          </Button>
-        </form>
-      </FormProvider>
+      <Form {...form}>
+        <Account />
+        <PersonalInformation />
+        <Checkbox
+          className={css.checkbox()}
+          label={className => (
+            <p className={className}>
+              I have read and agree to the Plus 82&apos;s
+              <br />
+              <Link href="/" variant="secondary">
+                Terms and Conditions of Use. (Essential)
+              </Link>
+            </p>
+          )}
+        />
+        <Button size="large" fullWidth disabled>
+          Sign Up
+        </Button>
+      </Form>
     </Layout>
   )
 }

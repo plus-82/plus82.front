@@ -1,5 +1,8 @@
-import { DatePicker, Heading, Label, Radio, Select, TextField } from 'shared/ui'
+import { Heading, Label } from 'shared/ui'
 
+import { Form } from 'features/form'
+
+import * as rules from '../../model/rules'
 import * as commonCss from '../../style/variants'
 
 import * as css from './variants'
@@ -10,33 +13,50 @@ export const PersonalInformation = () => {
       <Heading as="h3" size="medium" className="mb-6">
         Personal information
       </Heading>
+
       <div>
         <div className={commonCss.fieldWrapper()}>
-          <Label required>Full Name</Label>
-          <div>
-            <TextField placeholder="Enter your name" />
-          </div>
+          <Label required>First Name</Label>
+          <Form.Control name="firstName" rules={rules.firstName}>
+            <Form.TextField placeholder="Enter your first name" />
+            <Form.ErrorMessage />
+          </Form.Control>
         </div>
+
+        <div className={commonCss.fieldWrapper()}>
+          <Label required>Last Name</Label>
+          <Form.Control name="lastName" rules={rules.lastName}>
+            <Form.TextField placeholder="Enter your last name" />
+            <Form.ErrorMessage />
+          </Form.Control>
+        </div>
+
         <div className={commonCss.fieldWrapper()}>
           <Label required>Nationality</Label>
-          <div>
-            <Select onChange={() => {}} placeholder="Choose your nationality">
-              <Select.Item value="Korea">Korea</Select.Item>
-            </Select>
-          </div>
+          <Form.Control name="country" rules={rules.country}>
+            <Form.Select placeholder="Choose your nationality">
+              <Form.SelectItem value="Korea">Korea</Form.SelectItem>
+            </Form.Select>
+            <Form.ErrorMessage />
+          </Form.Control>
         </div>
+
         <div className={commonCss.fieldWrapper()}>
           <Label required>Gender</Label>
-          <div className={css.radioFieldWrapper()}>
-            <Radio label="Female" value="Female" checked={true} />
-            <Radio label="Male" value="Male" />
-          </div>
+          <Form.Control name="genderType">
+            <Form.RadioGroup className={css.radioFieldWrapper()}>
+              <Form.Radio label="Female" value="FEMALE" />
+              <Form.Radio label="Male" value="MALE" />
+            </Form.RadioGroup>
+          </Form.Control>
         </div>
+
         <div className={commonCss.fieldWrapper()}>
           <Label required>Birth</Label>
-          <div>
-            <DatePicker onChange={() => {}} placeholder="Choose your birth" />
-          </div>
+          <Form.Control name="birthDate" rules={rules.birthDate}>
+            <Form.DatePicker placeholder="Choose your birth" />
+            <Form.ErrorMessage />
+          </Form.Control>
         </div>
       </div>
     </div>
