@@ -26,6 +26,10 @@ export type GetIndeterminateCheckboxPropsReturnType = Omit<
   indeterminate: boolean | null
 }
 
+export type GetCheckboxProps =
+  | GetCheckboxPropsReturnType
+  | GetIndeterminateCheckboxPropsReturnType
+
 export type UseCheckboxProps = {
   name?: string
   options: CheckboxValue[]

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { useRadio } from 'shared/lib'
 
-import { Radio, type Props } from '.'
+import { Radio, type Props } from './radio'
 
 type Story = StoryObj<typeof meta>
 

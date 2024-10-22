@@ -4,8 +4,9 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
 import { AuthExceptionCode, HttpError } from 'shared/api'
-import { hasError } from 'shared/lib'
 import { Button, HelperText, Label, Layout, Link, TextField } from 'shared/ui'
+
+import { hasError } from 'features/form'
 
 import { useSignIn } from '../../api/use-sign-in'
 import { FormValues, defaultValues } from '../../model/form-values'

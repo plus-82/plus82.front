@@ -3,7 +3,7 @@ import type { MouseEvent } from 'react'
 
 import type { SelectValue } from './select'
 
-type SelectContextValues = {
+type SelectState = {
   close: () => void
   hasSelected: (value: SelectValue) => boolean
   hasSelectedInMultiSelect: (value: SelectValue) => boolean
@@ -11,7 +11,7 @@ type SelectContextValues = {
   updateSelectedValues: (event: MouseEvent, value: SelectValue) => SelectValue[]
 }
 
-const SelectContext = createContext<SelectContextValues | null>(null)
+const SelectContext = createContext<SelectState | null>(null)
 
 export const useSelectContext = () => {
   const context = useContext(SelectContext)
@@ -24,7 +24,7 @@ export const useSelectContext = () => {
 }
 
 type SelectProviderProps = {
-  value: SelectContextValues
+  value: SelectState
 }
 
 const SelectProvider = ({

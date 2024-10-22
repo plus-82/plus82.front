@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useEffect, useState } from 'react'
 
-import { Switch } from '.'
+import { Switch } from './switch'
 
 const meta = {
   title: 'Component/Switch',

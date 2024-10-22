@@ -9,7 +9,7 @@ import {
   ResourceNotFoundExceptionCode,
   UserExceptionCode,
 } from 'shared/api'
-import { hasError, isEmptyString } from 'shared/lib'
+import { isEmptyString } from 'shared/lib'
 import {
   Button,
   Heading,
@@ -18,6 +18,8 @@ import {
   PasswordField,
   TextField,
 } from 'shared/ui'
+
+import { hasError } from 'features/form'
 
 import { useRequestVerification } from '../../api/use-request-verification'
 import { useVerifyCode } from '../../api/use-verify-code'

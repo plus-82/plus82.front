@@ -1,3 +1,5 @@
+'use client'
+
 import { getYear } from 'date-fns'
 import { isNil, range } from 'lodash-es'
 import {

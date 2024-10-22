@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { useCheckbox } from 'shared/lib'
 
-import { Checkbox } from '.'
-import type { Props } from '.'
+import { Checkbox } from './checkbox'
+import type { Props } from './checkbox'
 
 type Story = StoryObj<typeof meta>
 

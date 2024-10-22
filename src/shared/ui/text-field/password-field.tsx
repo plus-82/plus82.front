@@ -9,7 +9,7 @@ import { Icon } from '../icon'
 
 import { TextField, Props as TextFieldProps } from './text-field'
 
-interface Props extends TextFieldProps {
+export interface Props extends TextFieldProps {
   showToggle?: boolean
 }
 
