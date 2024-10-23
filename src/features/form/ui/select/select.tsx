@@ -9,7 +9,7 @@ import { Select, SelectRootProps, SelectValue } from 'shared/ui'
 
 import { commonRules, type CommonFieldProps } from 'features/form/lib'
 
-type Props = Omit<SelectRootProps, 'onChange'> & {
+export type Props = Omit<SelectRootProps, 'onChange'> & {
   onChange?: SelectRootProps['onChange']
   resetErrorOnBlur?: boolean
 }

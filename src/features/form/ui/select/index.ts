@@ -1,1 +1,1 @@
-export { FormSelect } from './select'
+export { FormSelect, type Props as FormSelectProps } from './select'

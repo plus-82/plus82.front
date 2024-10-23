@@ -7,6 +7,8 @@ import { FormRadio } from './radio'
 import { FormSelect } from './select'
 import { FormTextField, FormPasswordField } from './text-field'
 
+export type { FormSelectProps } from './select'
+
 export const Form = Object.assign(FormRoot, {
   CheckboxGroup: FormCheckbox.Group,
   Checkbox: FormCheckbox,

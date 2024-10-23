@@ -2,6 +2,8 @@ import { Heading, Label } from 'shared/ui'
 
 import { Form } from 'features/form'
 
+import { CountrySelect } from 'widgets/country'
+
 import * as rules from '../../model/rules'
 import * as commonCss from '../../style/variants'
 
@@ -34,9 +36,7 @@ export const PersonalInformation = () => {
         <div className={commonCss.fieldWrapper()}>
           <Label required>Nationality</Label>
           <Form.Control name="country" rules={rules.country}>
-            <Form.Select placeholder="Choose your nationality">
-              <Form.SelectItem value="Korea">Korea</Form.SelectItem>
-            </Form.Select>
+            <CountrySelect />
             <Form.ErrorMessage />
           </Form.Control>
         </div>
