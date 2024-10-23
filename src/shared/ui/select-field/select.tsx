@@ -110,6 +110,18 @@ const SelectRoot = ({
   const isRemoveButtonVisible =
     canEditSelectedValuesInMultiSelect && !isSelectedValuesEmpty
 
+  const showPlaceholder = placeholder && isSelectedValuesEmpty
+
+  const renderValue = () => {
+    if (render && !readOnly)
+      return render(
+        selectedValuesForDisplay,
+        handleSelectedValueClickInRenderProp,
+      )
+
+    return selectedValuesAsString
+  }
+
   return (
     <div
       className={cn(
@@ -140,13 +152,8 @@ const SelectRoot = ({
         onKeyDown={handleTriggerKeyDown}
         onBlur={onBlur}
       >
-        {render && !readOnly
-          ? render(
-              selectedValuesForDisplay,
-              handleSelectedValueClickInRenderProp,
-            )
-          : selectedValuesAsString}
-        {isSelectedValuesEmpty && placeholder && (
+        {!isSelectedValuesEmpty && renderValue()}
+        {showPlaceholder && (
           <span className={cn(css.placeholder({ readOnly }))}>
             {placeholder}
           </span>
