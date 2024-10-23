@@ -41,13 +41,14 @@ export class ApiClient {
     endpoint: string,
     queryParams?: Record<string, string | number>,
   ): Promise<TResult> {
-    const url = new URL(endpoint, this.baseUrl)
+    const url = new URL(`${this.baseUrl}${endpoint}`)
 
     if (queryParams) {
       Object.entries(queryParams).forEach(([key, value]) => {
         url.searchParams.append(key, value.toString())
       })
     }
+
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: {
