@@ -15,7 +15,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 import { CustomHeader } from 'shared/ui/calendar/header'
 
-import { convertDateToStandardFormat } from './utils'
+import { formatDate } from './utils'
 import * as css from './variants'
 
 import './calendar.css'
@@ -102,7 +102,7 @@ export const Calendar = ({
     date: Date | null,
     event: SyntheticEvent<unknown, Event> | undefined,
   ) => {
-    const formattedDate = date ? convertDateToStandardFormat(date) : null
+    const formattedDate = date ? formatDate(date) : null
 
     if (selected !== formattedDate) onChange(formattedDate, event)
   }
