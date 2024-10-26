@@ -57,6 +57,8 @@ export const Account = () => {
   }
 
   const handleRequestVerificationSuccess = () => {
+    toast.success('A verification email has been sent')
+
     if (!showVerificationField) setShowVerificationField(true)
   }
 
