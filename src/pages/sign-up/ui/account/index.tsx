@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useState } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import {
@@ -29,15 +29,16 @@ import * as commonCss from '../../style/variants'
 import * as css from './variants'
 
 export const Account = () => {
+  const [showVerificationField, setShowVerificationField] = useState(false)
+
   const {
     trigger,
     getValues,
     setError,
     formState: { errors },
+    reset,
     control,
   } = useFormContext<FormValues>()
-
-  const emailRef = useRef('')
 
   const [email, password] = useWatch({
     name: ['email', 'password'],
@@ -47,22 +48,15 @@ export const Account = () => {
   const requestVerification = useRequestVerification()
   const verifyCode = useVerifyCode()
 
-  // TODO: 정확한 조건 확인 필요
-  const isCodeButtonDisabled = (() => {
-    let isDisabled = false
-
-    if (!requestVerification.isSuccess) return isDisabled
-
-    isDisabled = !isEmptyString(emailRef.current) && emailRef.current === email
-
-    return isDisabled
-  })()
-
   const checkPasswordCondition = (condition: (value: string) => boolean) => {
     if (isEmptyString(password)) return 'default'
     if (condition(password)) return 'success'
 
     return 'error'
+  }
+
+  const handleRequestVerificationSuccess = () => {
+    if (!showVerificationField) setShowVerificationField(true)
   }
 
   const handleRequestVerificationError = (error: HttpError) => {
@@ -75,17 +69,28 @@ export const Account = () => {
     }
   }
 
-  const handleCodeButtonClick = async () => {
+  const handleSendButtonClick = async () => {
     const isEmailValid = await trigger('email')
 
     if (!isEmailValid) return
 
     const data = { email }
-    emailRef.current = email
 
     requestVerification.mutate(data, {
+      onSuccess: handleRequestVerificationSuccess,
       onError: handleRequestVerificationError,
     })
+  }
+
+  const handleEmailChange = () => {
+    if (!(requestVerification.isPending || requestVerification.isIdle)) {
+      requestVerification.reset()
+    }
+
+    if (!(verifyCode.isPending || verifyCode.isIdle)) {
+      verifyCode.reset()
+      reset({ ...getValues(), code: '' })
+    }
   }
 
   const handleVerifyCodeError = (error: HttpError) => {
@@ -114,6 +119,14 @@ export const Account = () => {
 
     if (!isCodeValid) return
 
+    if (requestVerification.isPending || requestVerification.isIdle) {
+      setError('email', {
+        message: 'Please verify the email first',
+      })
+
+      return
+    }
+
     const data = { email, code: getValues('code') }
 
     verifyCode.mutate(data, {
@@ -134,6 +147,7 @@ export const Account = () => {
             <div className={commonCss.field({ className: 'grow' })}>
               <Form.Control name="email" rules={rules.email}>
                 <Form.TextField
+                  onChange={handleEmailChange}
                   placeholder="example@email.com"
                   autoComplete="one-time-code"
                   fullWidth
@@ -144,19 +158,23 @@ export const Account = () => {
             <Button
               variant="lined"
               size="large"
-              onClick={handleCodeButtonClick}
-              disabled={isCodeButtonDisabled}
+              onClick={handleSendButtonClick}
+              disabled={requestVerification.isSuccess}
               className="w-[95px]"
             >
-              Code
+              Send
             </Button>
           </div>
 
-          {requestVerification.isSuccess && (
+          {showVerificationField && (
             <div className={css.textFieldWrapper()}>
               <div className={commonCss.field({ className: 'grow' })}>
                 <Form.Control name="code" rules={rules.code}>
-                  <Form.TextField placeholder="Enter the code" fullWidth />
+                  <Form.TextField
+                    placeholder="Enter the verification code"
+                    readOnly={verifyCode.isSuccess}
+                    fullWidth
+                  />
                   <Form.ErrorMessage />
                 </Form.Control>
                 {!hasError(errors?.code) && verifyCode.isSuccess && (
@@ -174,10 +192,10 @@ export const Account = () => {
                 variant="lined"
                 size="large"
                 onClick={handleCheckButtonClick}
-                className="w-[95px]"
+                className="w-[95px] shrink-0"
                 disabled={verifyCode.isSuccess}
               >
-                Check
+                Verify
               </Button>
             </div>
           )}
