@@ -59,11 +59,7 @@ export const Calendar = ({
     ? '—'
     : restProps.placeholderText || 'MM-DD-YYYY'
 
-  const years: number[] = range(
-    getYear(new Date()) - 3,
-    getYear(new Date()) + 3,
-    1,
-  )
+  const years: number[] = range(1900, getYear(new Date()) + 1, 1)
 
   const minDate = restProps.minDate || new Date(years[0], 0, 1)
   const maxDate = restProps.maxDate || new Date(years[years.length - 1], 11, 31)
