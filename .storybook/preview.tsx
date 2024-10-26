@@ -11,11 +11,32 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    layout: 'centered',
+    backgrounds: {
+      default: 'light',
+      values: [
+        {
+          name: 'light',
+          value: '#ffffff',
+        },
+        {
+          name: 'dark',
+          value: '#333333',
+        },
+      ],
+    },
   },
+  tags: ['autodocs'],
   decorators: [
     Story => (
       <div
-        className={clsx(SpoqaHanSansNeo.variable, 'font-spoqa-han-sans-neo')}
+        className={clsx(
+          SpoqaHanSansNeo.variable,
+          'font-spoqa-han-sans-neo',
+          'flex',
+          'justify-center',
+          'items-center',
+        )}
       >
         <Story />
       </div>
