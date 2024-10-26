@@ -17,5 +17,5 @@ export const FormErrorMessage = ({ name = '' }: FormErrorMessageProps) => {
 
   if (!error) return null
 
-  return <HelperText>{error.message}</HelperText>
+  return <HelperText variant="error">{error.message}</HelperText>
 }
