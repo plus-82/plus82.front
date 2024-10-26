@@ -44,7 +44,7 @@ export const password = {
 
 export const confirmPassword = {
   required: 'Please enter your password',
-  validate: (value: string | null, formValues: FormValues) => {
+  validate: (value: string | number | null, formValues: FormValues) => {
     if (value === formValues.password) return true
 
     return 'The password you entered do not match'

@@ -35,7 +35,7 @@ export const PersonalInformation = () => {
 
         <div className={commonCss.fieldWrapper()}>
           <Label required>Nationality</Label>
-          <Form.Control name="country" rules={rules.country}>
+          <Form.Control name="countryId" rules={rules.country}>
             <CountrySelect />
             <Form.ErrorMessage />
           </Form.Control>

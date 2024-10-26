@@ -1,3 +1,5 @@
+import { SignUpRequest } from 'entities/auth'
+
 export type FormValues = {
   email: string
   code: string
@@ -5,7 +7,7 @@ export type FormValues = {
   confirmPassword: string
   firstName: string
   lastName: string
-  country: string | null
+  countryId: number | null
   genderType: 'MALE' | 'FEMALE'
   birthDate: string | null
 }
@@ -17,7 +19,19 @@ export const defaultValues: FormValues = {
   confirmPassword: '',
   firstName: '',
   lastName: '',
-  country: null,
+  countryId: null,
   genderType: 'FEMALE',
   birthDate: null,
+}
+
+export const convertToSignUpDTO = ({
+  code,
+  confirmPassword,
+  ...restFormValues
+}: FormValues): SignUpRequest => {
+  return {
+    ...restFormValues,
+    birthDate: restFormValues.birthDate!,
+    countryId: restFormValues.countryId!,
+  }
 }
