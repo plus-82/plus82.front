@@ -1,22 +1,64 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
+import { useCheckbox } from 'shared/lib'
 import { Button, Checkbox, Layout, Link } from 'shared/ui'
 
 import { Form } from 'features/form'
 
-import { FormValues, defaultValues } from '../../model/form-values'
+import { useSignUp } from '../../api/use-sign-up'
+import { useEmailValidationState } from '../../lib/use-email-validation-state'
+import {
+  FormValues,
+  defaultValues,
+  convertToSignUpDTO,
+} from '../../model/form-values'
 import { Account } from '../account'
 import { PersonalInformation } from '../personal-information'
 
 import * as css from './variants'
 
 export const SignUpPage = () => {
+  const router = useRouter()
+
   const form = useForm<FormValues>({
     defaultValues,
     reValidateMode: 'onSubmit',
   })
+
+  const signUp = useSignUp()
+
+  const { isChecked, getCheckboxProps } = useCheckbox({ options: ['checked'] })
+
+  const handleSignUpSuccess = () => {
+    // TODO: Show toast message
+    router.push('/sign-in')
+  }
+
+  const { isEmailVerificationRequested, isEmailVerificationCompleted } =
+    useEmailValidationState()
+
+  const submitForm = (data: FormValues) => {
+    if (!isEmailVerificationRequested) {
+      form.setError('email', {
+        message: 'Please verify your email address',
+      })
+
+      return
+    }
+
+    if (!isEmailVerificationCompleted) {
+      form.setError('code', {
+        message: 'Please complete the email verification',
+      })
+
+      return
+    }
+
+    signUp.mutate(convertToSignUpDTO(data), { onSuccess: handleSignUpSuccess })
+  }
 
   return (
     <Layout>
@@ -34,6 +76,7 @@ export const SignUpPage = () => {
         <Account />
         <PersonalInformation />
         <Checkbox
+          {...getCheckboxProps('checked')}
           className={css.checkbox()}
           label={className => (
             <p className={className}>
@@ -45,7 +88,12 @@ export const SignUpPage = () => {
             </p>
           )}
         />
-        <Button size="large" fullWidth disabled>
+        <Button
+          size="large"
+          fullWidth
+          disabled={!isChecked('checked')}
+          onClick={form.handleSubmit(submitForm)}
+        >
           Sign Up
         </Button>
       </Form>
