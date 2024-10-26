@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import {
   EmailVerificationCodeExceptionCode,
@@ -61,7 +62,9 @@ export const Account = () => {
 
   const handleRequestVerificationError = (error: HttpError) => {
     if (error.code === EmailVerificationCodeExceptionCode.TOO_MANY_REQUEST) {
-      // TODO: Show toast message
+      toast.error(
+        'You have requested the verification code too many times. Please try again in 10 minutes.',
+      )
     } else if (error.code === UserExceptionCode.ALREADY_USED_EMAIL) {
       setError('email', {
         message: 'An account with that email already exists',

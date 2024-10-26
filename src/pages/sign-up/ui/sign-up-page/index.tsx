@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { useCheckbox } from 'shared/lib'
 import { Button, Checkbox, Layout, Link } from 'shared/ui'
@@ -33,7 +34,7 @@ export const SignUpPage = () => {
   const { isChecked, getCheckboxProps } = useCheckbox({ options: ['checked'] })
 
   const handleSignUpSuccess = () => {
-    // TODO: Show toast message
+    toast.success('Sign up completed successfully')
     router.push('/sign-in')
   }
 
@@ -43,7 +44,7 @@ export const SignUpPage = () => {
   const submitForm = (data: FormValues) => {
     if (!isEmailVerificationRequested) {
       form.setError('email', {
-        message: 'Please verify your email address',
+        message: 'This email address is not verified',
       })
 
       return
@@ -51,7 +52,8 @@ export const SignUpPage = () => {
 
     if (!isEmailVerificationCompleted) {
       form.setError('code', {
-        message: 'Please complete the email verification',
+        message:
+          'Please click the verify button to complete email verification',
       })
 
       return

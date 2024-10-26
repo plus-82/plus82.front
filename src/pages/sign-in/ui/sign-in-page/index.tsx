@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { AuthExceptionCode, HttpError } from 'shared/api'
 import { Button, HelperText, Label, Layout, Link, TextField } from 'shared/ui'
@@ -35,19 +36,14 @@ export const SignInPage = () => {
   }
 
   const handleSignInError = (error: HttpError) => {
-    // TODO: Show toast message instead of using setError - EMAIL_NOT_CORRECT, DELETED_USER
     if (error.code === AuthExceptionCode.EMAIL_NOT_CORRECT) {
-      setError('email', {
-        message: "We couldn't find an account with that email",
-      })
+      toast.error("We couldn't find an account with that email")
     } else if (error.code === AuthExceptionCode.PW_NOT_CORRECT) {
       setError('password', {
         message: 'The password you entered is incorrect',
       })
     } else if (error.code === AuthExceptionCode.DELETED_USER) {
-      setError('email', {
-        message: 'This account has been deactivated',
-      })
+      toast.error('This account has been deactivated')
     }
   }
 
