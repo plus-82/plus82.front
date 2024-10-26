@@ -71,7 +71,7 @@ export const SignUpPage = () => {
         <h1 className={css.header()}>Sign Up</h1>
         <div className={css.goToSignIn()}>
           <p>Have an account?</p>
-          <Link href="/">Sign In</Link>
+          <Link href="/sign-in">Sign In</Link>
         </div>
       </div>
       <Form {...form}>

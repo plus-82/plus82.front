@@ -15,19 +15,16 @@ export const GNB = () => {
       </div>
       <div className={cn(css.rightSection())}>
         <div className={cn(css.textButtons())}>
-          <Button variant="text" size="small">
+          <Button as="a" href="/sign-in" variant="text" size="small">
             Sign In
           </Button>
           <div className={cn(css.divider())} />
-          <Button variant="text" size="small">
+          <Button as="a" href="/sign-up" variant="text" size="small">
             Sign Up
           </Button>
         </div>
         <Button variant="lined" size="small">
           Academy
-        </Button>
-        <Button variant="lined" size="small">
-          Language
         </Button>
       </div>
     </header>

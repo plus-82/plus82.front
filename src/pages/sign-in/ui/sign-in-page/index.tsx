@@ -97,7 +97,7 @@ export const SignInPage = () => {
       </form>
       <div className={css.footer()}>
         <p>Not a member yet?</p>
-        <Link href="/">Create an account</Link>
+        <Link href="/sign-up">Create an account</Link>
       </div>
     </Layout>
   )
