@@ -2,7 +2,11 @@ import Image from 'next/image'
 
 import { Country } from '../model/country'
 
-export const CountryWithFlag = ({ countryCode, countryNameEn }: Country) => {
+export const CountryWithFlag = ({
+  countryCode,
+  countryCallingCode,
+  countryNameEn,
+}: Country) => {
   return (
     <div className="flex gap-2">
       <Image
@@ -11,7 +15,7 @@ export const CountryWithFlag = ({ countryCode, countryNameEn }: Country) => {
         width={24}
         height={24}
       />
-      <span>{countryNameEn}</span>
+      <span>{`(+${countryCallingCode}) ${countryNameEn}`}</span>
     </div>
   )
 }
