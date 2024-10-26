@@ -1,2 +1,1 @@
-export const convertDateToStandardFormat = (date: Date) =>
-  new Intl.DateTimeFormat('en-US').format(date)
+export const formatDate = (date: Date) => date.toISOString().split('T')[0]

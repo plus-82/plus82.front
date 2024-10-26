@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 
-import { Calendar, Props } from '.'
+import { Calendar, Props } from './calendar'
 
 type Story = StoryObj<typeof meta>
 

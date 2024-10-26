@@ -12,6 +12,4 @@ export const goToSignIn = cva(
   'body-large flex items-center gap-1 text-gray-700',
 )
 
-export const radioFieldWrapper = cva('flex gap-[30px]')
-
 export const checkbox = cva('mb-4 pl-[15px]')

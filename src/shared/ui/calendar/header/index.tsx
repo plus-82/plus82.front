@@ -32,7 +32,7 @@ export const CustomHeader = ({
       <div className="flex gap-3">
         <Select
           defaultValue={months[getMonth(date)]}
-          onChange={(_, month) => {
+          onChange={(_, [month]) => {
             if (isString(month)) {
               changeMonth(months.indexOf(month as string))
             }
@@ -48,7 +48,7 @@ export const CustomHeader = ({
         </Select>
         <Select
           defaultValue={getYear(date)}
-          onChange={(_, year) => isNumber(year) && changeYear(year)}
+          onChange={(_, [year]) => isNumber(year) && changeYear(year)}
           className="w-[5.375rem]"
           displayLimit={3}
         >

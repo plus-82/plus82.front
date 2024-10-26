@@ -1,6 +1,6 @@
 'use client'
 
-import { isEqual } from 'lodash-es'
+import { isEqual, isFunction } from 'lodash-es'
 import { useEffect, useState } from 'react'
 
 import { CheckboxValue } from 'shared/ui'
@@ -25,6 +25,10 @@ export type GetIndeterminateCheckboxPropsReturnType = Omit<
   value?: CheckboxValue
   indeterminate: boolean | null
 }
+
+export type GetCheckboxProps =
+  | GetCheckboxPropsReturnType
+  | GetIndeterminateCheckboxPropsReturnType
 
 export type UseCheckboxProps = {
   name?: string
@@ -80,7 +84,8 @@ export const useCheckbox = ({
     callback => {
       const updatedCheckedValues = toggleChecked(value)()
       setCheckedValues(updatedCheckedValues)
-      callback?.(updatedCheckedValues)
+
+      if (isFunction(callback)) callback(updatedCheckedValues)
     }
 
   const handleIndeterminateCheckboxChange: CheckboxChangeHandler = callback => {

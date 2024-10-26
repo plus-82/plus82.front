@@ -1,6 +1,6 @@
 'use client'
 
-import { PropsWithChildren, useRef } from 'react'
+import { PropsWithChildren, useEffect, useRef } from 'react'
 import type { MouseEvent, ReactNode, SelectHTMLAttributes } from 'react'
 
 import { colors } from 'shared/config'
@@ -110,6 +110,18 @@ const SelectRoot = ({
   const isRemoveButtonVisible =
     canEditSelectedValuesInMultiSelect && !isSelectedValuesEmpty
 
+  const showPlaceholder = placeholder && isSelectedValuesEmpty
+
+  const renderValue = () => {
+    if (render && !readOnly)
+      return render(
+        selectedValuesForDisplay,
+        handleSelectedValueClickInRenderProp,
+      )
+
+    return selectedValuesAsString
+  }
+
   return (
     <div
       className={cn(
@@ -140,13 +152,8 @@ const SelectRoot = ({
         onKeyDown={handleTriggerKeyDown}
         onBlur={onBlur}
       >
-        {render && !readOnly
-          ? render(
-              selectedValuesForDisplay,
-              handleSelectedValueClickInRenderProp,
-            )
-          : selectedValuesAsString}
-        {isSelectedValuesEmpty && placeholder && (
+        {!isSelectedValuesEmpty && renderValue()}
+        {showPlaceholder && (
           <span className={cn(css.placeholder({ readOnly }))}>
             {placeholder}
           </span>
@@ -197,6 +204,14 @@ const SelectItem = ({
     updateSelectedValues,
   } = useSelectContext()
 
+  const scrollRef = useRef<HTMLLIElement>(null)
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: 'instant', block: 'center' })
+    }
+  }, [])
+
   if (hasSelectedInMultiSelect(value)) return null
 
   const handleDropdownItemClick = (event: MouseEvent) => {
@@ -206,6 +221,7 @@ const SelectItem = ({
 
   return (
     <Dropdown.Item
+      ref={hasSelected(value) ? scrollRef : null}
       role="option"
       selected={hasSelected(value)}
       onClick={handleDropdownItemClick}

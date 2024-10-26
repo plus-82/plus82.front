@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef } from 'react'
+import { useState } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import {
   EmailVerificationCodeExceptionCode,
@@ -9,58 +10,63 @@ import {
   ResourceNotFoundExceptionCode,
   UserExceptionCode,
 } from 'shared/api'
-import { hasError, isEmptyString } from 'shared/lib'
-import {
-  Button,
-  Heading,
-  HelperText,
-  Label,
-  PasswordField,
-  TextField,
-} from 'shared/ui'
+import { isEmptyString } from 'shared/lib'
+import { Button, Heading, HelperText, Label } from 'shared/ui'
+
+import { Form, hasError } from 'features/form'
 
 import { useRequestVerification } from '../../api/use-request-verification'
 import { useVerifyCode } from '../../api/use-verify-code'
 import { FormValues } from '../../model/form-values'
 import * as rules from '../../model/rules'
+import {
+  isCorrectLength,
+  hasLowercaseAndUppercaseLetter,
+  hasNumber,
+  hasSpecialChar,
+} from '../../model/rules'
 import * as commonCss from '../../style/variants'
 
 import * as css from './variants'
 
 export const Account = () => {
+  const [showVerificationField, setShowVerificationField] = useState(false)
+
   const {
-    register,
     trigger,
     getValues,
     setError,
     formState: { errors },
+    reset,
     control,
   } = useFormContext<FormValues>()
 
-  const emailRef = useRef('')
-
-  const email = useWatch({
-    name: 'email',
+  const [email, password] = useWatch({
+    name: ['email', 'password'],
     control,
   })
 
   const requestVerification = useRequestVerification()
   const verifyCode = useVerifyCode()
 
-  // TODO: 정확한 조건 확인 필요
-  const isCodeButtonDisabled = (() => {
-    let isDisabled = false
+  const checkPasswordCondition = (condition: (value: string) => boolean) => {
+    if (isEmptyString(password)) return 'default'
+    if (condition(password)) return 'success'
 
-    if (!requestVerification.isSuccess) return isDisabled
+    return 'error'
+  }
 
-    isDisabled = !isEmptyString(emailRef.current) && emailRef.current === email
+  const handleRequestVerificationSuccess = () => {
+    toast.success('A verification email has been sent')
 
-    return isDisabled
-  })()
+    if (!showVerificationField) setShowVerificationField(true)
+  }
 
   const handleRequestVerificationError = (error: HttpError) => {
     if (error.code === EmailVerificationCodeExceptionCode.TOO_MANY_REQUEST) {
-      // TODO: Show toast message
+      toast.error(
+        'You have requested the verification code too many times. Please try again in 10 minutes.',
+      )
     } else if (error.code === UserExceptionCode.ALREADY_USED_EMAIL) {
       setError('email', {
         message: 'An account with that email already exists',
@@ -68,17 +74,28 @@ export const Account = () => {
     }
   }
 
-  const handleCodeButtonClick = async () => {
+  const handleSendButtonClick = async () => {
     const isEmailValid = await trigger('email')
 
     if (!isEmailValid) return
 
     const data = { email }
-    emailRef.current = email
 
     requestVerification.mutate(data, {
+      onSuccess: handleRequestVerificationSuccess,
       onError: handleRequestVerificationError,
     })
+  }
+
+  const handleEmailChange = () => {
+    if (!(requestVerification.isPending || requestVerification.isIdle)) {
+      requestVerification.reset()
+    }
+
+    if (!(verifyCode.isPending || verifyCode.isIdle)) {
+      verifyCode.reset()
+      reset({ ...getValues(), code: '' })
+    }
   }
 
   const handleVerifyCodeError = (error: HttpError) => {
@@ -107,6 +124,14 @@ export const Account = () => {
 
     if (!isCodeValid) return
 
+    if (requestVerification.isPending || requestVerification.isIdle) {
+      setError('email', {
+        message: 'Please verify the email first',
+      })
+
+      return
+    }
+
     const data = { email, code: getValues('code') }
 
     verifyCode.mutate(data, {
@@ -119,41 +144,44 @@ export const Account = () => {
       <Heading as="h3" size="medium" className="mb-6">
         Account
       </Heading>
+
       <div>
         <div className={commonCss.fieldWrapper()}>
           <Label required>Email</Label>
           <div className={css.textFieldWrapper()}>
             <div className={commonCss.field({ className: 'grow' })}>
-              <TextField
-                {...register('email', rules.email)}
-                placeholder="example@email.com"
-                autoComplete="one-time-code"
-                error={hasError(errors?.email)}
-                fullWidth
-              />
-              {hasError(errors?.email) && (
-                <HelperText variant="error">{errors.email.message}</HelperText>
-              )}
+              <Form.Control name="email" rules={rules.email}>
+                <Form.TextField
+                  onChange={handleEmailChange}
+                  placeholder="example@email.com"
+                  autoComplete="one-time-code"
+                  fullWidth
+                />
+                <Form.ErrorMessage />
+              </Form.Control>
             </div>
             <Button
               variant="lined"
               size="large"
-              onClick={handleCodeButtonClick}
-              disabled={isCodeButtonDisabled}
+              onClick={handleSendButtonClick}
+              disabled={requestVerification.isSuccess}
               className="w-[95px]"
             >
-              Code
+              Send
             </Button>
           </div>
-          {requestVerification.isSuccess && (
+
+          {showVerificationField && (
             <div className={css.textFieldWrapper()}>
               <div className={commonCss.field({ className: 'grow' })}>
-                <TextField
-                  {...register('code', rules.code)}
-                  placeholder="Enter the code"
-                  error={hasError(errors?.code)}
-                  fullWidth
-                />
+                <Form.Control name="code" rules={rules.code}>
+                  <Form.TextField
+                    placeholder="Enter the verification code"
+                    readOnly={verifyCode.isSuccess}
+                    fullWidth
+                  />
+                  <Form.ErrorMessage />
+                </Form.Control>
                 {!hasError(errors?.code) && verifyCode.isSuccess && (
                   <HelperText variant="success">
                     Authentication completed
@@ -164,41 +192,64 @@ export const Account = () => {
                     Please enter the code sent to the email
                   </HelperText>
                 )}
-                {hasError(errors?.code) && (
-                  <HelperText variant="error">{errors.code.message}</HelperText>
-                )}
               </div>
               <Button
                 variant="lined"
                 size="large"
                 onClick={handleCheckButtonClick}
-                className="w-[95px]"
+                className="w-[95px] shrink-0"
                 disabled={verifyCode.isSuccess}
               >
-                Check
+                Verify
               </Button>
             </div>
           )}
         </div>
+
         <div className={commonCss.fieldWrapper()}>
           <Label required>Password</Label>
           <div className={css.passwordFieldWrapper()}>
-            <PasswordField
+            <Form.PasswordField
+              name="password"
+              rules={rules.password}
               placeholder="Enter the password"
               autoComplete="one-time-code"
+              showToggle
             />
-            <HelperText hasIcon>9 ~ 28 characters long</HelperText>
-            <HelperText hasIcon>
-              Consist of a combination of three types of Upper & lower case
-              letters, Numbers, and Special characters
+            <HelperText
+              hasIcon
+              variant={checkPasswordCondition(isCorrectLength)}
+            >
+              9 ~ 28 characters long
+            </HelperText>
+            <HelperText
+              hasIcon
+              variant={checkPasswordCondition(hasLowercaseAndUppercaseLetter)}
+            >
+              Upper & lower case letters
+            </HelperText>
+            <HelperText hasIcon variant={checkPasswordCondition(hasNumber)}>
+              At least one number
+            </HelperText>
+            <HelperText
+              hasIcon
+              variant={checkPasswordCondition(hasSpecialChar)}
+            >
+              At least special character
             </HelperText>
           </div>
         </div>
+
         <div className={commonCss.field()}>
           <Label required>Confirm Password</Label>
-          <div>
-            <TextField placeholder="Check the password" />
-          </div>
+          <Form.Control name="confirmPassword" rules={rules.confirmPassword}>
+            <Form.PasswordField
+              placeholder="Check the password"
+              autoComplete="one-time-code"
+              showToggle
+            />
+            <Form.ErrorMessage />
+          </Form.Control>
         </div>
       </div>
     </div>

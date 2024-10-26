@@ -1,10 +1,10 @@
 import { cva, VariantProps } from 'class-variance-authority'
 
-export const outerWrapper = cva('', {
+export const outerWrapper = cva('h-fit min-h-full w-full', {
   variants: {
     wide: {
-      true: 'h-full w-full',
-      false: 'flex h-full w-full justify-center',
+      true: '',
+      false: 'flex justify-center',
     },
   },
 })

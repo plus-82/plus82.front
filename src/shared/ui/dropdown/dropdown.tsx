@@ -42,6 +42,7 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownRootProps>(
           className={cn(dropdown())}
           role={role}
           style={{ maxHeight: `${dropdownHeight}rem` }}
+          onWheel={event => event.stopPropagation()}
           {...restProps}
         >
           {children}

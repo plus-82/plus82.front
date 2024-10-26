@@ -1,31 +1,66 @@
 'use client'
 
-import { FormProvider, useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
+import { useCheckbox } from 'shared/lib'
+import { Button, Checkbox, Layout, Link } from 'shared/ui'
+
+import { Form } from 'features/form'
+
+import { useSignUp } from '../../api/use-sign-up'
+import { useEmailValidationState } from '../../lib/use-email-validation-state'
 import {
-  Button,
-  Checkbox,
-  DatePicker,
-  Heading,
-  Label,
-  Layout,
-  Link,
-  Radio,
-  Select,
-  TextField,
-} from 'shared/ui'
-
-import { FormValues, defaultValues } from '../../model/form-values'
-import * as commonCss from '../../style/variants'
+  FormValues,
+  defaultValues,
+  convertToSignUpDTO,
+} from '../../model/form-values'
 import { Account } from '../account'
+import { PersonalInformation } from '../personal-information'
 
 import * as css from './variants'
 
 export const SignUpPage = () => {
+  const router = useRouter()
+
   const form = useForm<FormValues>({
     defaultValues,
     reValidateMode: 'onSubmit',
   })
+
+  const signUp = useSignUp()
+
+  const { isChecked, getCheckboxProps } = useCheckbox({ options: ['checked'] })
+
+  const handleSignUpSuccess = () => {
+    toast.success('Sign up completed successfully')
+    router.push('/sign-in')
+  }
+
+  const { isEmailVerificationRequested, isEmailVerificationCompleted } =
+    useEmailValidationState()
+
+  const submitForm = (data: FormValues) => {
+    if (!isEmailVerificationRequested) {
+      form.setError('email', {
+        message: 'This email address is not verified',
+      })
+
+      return
+    }
+
+    if (!isEmailVerificationCompleted) {
+      form.setError('code', {
+        message:
+          'Please click the verify button to complete email verification',
+      })
+
+      return
+    }
+
+    signUp.mutate(convertToSignUpDTO(data), { onSuccess: handleSignUpSuccess })
+  }
 
   return (
     <Layout>
@@ -36,69 +71,34 @@ export const SignUpPage = () => {
         <h1 className={css.header()}>Sign Up</h1>
         <div className={css.goToSignIn()}>
           <p>Have an account?</p>
-          <Link href="/">Sign In</Link>
+          <Link href="/sign-in">Sign In</Link>
         </div>
       </div>
-      <FormProvider {...form}>
-        <form>
-          <Account />
-          <div className="mb-10">
-            <Heading as="h3" size="medium" className="mb-6">
-              Personal information
-            </Heading>
-            <div>
-              <div className={commonCss.fieldWrapper()}>
-                <Label required>Full Name</Label>
-                <div>
-                  <TextField placeholder="Enter your name" />
-                </div>
-              </div>
-              <div className={commonCss.fieldWrapper()}>
-                <Label required>Nationality</Label>
-                <div>
-                  <Select
-                    onChange={() => {}}
-                    placeholder="Choose your nationality"
-                  >
-                    <Select.Item value="Korea">Korea</Select.Item>
-                  </Select>
-                </div>
-              </div>
-              <div className={commonCss.fieldWrapper()}>
-                <Label required>Gender</Label>
-                <div className={css.radioFieldWrapper()}>
-                  <Radio label="Female" value="Female" checked={true} />
-                  <Radio label="Male" value="Male" />
-                </div>
-              </div>
-              <div className={commonCss.fieldWrapper()}>
-                <Label required>Birth</Label>
-                <div>
-                  <DatePicker
-                    onChange={() => {}}
-                    placeholder="Choose your birth"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <Checkbox
-            className={css.checkbox()}
-            label={className => (
-              <p className={className}>
-                I have read and agree to the Plus 82&apos;s
-                <br />
-                <Link href="/" variant="secondary">
-                  Terms and Conditions of Use. (Essential)
-                </Link>
-              </p>
-            )}
-          />
-          <Button size="large" fullWidth disabled>
-            Sign Up
-          </Button>
-        </form>
-      </FormProvider>
+      <Form {...form}>
+        <Account />
+        <PersonalInformation />
+        <Checkbox
+          {...getCheckboxProps('checked')}
+          className={css.checkbox()}
+          label={className => (
+            <p className={className}>
+              I have read and agree to the Plus 82&apos;s
+              <br />
+              <Link href="/" variant="secondary">
+                Terms and Conditions of Use. (Essential)
+              </Link>
+            </p>
+          )}
+        />
+        <Button
+          size="large"
+          fullWidth
+          disabled={!isChecked('checked')}
+          onClick={form.handleSubmit(submitForm)}
+        >
+          Sign Up
+        </Button>
+      </Form>
     </Layout>
   )
 }
