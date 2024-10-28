@@ -1,3 +1,4 @@
+export { requestPasswordReset } from './api/request-password-reset'
 export { requestVerification } from './api/request-verification'
 export { signIn } from './api/sign-in'
 export { signUp, type SignUpRequest } from './api/sign-up'
