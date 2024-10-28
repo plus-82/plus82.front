@@ -6,10 +6,15 @@ import { Button, Label, Layout } from 'shared/ui'
 
 import { Form } from 'features/form'
 
+import { defaultValues } from '../../model/form-values'
+
 import * as css from './variants'
 
 export const FindPasswordPage = () => {
-  const form = useForm()
+  const form = useForm({
+    defaultValues,
+    reValidateMode: 'onSubmit',
+  })
 
   return (
     <Layout className={css.layout()}>
