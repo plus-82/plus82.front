@@ -7,6 +7,7 @@ import { Button, Label, Layout } from 'shared/ui'
 import { Form } from 'features/form'
 
 import { defaultValues } from '../../model/form-values'
+import * as rules from '../../model/rules'
 
 import * as css from './variants'
 
@@ -22,7 +23,7 @@ export const FindPasswordPage = () => {
       <Form {...form} className={css.form()}>
         <div className={css.field()}>
           <Label>Email</Label>
-          <Form.Control name="email">
+          <Form.Control name="email" rules={rules.email}>
             <Form.TextField />
             <Form.ErrorMessage />
           </Form.Control>
