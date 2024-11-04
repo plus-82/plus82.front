@@ -40,7 +40,7 @@ export class ApiClient {
 
     if (status >= 500) {
       throw new HttpError({
-        code: status,
+        code: body?.code ?? status,
         message: ERROR_MESSAGES[status] ?? DEFAULT_ERROR_MESSAGE,
         status,
       })

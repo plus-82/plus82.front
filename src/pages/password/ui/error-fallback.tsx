@@ -1,6 +1,7 @@
 import { FallbackProps } from 'react-error-boundary'
 
 import {
+  CommonResponseCode,
   EmailVerificationCodeExceptionCode,
   ResourceNotFoundExceptionCode,
 } from 'shared/api'
@@ -20,8 +21,9 @@ export const ErrorFallback = ({ error }: FallbackProps) => {
   }
 
   if (
+    error?.code === CommonResponseCode.FAILED ||
     error?.code ===
-    ResourceNotFoundExceptionCode.EMAIL_VERIFICATION_CODE_NOT_FOUND
+      ResourceNotFoundExceptionCode.EMAIL_VERIFICATION_CODE_NOT_FOUND
   ) {
     return (
       <ErrorPage
