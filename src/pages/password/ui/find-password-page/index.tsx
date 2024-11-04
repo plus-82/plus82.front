@@ -1,6 +1,6 @@
 'use client'
 
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import {
@@ -8,6 +8,7 @@ import {
   HttpError,
   ResourceNotFoundExceptionCode,
 } from 'shared/api'
+import { isEmptyString } from 'shared/lib'
 import { Button, Label, Layout } from 'shared/ui'
 
 import { Form } from 'features/form'
@@ -23,6 +24,13 @@ export const FindPasswordPage = () => {
     defaultValues: findFormDefaultValues,
     reValidateMode: 'onSubmit',
   })
+
+  const email = useWatch({
+    name: 'email',
+    control: form.control,
+  })
+
+  const canSubmit = !isEmptyString(email)
 
   const requestPasswordReset = useRequestPasswordReset()
 
@@ -54,7 +62,12 @@ export const FindPasswordPage = () => {
             <Form.ErrorMessage />
           </Form.Control>
         </div>
-        <Button size="large" fullWidth onClick={form.handleSubmit(submitForm)}>
+        <Button
+          size="large"
+          fullWidth
+          onClick={form.handleSubmit(submitForm)}
+          disabled={!canSubmit}
+        >
           Send password reset link
         </Button>
       </Form>
