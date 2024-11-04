@@ -2,9 +2,12 @@
 
 import { useForm } from 'react-hook-form'
 
+import { QueryErrorBoundary } from 'shared/api'
 import { Button, HelperText, Label, Layout } from 'shared/ui'
 
 import { field, fieldWrapper, Form, helperText } from 'features/form'
+
+import { ErrorFallback } from '../error-fallback'
 
 import * as css from './variants'
 
@@ -51,5 +54,16 @@ export const ResetPasswordPage = () => {
         </Button>
       </Form>
     </Layout>
+  )
+}
+
+export const ResetPasswordPageWithErrorBoundary = () => {
+  return (
+    <QueryErrorBoundary
+      errorFallback={ErrorFallback}
+      suspenseFallback={<div>Loading</div>}
+    >
+      <ResetPasswordPage />
+    </QueryErrorBoundary>
   )
 }
