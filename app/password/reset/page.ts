@@ -1,1 +1,1 @@
-export { ResetPasswordPage as default } from 'pages/password'
+export { ResetPasswordPageWithErrorBoundary as default } from 'pages/password'

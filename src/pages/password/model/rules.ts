@@ -1,4 +1,5 @@
-// TODO: Email validation 공통화
+// TODO: validation 공통화
+
 const REG_EMAIL =
   /^([A-Za-z0-9]+([-_.]?[A-Za-z0-9])*)@([A-Za-z0-9]+([-]?[A-Za-z0-9])*)(\.([A-Za-z0-9]+([-]?[A-Za-z0-9])*))?(\.([A-Za-z0-9]([-]?[A-Za-z0-9])*))?((\.[A-Za-z]{2,63})$)/
 
