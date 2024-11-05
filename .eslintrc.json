@@ -53,6 +53,7 @@
     ],
     "react/destructuring-assignment": "warn",
     "react/jsx-no-useless-fragment": "warn",
-    "react/jsx-key": "error"
+    "react/jsx-key": "error",
+    "@typescript-eslint/no-shadow": "warn"
   }
 }
