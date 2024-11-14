@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import { Chip, Filter, Layout } from 'shared/ui'
 
 import { useJobPostFilter } from '../../lib/use-job-post-filter'
@@ -19,8 +21,13 @@ export const MainPage = () => {
 
   return (
     <Layout wide>
-      <div className="mb-10 flex h-[430px] w-full items-center justify-center rounded-3xl bg-gray-200">
-        Banner
+      <div className="mb-10 w-full">
+        <Image
+          src="/images/banner.svg"
+          width={1060}
+          height={400}
+          alt="Plus 82 Banner"
+        />
       </div>
       <section className="mb-20">
         <h2 className="display-small mb-6 text-gray-900">Closing soon</h2>
