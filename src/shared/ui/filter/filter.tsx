@@ -1,7 +1,6 @@
 'use client'
 
 import { PropsWithChildren, useEffect, useRef } from 'react'
-import type { MouseEvent } from 'react'
 
 import { colors } from 'shared/config'
 import { cn } from 'shared/lib'
@@ -136,8 +135,8 @@ const FilterItem = ({
     }
   }, [])
 
-  const handleDropdownItemClick = (event: MouseEvent) => {
-    const updatedCheckedValues = updateCheckedValues(event, value)
+  const handleCheckboxChange = () => {
+    const updatedCheckedValues = updateCheckedValues(value)
     if (hasLimitExceeded(updatedCheckedValues)) close()
   }
 
@@ -145,11 +144,15 @@ const FilterItem = ({
     <Dropdown.Item
       ref={hasChecked(value) ? scrollRef : null}
       role="option"
-      onClick={handleDropdownItemClick}
       {...restProps}
     >
       <div className="flex justify-start gap-2">
-        <Checkbox name={name} value={value} checked={hasChecked(value)} />
+        <Checkbox
+          name={name}
+          value={value}
+          checked={hasChecked(value)}
+          onChange={handleCheckboxChange}
+        />
         {children}
       </div>
     </Dropdown.Item>

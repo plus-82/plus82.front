@@ -1,5 +1,4 @@
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
-import type { MouseEvent } from 'react'
 
 import type { FilterValue } from './use-filter'
 
@@ -8,7 +7,7 @@ type FilterState = {
   close: () => void
   hasChecked: (value: FilterValue) => boolean
   hasLimitExceeded: (values: FilterValue[]) => boolean
-  updateCheckedValues: (event: MouseEvent, value: FilterValue) => FilterValue[]
+  updateCheckedValues: (value: FilterValue) => FilterValue[]
 }
 
 const FilterContext = createContext<FilterState | null>(null)

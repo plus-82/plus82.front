@@ -2,7 +2,7 @@
 
 import { isArray, isEqual, isNil, isNull, isUndefined } from 'lodash-es'
 import { useCallback, useEffect, useState } from 'react'
-import type { KeyboardEvent, MouseEvent, RefObject } from 'react'
+import type { KeyboardEvent, RefObject } from 'react'
 
 import {
   convertToSentence,
@@ -24,7 +24,7 @@ export type Props = FilterVariants &
     value?: FilterValue[] | null
     disabled: boolean
     selectionLimit?: number
-    onChange: (event: MouseEvent | null, updatedValues: FilterValue[]) => void
+    onChange: (updatedValues: FilterValue[]) => void
     filterRef: RefObject<HTMLDivElement>
   }
 
@@ -105,15 +105,15 @@ export const useFilter = ({
   const canCheck = !hasLimitExceeded(checkedValues)
 
   const updateCheckedValuesState = useCallback(
-    (event: MouseEvent | null, updatedCheckedValues: FilterValue[]) => {
+    (updatedCheckedValues: FilterValue[]) => {
       setCheckedValues(updatedCheckedValues)
-      onChange(event, updatedCheckedValues)
+      onChange(updatedCheckedValues)
     },
     [onChange],
   )
 
   const updateCheckedValues = useCallback(
-    (event: MouseEvent, itemValue: FilterValue) => {
+    (itemValue: FilterValue) => {
       let updatedCheckedValues: FilterValue[]
 
       if (hasChecked(itemValue)) {
@@ -127,7 +127,7 @@ export const useFilter = ({
           .add(itemValue)
           .get() as FilterValue[]
 
-      updateCheckedValuesState(event, updatedCheckedValues)
+      updateCheckedValuesState(updatedCheckedValues)
 
       return updatedCheckedValues
     },
