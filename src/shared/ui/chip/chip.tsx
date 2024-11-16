@@ -1,3 +1,5 @@
+'use cilent'
+
 import type { ButtonHTMLAttributes, PropsWithChildren } from 'react'
 import { useMemo } from 'react'
 

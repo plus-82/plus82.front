@@ -1,6 +1,6 @@
 import { cva, VariantProps } from 'class-variance-authority'
 
-export const chip = cva('flex items-center border', {
+export const chip = cva('flex w-fit items-center border', {
   variants: {
     size: {
       small: 'min-h-[30px] gap-1 rounded-md px-2 py-1',
