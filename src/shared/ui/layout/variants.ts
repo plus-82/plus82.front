@@ -12,7 +12,7 @@ export const outerWrapper = cva('h-fit min-h-full w-full', {
 export const innerWrapper = cva('', {
   variants: {
     wide: {
-      true: 'm-[50px] w-[1060px]',
+      true: 'm-[40px] w-[1060px]',
       false: 'm-[50px] w-[360px]',
     },
   },
