@@ -1,12 +1,35 @@
 'use client'
 
 import Image from 'next/image'
+import { Suspense } from 'react'
 
 import { Chip, Filter, Layout } from 'shared/ui'
 
+import { Card } from 'entities/job-post'
+
+import { useJobPosts } from '../../api/use-job-posts'
 import { useJobPostFilter } from '../../lib/use-job-post-filter'
-import { Card } from '../card'
 import { ResetButton } from '../reset-button'
+
+const ClosingSoon = () => {
+  const { data } = useJobPosts({ pageNumber: 0, rowCount: 20 })
+
+  return (
+    <div className="flex flex-wrap gap-x-5 gap-y-8">
+      {data?.slice(0, 4).map((post, index) => <Card key={index} {...post} />)}
+    </div>
+  )
+}
+
+const JobPosts = () => {
+  const { data } = useJobPosts({ pageNumber: 0, rowCount: 20 })
+
+  return (
+    <div className="flex flex-wrap gap-x-5 gap-y-8">
+      {data?.map((post, index) => <Card key={index} {...post} />)}
+    </div>
+  )
+}
 
 export const MainPage = () => {
   const {
@@ -31,11 +54,9 @@ export const MainPage = () => {
       </div>
       <section className="mb-20">
         <h2 className="display-small mb-6 text-gray-900">Closing soon</h2>
-        <div className="flex flex-wrap gap-x-5 gap-y-8">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <Card key={index} />
-          ))}
-        </div>
+        <Suspense fallback={<div>Loading</div>}>
+          <ClosingSoon />
+        </Suspense>
       </section>
       <section>
         <h2 className="display-small mb-4 text-gray-900">Job posting</h2>
@@ -80,11 +101,9 @@ export const MainPage = () => {
             </div>
           )}
         </div>
-        <div className="flex flex-wrap gap-x-5 gap-y-8">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <Card key={index} />
-          ))}
-        </div>
+        <Suspense fallback={<div>Loading</div>}>
+          <JobPosts />
+        </Suspense>
       </section>
     </Layout>
   )
