@@ -1,3 +1,5 @@
+import { useObserver } from 'shared/lib/observer'
+
 import { Card } from 'entities/job-post'
 
 import { JobPostFilter } from 'features/job-post-filter/model/filter'
@@ -12,11 +14,30 @@ type Props = {
 export const JobPosting = ({ filters }: Props) => {
   const params = transformFiltersToParams(filters)
 
-  const { data } = useJobPosts({ pageNumber: 0, rowCount: 20, ...params })
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useJobPosts({
+    pageNumber: 0,
+    rowCount: 20,
+    ...params,
+  })
+
+  const handleIntersect = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }
+
+  const targetRef = useObserver({
+    callback: handleIntersect,
+  })
 
   return (
-    <div className="flex flex-wrap gap-x-5 gap-y-8">
-      {data?.map((post, index) => <Card key={index} {...post} />)}
-    </div>
+    <ul className="flex flex-wrap gap-x-5 gap-y-8">
+      {data?.map(post => (
+        <li key={post.id}>
+          <Card {...post} />
+        </li>
+      ))}
+      {isFetchingNextPage ? <div>Loading</div> : <div ref={targetRef} />}
+    </ul>
   )
 }
