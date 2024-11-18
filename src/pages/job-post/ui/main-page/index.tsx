@@ -1,18 +1,19 @@
 'use client'
 
 import Image from 'next/image'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 
-import { Chip, Filter, Layout } from 'shared/ui'
+import { Layout } from 'shared/ui'
 
 import { Card } from 'entities/job-post'
 
+import { JobPostFilter } from 'features/job-post-filter/model/filter'
+import { JobPostFilters } from 'features/job-post-filter/ui/job-post-filters'
+
 import { useJobPosts } from '../../api/use-job-posts'
-import { useJobPostFilter } from '../../lib/use-job-post-filter'
-import { ResetButton } from '../reset-button'
 
 const ClosingSoon = () => {
-  const { data } = useJobPosts({ pageNumber: 0, rowCount: 20 })
+  const { data } = useJobPosts()
 
   return (
     <div className="flex flex-wrap gap-x-5 gap-y-8">
@@ -21,8 +22,8 @@ const ClosingSoon = () => {
   )
 }
 
-const JobPosts = () => {
-  const { data } = useJobPosts({ pageNumber: 0, rowCount: 20 })
+const JobPosts = ({ filters }: { filters: JobPostFilter | null }) => {
+  const { data } = useJobPosts(filters)
 
   return (
     <div className="flex flex-wrap gap-x-5 gap-y-8">
@@ -32,15 +33,7 @@ const JobPosts = () => {
 }
 
 export const MainPage = () => {
-  const {
-    filters,
-    isFilterExist,
-    updateLocationFilter,
-    updateStudentTypeFilter,
-    removeLocationFilter,
-    removeStudentTypeFilter,
-    resetFilters,
-  } = useJobPostFilter()
+  const [filters, setFilters] = useState<JobPostFilter | null>(null)
 
   return (
     <Layout wide>
@@ -60,49 +53,9 @@ export const MainPage = () => {
       </section>
       <section>
         <h2 className="display-small mb-4 text-gray-900">Job posting</h2>
-        <div className="mb-6 flex flex-col gap-4">
-          <div className="flex gap-2">
-            <Filter
-              name="location"
-              value={filters.locations}
-              onChange={updateLocationFilter}
-            >
-              <Filter.Item value="seoul">Seoul</Filter.Item>
-              <Filter.Item value="gyeonggi-do">Gyeonggi-do</Filter.Item>
-            </Filter>
-            <Filter
-              name="studentType"
-              value={filters.studentTypes}
-              onChange={updateStudentTypeFilter}
-            >
-              <Filter.Item value="adult">Adult</Filter.Item>
-              <Filter.Item value="element">ElementSchool</Filter.Item>
-            </Filter>
-            {isFilterExist && <ResetButton onClick={resetFilters} />}
-          </div>
-          {isFilterExist && (
-            <div className="flex gap-2">
-              {filters.locations.map(location => (
-                <Chip key={location} selected>
-                  <Chip.Label>{location}</Chip.Label>
-                  <Chip.RemoveButton
-                    onClick={() => removeLocationFilter(location)}
-                  />
-                </Chip>
-              ))}
-              {filters.studentTypes.map(item => (
-                <Chip key={item} selected>
-                  <Chip.Label>{item}</Chip.Label>
-                  <Chip.RemoveButton
-                    onClick={() => removeStudentTypeFilter(item)}
-                  />
-                </Chip>
-              ))}
-            </div>
-          )}
-        </div>
+        <JobPostFilters onChange={setFilters} />
         <Suspense fallback={<div>Loading</div>}>
-          <JobPosts />
+          <JobPosts filters={filters} />
         </Suspense>
       </section>
     </Layout>

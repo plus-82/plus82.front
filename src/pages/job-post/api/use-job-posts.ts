@@ -1,10 +1,16 @@
 import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 
-import { jobPostQueries, type GetJobPostsRequest } from 'entities/job-post'
+import { jobPostQueries } from 'entities/job-post'
 
-export const useJobPosts = (params: GetJobPostsRequest) => {
+import { JobPostFilter } from 'features/job-post-filter/model/filter'
+
+import { transformFiltersToParams } from 'pages/job-post/model/transformFiltersToParams'
+
+export const useJobPosts = (filters?: JobPostFilter | null) => {
+  const params = transformFiltersToParams(filters)
+
   return useSuspenseInfiniteQuery({
-    ...jobPostQueries.list(params),
+    ...jobPostQueries.list({ pageNumber: 0, rowCount: 20, ...params }),
     select: data => data?.pages.flatMap(page => page.content),
   })
 }
