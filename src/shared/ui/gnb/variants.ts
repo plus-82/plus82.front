@@ -8,7 +8,7 @@ export const innerWrapper = cva(
   'mx-10 flex w-[1060px] items-center justify-between',
 )
 
-export const leftSection = cva('flex items-center gap-[7.5rem]')
+export const leftSection = cva('flex cursor-pointer items-center gap-[7.5rem]')
 
 export const rightSection = cva('flex items-center gap-2')
 
