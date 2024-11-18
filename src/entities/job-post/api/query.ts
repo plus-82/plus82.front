@@ -5,10 +5,11 @@ import { getJobPosts, type GetJobPostsRequest } from './get-job-posts'
 export const jobPostQueries = {
   all: () => ['job-post'],
   lists: () => [...jobPostQueries.all(), 'list'],
-  list: (params: GetJobPostsRequest) =>
+  list: ({ pageNumber, ...params }: GetJobPostsRequest) =>
     infiniteQueryOptions({
       queryKey: [...jobPostQueries.lists(), params],
-      queryFn: () => getJobPosts(params),
+      queryFn: ({ pageParam = pageNumber }) =>
+        getJobPosts({ ...params, pageNumber: pageParam }),
       initialPageParam: 0,
       getNextPageParam: lastPage => {
         if (lastPage.last) return undefined

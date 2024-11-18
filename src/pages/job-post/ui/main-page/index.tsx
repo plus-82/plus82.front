@@ -10,10 +10,12 @@ import { Card } from 'entities/job-post'
 import { JobPostFilter } from 'features/job-post-filter/model/filter'
 import { JobPostFilters } from 'features/job-post-filter/ui/job-post-filters'
 
+import { transformFiltersToParams } from 'pages/job-post/model/transformFiltersToParams'
+
 import { useJobPosts } from '../../api/use-job-posts'
 
 const ClosingSoon = () => {
-  const { data } = useJobPosts()
+  const { data } = useJobPosts({ pageNumber: 0, rowCount: 4 })
 
   return (
     <div className="flex flex-wrap gap-x-5 gap-y-8">
@@ -22,8 +24,10 @@ const ClosingSoon = () => {
   )
 }
 
-const JobPosts = ({ filters }: { filters: JobPostFilter | null }) => {
-  const { data } = useJobPosts(filters)
+const JobPosting = ({ filters }: { filters: JobPostFilter | null }) => {
+  const params = transformFiltersToParams(filters)
+
+  const { data } = useJobPosts({ pageNumber: 0, rowCount: 20, ...params })
 
   return (
     <div className="flex flex-wrap gap-x-5 gap-y-8">
@@ -55,7 +59,7 @@ export const MainPage = () => {
         <h2 className="display-small mb-4 text-gray-900">Job posting</h2>
         <JobPostFilters onChange={setFilters} />
         <Suspense fallback={<div>Loading</div>}>
-          <JobPosts filters={filters} />
+          <JobPosting filters={filters} />
         </Suspense>
       </section>
     </Layout>
