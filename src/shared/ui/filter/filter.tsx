@@ -21,6 +21,7 @@ export type FilterRootProps = Omit<UseFilterProps, 'filterRef' | 'disabled'> & {
   disabled?: boolean
   className?: string
   onBlur?: () => void
+  onClose?: () => void
 }
 
 const FilterRoot = ({
@@ -32,6 +33,7 @@ const FilterRoot = ({
   defaultValue,
   value,
   onChange = () => {},
+  onClose,
   onBlur,
   className,
 }: PropsWithChildren<FilterRootProps>) => {
@@ -51,6 +53,7 @@ const FilterRoot = ({
     defaultValue,
     disabled,
     onChange,
+    onClose,
     selectionLimit,
     filterRef,
   })
