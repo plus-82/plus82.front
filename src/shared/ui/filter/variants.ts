@@ -10,7 +10,7 @@ export const wrapper = cva('relative flex w-fit shrink-0 items-center gap-2', {
 })
 
 export const checked = cva(
-  'body-large flex h-auto min-h-9 w-full cursor-pointer flex-wrap items-center gap-2 rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-10 pr-9 text-gray-900 outline-none transition-all focus:border-2',
+  'body-large flex h-auto min-h-9 w-full cursor-pointer flex-wrap items-center gap-2 rounded-lg border border-gray-300 bg-white py-2 pl-3 pr-10 pr-9 text-gray-900 outline-none transition-all',
   {
     variants: {
       disabled: {
@@ -18,7 +18,7 @@ export const checked = cva(
         false: '',
       },
       isFocused: {
-        true: 'border-2',
+        true: 'border-2 focus:border-2',
         false: '',
       },
       canCheck: {

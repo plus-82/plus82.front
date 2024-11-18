@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { FilterValue } from 'shared/ui'
 
@@ -8,6 +8,8 @@ const defaultFilters: JobPostFilter = {
   locations: [],
   studentTypes: [],
 }
+
+const FILTER_LIMIT = 5
 
 type Props = {
   defaultFilters?: JobPostFilter
@@ -22,6 +24,14 @@ export const useJobPostFilters = ({
 
   const isFilterExist =
     [...filters.locations, ...filters.studentTypes].length > 0
+
+  const selectionLimit = useMemo(
+    () => ({
+      locations: FILTER_LIMIT - filters.studentTypes.length,
+      studentTypes: FILTER_LIMIT - filters.locations.length,
+    }),
+    [filters],
+  )
 
   const updateLocationFilter = (updatedLocations: FilterValue[]) => {
     setFilters(prev => ({
@@ -60,6 +70,7 @@ export const useJobPostFilters = ({
   return {
     filters,
     isFilterExist,
+    selectionLimit,
     updateLocationFilter,
     updateStudentTypeFilter,
     removeLocationFilter,

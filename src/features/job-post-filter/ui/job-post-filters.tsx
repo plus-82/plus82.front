@@ -15,6 +15,7 @@ export const JobPostFilters = ({ defaultFilters, onChange }: Props) => {
   const {
     filters,
     isFilterExist,
+    selectionLimit,
     updateLocationFilter,
     updateStudentTypeFilter,
     removeLocationFilter,
@@ -32,6 +33,7 @@ export const JobPostFilters = ({ defaultFilters, onChange }: Props) => {
         <Filter
           name="location"
           value={filters.locations}
+          selectionLimit={selectionLimit.locations}
           onChange={updateLocationFilter}
           onClose={handleFilterClose}
         >
@@ -44,6 +46,7 @@ export const JobPostFilters = ({ defaultFilters, onChange }: Props) => {
         <Filter
           name="studentType"
           value={filters.studentTypes}
+          selectionLimit={selectionLimit.studentTypes}
           onChange={updateStudentTypeFilter}
           onClose={handleFilterClose}
         >

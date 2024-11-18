@@ -138,7 +138,7 @@ const FilterItem = ({
     }
   }, [])
 
-  const handleCheckboxChange = () => {
+  const handleFilterChange = () => {
     const updatedCheckedValues = updateCheckedValues(value)
     if (hasLimitExceeded(updatedCheckedValues)) close()
   }
@@ -147,6 +147,7 @@ const FilterItem = ({
     <Dropdown.Item
       ref={hasChecked(value) ? scrollRef : null}
       role="option"
+      onClick={handleFilterChange}
       {...restProps}
     >
       <div className="flex justify-start gap-2">
@@ -154,7 +155,7 @@ const FilterItem = ({
           name={name}
           value={value}
           checked={hasChecked(value)}
-          onChange={handleCheckboxChange}
+          onChange={handleFilterChange}
         />
         {children}
       </div>
