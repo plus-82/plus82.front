@@ -5,36 +5,11 @@ import { Suspense, useState } from 'react'
 
 import { Layout } from 'shared/ui'
 
-import { Card } from 'entities/job-post'
-
 import { JobPostFilter } from 'features/job-post-filter/model/filter'
 import { JobPostFilters } from 'features/job-post-filter/ui/job-post-filters'
 
-import { transformFiltersToParams } from 'pages/job-post/model/transformFiltersToParams'
-
-import { useJobPosts } from '../../api/use-job-posts'
-
-const ClosingSoon = () => {
-  const { data } = useJobPosts({ pageNumber: 0, rowCount: 4 })
-
-  return (
-    <div className="flex flex-wrap gap-x-5 gap-y-8">
-      {data?.slice(0, 4).map((post, index) => <Card key={index} {...post} />)}
-    </div>
-  )
-}
-
-const JobPosting = ({ filters }: { filters: JobPostFilter | null }) => {
-  const params = transformFiltersToParams(filters)
-
-  const { data } = useJobPosts({ pageNumber: 0, rowCount: 20, ...params })
-
-  return (
-    <div className="flex flex-wrap gap-x-5 gap-y-8">
-      {data?.map((post, index) => <Card key={index} {...post} />)}
-    </div>
-  )
-}
+import { ClosingSoon } from './closing-soon'
+import { JobPosting } from './job-posting'
 
 export const MainPage = () => {
   const [filters, setFilters] = useState<JobPostFilter | null>(null)
