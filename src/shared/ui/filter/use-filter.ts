@@ -25,6 +25,7 @@ export type Props = FilterVariants &
     disabled: boolean
     selectionLimit?: number
     onChange: (updatedValues: FilterValue[]) => void
+    onClose?: () => void
     filterRef: RefObject<HTMLDivElement>
   }
 
@@ -34,6 +35,7 @@ export const useFilter = ({
   defaultValue,
   disabled,
   onChange,
+  onClose,
   selectionLimit,
   filterRef,
 }: Props) => {
@@ -74,13 +76,21 @@ export const useFilter = ({
   const focus = useCallback(() => setIsFocused(true), [])
   const removeFocus = useCallback(() => setIsFocused(false), [])
 
+  const handleClose = () => {
+    removeFocus()
+    onClose?.()
+  }
+
   const [isOpen, setIsOpen] = useClickAway({
     ref: filterRef,
-    callback: removeFocus,
+    callback: handleClose,
   })
 
   const open = useCallback(() => setIsOpen(true), [setIsOpen])
-  const close = useCallback(() => setIsOpen(false), [setIsOpen])
+  const close = useCallback(() => {
+    setIsOpen(false)
+    handleClose()
+  }, [setIsOpen])
 
   const handleEscapeKeyDown = useCallback(() => close(), [close])
 
@@ -88,7 +98,7 @@ export const useFilter = ({
 
   const hasLimitExceeded = useCallback(
     (values: FilterValue[]) => {
-      if (!selectionLimit) return false
+      if (isNil(selectionLimit)) return false
 
       return values.length === selectionLimit
     },
@@ -137,10 +147,13 @@ export const useFilter = ({
   const updateIsOpen = () => {
     if (disabled) return
 
-    focus()
-
-    if (isOpen) close()
-    else if (!hasLimitExceeded(checkedValues)) open()
+    if (isOpen) {
+      close()
+      handleClose()
+    } else if (!hasLimitExceeded(checkedValues)) {
+      open()
+      focus()
+    }
   }
 
   const handleTriggerClick = () => updateIsOpen()
@@ -152,7 +165,7 @@ export const useFilter = ({
       }
       if (event.key === 'Tab') {
         close()
-        removeFocus()
+        handleClose()
       }
     }
   }

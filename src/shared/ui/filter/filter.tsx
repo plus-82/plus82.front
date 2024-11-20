@@ -21,6 +21,7 @@ export type FilterRootProps = Omit<UseFilterProps, 'filterRef' | 'disabled'> & {
   disabled?: boolean
   className?: string
   onBlur?: () => void
+  onClose?: () => void
 }
 
 const FilterRoot = ({
@@ -32,6 +33,7 @@ const FilterRoot = ({
   defaultValue,
   value,
   onChange = () => {},
+  onClose,
   onBlur,
   className,
 }: PropsWithChildren<FilterRootProps>) => {
@@ -51,6 +53,7 @@ const FilterRoot = ({
     defaultValue,
     disabled,
     onChange,
+    onClose,
     selectionLimit,
     filterRef,
   })
@@ -135,7 +138,7 @@ const FilterItem = ({
     }
   }, [])
 
-  const handleCheckboxChange = () => {
+  const handleFilterChange = () => {
     const updatedCheckedValues = updateCheckedValues(value)
     if (hasLimitExceeded(updatedCheckedValues)) close()
   }
@@ -144,6 +147,7 @@ const FilterItem = ({
     <Dropdown.Item
       ref={hasChecked(value) ? scrollRef : null}
       role="option"
+      onClick={handleFilterChange}
       {...restProps}
     >
       <div className="flex justify-start gap-2">
@@ -151,7 +155,7 @@ const FilterItem = ({
           name={name}
           value={value}
           checked={hasChecked(value)}
-          onChange={handleCheckboxChange}
+          onChange={handleFilterChange}
         />
         {children}
       </div>
