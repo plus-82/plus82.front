@@ -10,7 +10,7 @@ export const useJobPosts = (params: GetJobPostsRequest) => {
     select: data => data?.pages.flatMap(page => page.content),
   })
 
-  useEmptyBoundary(result.data)
+  useEmptyBoundary(result.data, params)
 
   return result
 }

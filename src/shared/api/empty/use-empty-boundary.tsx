@@ -3,7 +3,7 @@ import { useContext, useEffect } from 'react'
 
 import { EmptyContext } from 'shared/api/empty/empty-boundary'
 
-export const useEmptyBoundary = (data: unknown) => {
+export const useEmptyBoundary = (data: unknown, params: unknown) => {
   const context = useContext(EmptyContext)
 
   if (!context) {
@@ -11,6 +11,10 @@ export const useEmptyBoundary = (data: unknown) => {
   }
 
   const { setIsEmpty } = context
+
+  useEffect(() => {
+    setIsEmpty(false)
+  }, [params, setIsEmpty])
 
   useEffect(() => {
     const isEmpty = isNull(data) || (isArray(data) && data.length === 0)

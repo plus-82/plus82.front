@@ -7,6 +7,7 @@ import { JobPostFilter } from '../model/filter'
 const defaultFilters: JobPostFilter = {
   locations: [],
   studentTypes: [],
+  searchText: '',
 }
 
 const FILTER_LIMIT = 5
@@ -47,6 +48,13 @@ export const useJobPostFilters = ({
     }))
   }
 
+  const updateSearchText = (updatedSearchText: string) => {
+    setFilters(prev => ({
+      ...prev,
+      searchText: updatedSearchText,
+    }))
+  }
+
   const removeLocationFilter = (locationToBeRemoved: FilterValue) => {
     setFilters(prev => ({
       ...prev,
@@ -73,6 +81,7 @@ export const useJobPostFilters = ({
     selectionLimit,
     updateLocationFilter,
     updateStudentTypeFilter,
+    updateSearchText,
     removeLocationFilter,
     removeStudentTypeFilter,
     resetFilters,
