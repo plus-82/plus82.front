@@ -5,7 +5,9 @@ import { Card } from 'entities/job-post'
 import { JobPostFilter } from 'features/job-post-filter/model/filter'
 
 import { useJobPosts } from '../api/use-job-posts'
-import { transformFiltersToParams } from '../model/transformFiltersToParams'
+import { transformFiltersToParams } from '../model/transform-filters-to-params'
+
+import { JobListSkeleton } from './job-list-skeleton'
 
 type Props = {
   filters: JobPostFilter | null
@@ -17,6 +19,8 @@ export const JobPosting = ({ filters }: Props) => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useJobPosts({
     pageNumber: 0,
     rowCount: 20,
+    orderType: 'DESC',
+    sortBy: 'id',
     ...params,
   })
 
@@ -37,7 +41,7 @@ export const JobPosting = ({ filters }: Props) => {
           <Card {...post} />
         </li>
       ))}
-      {isFetchingNextPage ? <div>Loading</div> : <div ref={targetRef} />}
+      {isFetchingNextPage ? <JobListSkeleton /> : <div ref={targetRef} />}
     </ul>
   )
 }

@@ -13,6 +13,10 @@ export const transformFiltersToParams = (
     locationTypeList: filter.locations as unknown as Location[],
   }
 
+  if (filter.searchText) {
+    params.searchText = filter.searchText
+  }
+
   if (filter.studentTypes.includes(StudentType.KINDERGARTEN)) {
     params.forKindergarten = true
   }

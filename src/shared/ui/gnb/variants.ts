@@ -1,6 +1,6 @@
 import { cva } from 'class-variance-authority'
 
-export const header = cva('w-full border-b border-b-gray-300 py-3')
+export const header = cva('w-fit min-w-full border-b border-b-gray-300 py-3')
 
 export const outerWrapper = cva('mx-auto flex w-fit')
 
