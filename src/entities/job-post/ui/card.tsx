@@ -30,7 +30,12 @@ export const Card = ({
   return (
     <div className="w-[250px]">
       <div className="relative mb-2 h-[150px] overflow-hidden rounded-xl border border-gray-200">
-        <Image src={imageUrls[0]} alt={title} fill className="object-cover" />
+        <Image
+          src={`${process.env.NEXT_PUBLIC_CDN_URL}${imageUrls[0]}`}
+          alt={title}
+          fill
+          className="object-cover"
+        />
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-0.5">
