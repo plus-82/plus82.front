@@ -9,6 +9,7 @@ import { JobPostFilters } from 'features/job-post-filter/ui/job-post-filters'
 
 import { useFilter } from '../lib/use-filter'
 
+import { JobListSkeleton } from './job-list-skeleton'
 import { JobPosting } from './job-posting'
 import { NoJobPosting } from './no-job-posting'
 
@@ -26,7 +27,7 @@ export const JobBoardPage = () => {
         onChange={setFilters}
       />
       <EmptyBoundary trigger={filters} fallback={<NoJobPosting />}>
-        <Suspense fallback={<div>Loading</div>}>
+        <Suspense fallback={<JobListSkeleton />}>
           <JobPosting filters={filters} />
         </Suspense>
       </EmptyBoundary>

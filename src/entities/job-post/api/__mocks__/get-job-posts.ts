@@ -29,7 +29,7 @@ export const getJobPostsHandler = (response: JobPost = JobPostData) =>
   http.get(
     convertURL('/job-posts'),
     resolver(async ({ request }) => {
-      await delay(3000)
+      await delay(1000)
       const [pageNumber, rowCount] = getAPISearchParams(request, [
         'pageNumber',
         'rowCount',
