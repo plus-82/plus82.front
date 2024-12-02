@@ -11,6 +11,10 @@ export type GetJobPostsRequest = PaginationParams<{
   forMiddleSchool?: boolean
   forHighSchool?: boolean
   forAdult?: boolean
+  orderType?: 'ASC' | 'DESC'
+  sortBy?: 'id' | 'dueDate'
+  fromDueDate?: string
+  toDueDate?: string
 }>
 
 type GetJobPostsResponse = Pagination<JobPost>

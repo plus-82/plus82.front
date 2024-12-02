@@ -19,6 +19,8 @@ export const JobPosting = ({ filters }: Props) => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useJobPosts({
     pageNumber: 0,
     rowCount: 20,
+    orderType: 'DESC',
+    sortBy: 'id',
     ...params,
   })
 
