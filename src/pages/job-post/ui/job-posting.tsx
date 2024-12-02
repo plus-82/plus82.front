@@ -5,7 +5,7 @@ import { Card } from 'entities/job-post'
 import { JobPostFilter } from 'features/job-post-filter/model/filter'
 
 import { useJobPosts } from '../api/use-job-posts'
-import { transformFiltersToParams } from '../model/transformFiltersToParams'
+import { transformFiltersToParams } from '../model/transform-filters-to-params'
 
 type Props = {
   filters: JobPostFilter | null

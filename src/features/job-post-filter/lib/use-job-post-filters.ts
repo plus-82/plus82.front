@@ -13,7 +13,7 @@ const defaultFilters: JobPostFilter = {
 const FILTER_LIMIT = 5
 
 type Props = {
-  defaultFilters?: JobPostFilter
+  defaultFilters?: JobPostFilter | null
 }
 
 export const useJobPostFilters = ({

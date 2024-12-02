@@ -1,7 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from 'react'
 
 import { useDebounce } from 'shared/lib'
-import { Chip, Filter, TextField } from 'shared/ui'
+import { Chip, Filter, FilterValue, TextField } from 'shared/ui'
 
 import { Location, StudentType } from 'entities/job-post'
 
@@ -10,11 +10,16 @@ import { JobPostFilter } from '../model/filter'
 import { ResetButton } from '../ui/reset-button'
 
 type Props = {
-  defaultFilters?: JobPostFilter
-  onChange: (filters: JobPostFilter) => void
+  defaultFilters?: JobPostFilter | null
+  useSearchField?: boolean
+  onChange: (filters: JobPostFilter | null) => void
 }
 
-export const JobPostFilters = ({ defaultFilters, onChange }: Props) => {
+export const JobPostFilters = ({
+  defaultFilters,
+  useSearchField = false,
+  onChange,
+}: Props) => {
   const {
     filters,
     isFilterExist,
@@ -28,6 +33,33 @@ export const JobPostFilters = ({ defaultFilters, onChange }: Props) => {
   } = useJobPostFilters({ defaultFilters })
 
   const { debouncedCallback, immediateCallback } = useDebounce(onChange, 1000)
+
+  const handleLocationFilterRemove = (locationToBeRemoved: FilterValue) => {
+    removeLocationFilter(locationToBeRemoved)
+    onChange({
+      ...filters,
+      locations: filters.locations.filter(
+        location => location !== locationToBeRemoved,
+      ),
+    })
+  }
+
+  const handleStudentTypeFilterRemove = (
+    studentTypeToBeRemoved: FilterValue,
+  ) => {
+    removeStudentTypeFilter(studentTypeToBeRemoved)
+    onChange({
+      ...filters,
+      studentTypes: filters.studentTypes.filter(
+        studentType => studentType !== studentTypeToBeRemoved,
+      ),
+    })
+  }
+
+  const handleFilterReset = () => {
+    resetFilters()
+    onChange(null)
+  }
 
   const handleFilterClose = () => {
     onChange(filters)
@@ -78,17 +110,17 @@ export const JobPostFilters = ({ defaultFilters, onChange }: Props) => {
               </Filter.Item>
             ))}
           </Filter>
-          {isFilterExist && <ResetButton onClick={resetFilters} />}
+          {isFilterExist && <ResetButton onClick={handleFilterReset} />}
         </div>
         {isFilterExist && (
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {filters.locations.map(location => (
               <Chip key={location} selected>
                 <Chip.Label>
                   {Location[location as keyof typeof Location]}
                 </Chip.Label>
                 <Chip.RemoveButton
-                  onClick={() => removeLocationFilter(location)}
+                  onClick={() => handleLocationFilterRemove(location)}
                 />
               </Chip>
             ))}
@@ -96,19 +128,21 @@ export const JobPostFilters = ({ defaultFilters, onChange }: Props) => {
               <Chip key={studentType} selected>
                 <Chip.Label>{studentType}</Chip.Label>
                 <Chip.RemoveButton
-                  onClick={() => removeStudentTypeFilter(studentType)}
+                  onClick={() => handleStudentTypeFilterRemove(studentType)}
                 />
               </Chip>
             ))}
           </div>
         )}
       </div>
-      <TextField
-        value={filters.searchText}
-        onChange={handleSearchTextChange}
-        onKeyDown={handleSearchTextKeyDown}
-        placeholder="Search jobs by keywords"
-      />
+      {useSearchField && (
+        <TextField
+          value={filters.searchText}
+          onChange={handleSearchTextChange}
+          onKeyDown={handleSearchTextKeyDown}
+          placeholder="Search jobs by keywords"
+        />
+      )}
     </div>
   )
 }
