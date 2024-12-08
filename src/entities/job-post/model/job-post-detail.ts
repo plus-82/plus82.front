@@ -1,3 +1,5 @@
+import { Location } from '../config/location'
+
 export type JobPostDetail = {
   id: number
   title: string
