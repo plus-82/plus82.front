@@ -8,7 +8,8 @@ import {
   resolver,
 } from 'shared/mocks'
 
-import { JobPost, Location } from 'entities/job-post/model/job-post'
+import { Location } from '../../config/location'
+import type { JobPost } from '../../model/job-post'
 
 const JobPostData: JobPost = {
   id: 1,
