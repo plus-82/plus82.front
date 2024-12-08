@@ -1,5 +1,6 @@
-import { infiniteQueryOptions } from '@tanstack/react-query'
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 
+import { getJobPost } from './get-job-post'
 import { getJobPosts, type GetJobPostsRequest } from './get-job-posts'
 
 export const jobPostQueries = {
@@ -21,5 +22,11 @@ export const jobPostQueries = {
 
         return firstPage.pageable.pageNumber - 1
       },
+    }),
+  details: () => [...jobPostQueries.all(), 'detail'],
+  detail: (jobPostId: number) =>
+    queryOptions({
+      queryKey: [...jobPostQueries.details(), jobPostId],
+      queryFn: () => getJobPost({ jobPostId }),
     }),
 }
