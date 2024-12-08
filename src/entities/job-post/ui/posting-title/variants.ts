@@ -1,5 +1,14 @@
 import { cva } from 'class-variance-authority'
 
+export const container = cva('flex flex-col', {
+  variants: {
+    size: {
+      small: 'gap-2',
+      medium: 'gap-3',
+    },
+  },
+})
+
 export const title = cva('font-medium text-gray-900', {
   variants: {
     size: {
@@ -24,7 +33,7 @@ export const description = cva(
     variants: {
       size: {
         small: 'body-large',
-        medium: 'body-small',
+        medium: 'title-small',
       },
     },
   },
