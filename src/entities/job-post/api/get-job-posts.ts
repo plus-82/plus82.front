@@ -1,7 +1,8 @@
 import { apiClient } from 'shared/api'
 import type { Pagination, PaginationParams } from 'shared/api'
 
-import type { Location, JobPost } from '../model/job-post'
+import { Location } from '../config/location'
+import { JobPost } from '../model/job-post'
 
 export type GetJobPostsRequest = PaginationParams<{
   searchText?: string
