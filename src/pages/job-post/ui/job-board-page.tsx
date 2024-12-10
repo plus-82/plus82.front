@@ -5,7 +5,7 @@ import { Suspense } from 'react'
 import { EmptyBoundary } from 'shared/api'
 import { Layout } from 'shared/ui'
 
-import { JobPostFilters } from 'features/job-post-filter/ui/job-post-filters'
+import { JobPostFilters } from 'features/job-post-filter'
 
 import { useFilter } from '../lib/use-filter'
 
