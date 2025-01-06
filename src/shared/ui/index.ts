@@ -18,6 +18,7 @@ export { Radio, type RadioProps } from './radio'
 export { Select, type SelectValue, type SelectRootProps } from './select-field'
 export { Switch } from './switch'
 export { Tabs } from './tabs'
+export { TextArea } from './text-area'
 export {
   TextField,
   PasswordField,
