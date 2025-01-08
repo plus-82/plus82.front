@@ -14,7 +14,7 @@ type RequestOption = {
   contentType: ContentType
 }
 
-const API_URL = `${window.location.origin}/api/v1`
+const API_URL = `http://localhost:3000/api/v1` // TODO: 배포 후 동작 체크
 
 const DEFAULT_ERROR_MESSAGE = '기술팀에 문의해주세요'
 
@@ -54,7 +54,7 @@ export class ApiClient {
     option?: RequestOption,
   ) {
     let requestBody: string | FormData
-    const headers: HeadersInit = {}
+    const headers: HeadersInit = option?.headers ?? {}
 
     if (option?.contentType === ContentType.MULTIPART) {
       const formData = new FormData()
@@ -75,7 +75,7 @@ export class ApiClient {
   public async get<TResult = unknown, TParams = Record<string, any>>(
     endpoint: string,
     queryParams?: TParams,
-    option?: { contentType: ContentType },
+    option?: { contentType?: ContentType; headers?: HeadersInit },
   ): Promise<TResult> {
     const url = new URL(`${this.baseUrl}${endpoint}`)
 
@@ -90,10 +90,21 @@ export class ApiClient {
       })
     }
 
+    // console.log(
+    //   option?.headers,
+    //   JSON.stringify({
+    //     headers: {
+    //       'Content-Type': option?.contentType ?? 'application/json',
+    //       ...option?.headers,
+    //     },
+    //   }),
+    // )
+
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: {
         'Content-Type': option?.contentType ?? 'application/json',
+        ...option?.headers,
       },
     })
 
@@ -103,7 +114,7 @@ export class ApiClient {
   public async post<TResult = unknown, TData = Record<string, unknown>>(
     endpoint: string,
     body: TData,
-    option?: { contentType: ContentType },
+    option?: { contentType: ContentType; headers?: HeadersInit },
   ): Promise<TResult> {
     const { requestBody, headers } = this.getRequestInit(body, option)
 
