@@ -11,7 +11,8 @@ export enum ContentType {
 }
 
 type RequestOption = {
-  contentType: ContentType
+  contentType?: ContentType
+  authorization?: string
 }
 
 const API_URL = `http://localhost:3000/api/v1` // TODO: 배포 후 동작 체크
@@ -54,7 +55,11 @@ export class ApiClient {
     option?: RequestOption,
   ) {
     let requestBody: string | FormData
-    const headers: HeadersInit = option?.headers ?? {}
+    const headers: HeadersInit = {}
+
+    if (option?.authorization) {
+      headers.Authorization = option.authorization
+    }
 
     if (option?.contentType === ContentType.MULTIPART) {
       const formData = new FormData()
@@ -72,11 +77,15 @@ export class ApiClient {
     return { requestBody, headers }
   }
 
-  public async get<TResult = unknown, TParams = Record<string, any>>(
-    endpoint: string,
-    queryParams?: TParams,
-    option?: { contentType?: ContentType; headers?: HeadersInit },
-  ): Promise<TResult> {
+  public async get<TResult = unknown, TParams = Record<string, any>>({
+    endpoint,
+    queryParams,
+    option,
+  }: {
+    endpoint: string
+    queryParams?: TParams
+    option?: RequestOption
+  }): Promise<TResult> {
     const url = new URL(`${this.baseUrl}${endpoint}`)
 
     if (queryParams) {
@@ -90,32 +99,26 @@ export class ApiClient {
       })
     }
 
-    // console.log(
-    //   option?.headers,
-    //   JSON.stringify({
-    //     headers: {
-    //       'Content-Type': option?.contentType ?? 'application/json',
-    //       ...option?.headers,
-    //     },
-    //   }),
-    // )
-
     const response = await fetch(url.toString(), {
       method: 'GET',
       headers: {
         'Content-Type': option?.contentType ?? 'application/json',
-        ...option?.headers,
+        ...(option?.authorization && { Authorization: option.authorization }),
       },
     })
 
     return this.handleResponse<TResult>(response)
   }
 
-  public async post<TResult = unknown, TData = Record<string, unknown>>(
-    endpoint: string,
-    body: TData,
-    option?: { contentType: ContentType; headers?: HeadersInit },
-  ): Promise<TResult> {
+  public async post<TResult = unknown, TData = Record<string, unknown>>({
+    endpoint,
+    body,
+    option,
+  }: {
+    endpoint: string
+    body: TData
+    option?: RequestOption
+  }): Promise<TResult> {
     const { requestBody, headers } = this.getRequestInit(body, option)
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -127,11 +130,15 @@ export class ApiClient {
     return this.handleResponse<TResult>(response)
   }
 
-  public async put<TResult = unknown, TData = Record<string, unknown>>(
-    endpoint: string,
-    body: TData,
-    option?: { contentType: ContentType },
-  ): Promise<TResult> {
+  public async put<TResult = unknown, TData = Record<string, unknown>>({
+    endpoint,
+    body,
+    option,
+  }: {
+    endpoint: string
+    body: TData
+    option?: RequestOption
+  }): Promise<TResult> {
     const { requestBody, headers } = this.getRequestInit(body, option)
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -143,11 +150,15 @@ export class ApiClient {
     return this.handleResponse<TResult>(response)
   }
 
-  public async delete<TResult = unknown, TData = Record<string, unknown>>(
-    endpoint: string,
-    body: TData,
-    option?: { contentType: ContentType },
-  ): Promise<TResult> {
+  public async delete<TResult = unknown, TData = Record<string, unknown>>({
+    endpoint,
+    body,
+    option,
+  }: {
+    endpoint: string
+    body: TData
+    option?: RequestOption
+  }): Promise<TResult> {
     const { requestBody, headers } = this.getRequestInit(body, option)
 
     const response = await fetch(`${this.baseUrl}${endpoint}`, {

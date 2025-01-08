@@ -50,10 +50,10 @@ const handleError = (error: Error) => {
 
 export const signIn = async (data: SignInRequest) => {
   try {
-    const response = await apiClient.post<SignInResponse, SignInRequest>(
-      '/auth/sign-in',
-      data,
-    )
+    const response = await apiClient.post<SignInResponse, SignInRequest>({
+      endpoint: '/auth/sign-in',
+      body: data,
+    })
 
     const { accessToken } = response
 

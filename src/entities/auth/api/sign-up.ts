@@ -11,10 +11,10 @@ export type SignUpRequest = {
 }
 
 export const signUp = async (data: SignUpRequest) => {
-  const response = await apiClient.post<null, SignUpRequest>(
-    '/auth/sign-up',
-    data,
-  )
+  const response = await apiClient.post<null, SignUpRequest>({
+    endpoint: '/auth/sign-up',
+    body: data,
+  })
 
   return response
 }
