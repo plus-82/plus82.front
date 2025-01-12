@@ -6,6 +6,7 @@ import {
   ElementRef,
   forwardRef,
   HTMLAttributes,
+  useMemo,
 } from 'react'
 
 import { colors } from 'shared/config'
@@ -13,7 +14,30 @@ import { cn } from 'shared/lib'
 
 import { Icon } from '../icon'
 
-const ModalRoot = DialogPrimitive.Root
+import { ModalContext } from './use-modal-context'
+
+const ModalRoot = ({
+  open,
+  onOpenChange,
+  children,
+  ...restProps
+}: DialogPrimitive.DialogProps) => {
+  const value = useMemo(() => {
+    return { open, changeOpen: onOpenChange }
+  }, [open, onOpenChange])
+
+  return (
+    <ModalContext.Provider value={value}>
+      <DialogPrimitive.Root
+        open={open}
+        onOpenChange={onOpenChange}
+        {...restProps}
+      >
+        {children}
+      </DialogPrimitive.Root>
+    </ModalContext.Provider>
+  )
+}
 
 const ModalTrigger = DialogPrimitive.Trigger
 
