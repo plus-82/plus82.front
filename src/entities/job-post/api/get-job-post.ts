@@ -9,9 +9,9 @@ type GetJobPostRequest = {
 type GetJobPostResponse = JobPostDetail
 
 export const getJobPost = async ({ jobPostId }: GetJobPostRequest) => {
-  const response = await apiClient.get<GetJobPostResponse>(
-    `/job-posts/${jobPostId}`,
-  )
+  const response = await apiClient.get<GetJobPostResponse>({
+    endpoint: `/job-posts/${jobPostId}`,
+  })
 
   return response
 }

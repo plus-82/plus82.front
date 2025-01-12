@@ -20,11 +20,11 @@ export type GetJobPostsRequest = PaginationParams<{
 
 type GetJobPostsResponse = Pagination<JobPost>
 
-export const getJobPosts = async (params: GetJobPostsRequest) => {
-  const response = await apiClient.get<GetJobPostsResponse>(
-    '/job-posts',
-    params,
-  )
+export const getJobPosts = async (queryParams: GetJobPostsRequest) => {
+  const response = await apiClient.get<GetJobPostsResponse>({
+    endpoint: '/job-posts',
+    queryParams,
+  })
 
   return response
 }

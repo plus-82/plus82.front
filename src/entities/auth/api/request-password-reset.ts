@@ -7,10 +7,10 @@ type RequestPasswordResetRequest = {
 export const requestPasswordReset = async (
   data: RequestPasswordResetRequest,
 ) => {
-  const response = await apiClient.post<null, RequestPasswordResetRequest>(
-    '/auth/reset-password/request',
-    data,
-  )
+  const response = await apiClient.post<null, RequestPasswordResetRequest>({
+    endpoint: '/auth/reset-password/request',
+    body: data,
+  })
 
   return response
 }

@@ -5,10 +5,10 @@ export type CheckCodeValidityRequest = {
 }
 
 export const checkCodeValidity = async (data: CheckCodeValidityRequest) => {
-  const response = await apiClient.get<null>(
-    '/auth/reset-password/validate',
-    data,
-  )
+  const response = await apiClient.get<null>({
+    endpoint: '/auth/reset-password/validate',
+    queryParams: data,
+  })
 
   return response
 }

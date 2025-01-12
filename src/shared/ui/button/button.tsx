@@ -1,5 +1,10 @@
 import Link from 'next/link'
-import { ComponentProps, ElementType } from 'react'
+import {
+  type ComponentProps,
+  type ElementType,
+  ForwardedRef,
+  forwardRef,
+} from 'react'
 
 import { cn } from 'shared/lib'
 import { button, ButtonVariants } from 'shared/ui/button/variants'
@@ -11,31 +16,40 @@ type ButtonProps = ButtonVariants & {
 type Props<E extends ElementType> = ButtonProps &
   Omit<ComponentProps<E>, keyof ButtonProps>
 
-export const Button = <E extends ElementType>({
-  as,
-  variant = 'primary',
-  size = 'medium',
-  fullWidth = false,
-  className,
-  ...restProps
-}: Props<E>) => {
-  const $Element = as || 'button'
+export const Button = forwardRef(
+  <E extends ElementType>(
+    {
+      as,
+      variant = 'primary',
+      size = 'medium',
+      fullWidth = false,
+      className,
+      ...restProps
+    }: Props<E>,
+    ref: ForwardedRef<ComponentProps<E>>,
+  ) => {
+    const $Element = as || 'button'
 
-  if (as === 'a') {
+    if (as === 'a') {
+      return (
+        <Link href={restProps?.href} passHref legacyBehavior>
+          <$Element
+            ref={ref}
+            className={cn(button({ variant, size, fullWidth, className }))}
+            {...restProps}
+          />
+        </Link>
+      )
+    }
+
     return (
-      <Link href={restProps?.href} passHref legacyBehavior>
-        <$Element
-          className={cn(button({ variant, size, fullWidth, className }))}
-          {...restProps}
-        />
-      </Link>
+      <$Element
+        ref={ref}
+        className={cn(button({ variant, size, fullWidth, className }))}
+        {...restProps}
+      />
     )
-  }
+  },
+)
 
-  return (
-    <$Element
-      className={cn(button({ variant, size, fullWidth, className }))}
-      {...restProps}
-    />
-  )
-}
+Button.displayName = 'Button'

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import { convertToSearchParams } from 'shared/lib'
 
-import { JobPostFilter } from 'features/job-post-filter/model/filter'
+import { JobPostFilter } from 'features/job-post-filter'
 
 type Props = {
   syncWithURL?: boolean
