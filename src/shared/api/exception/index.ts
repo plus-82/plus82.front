@@ -34,6 +34,11 @@ export enum ResourceNotFoundExceptionCode {
   COUNTRY_NOT_FOUND = 'RNF-003',
 }
 
+export enum JobPostExceptionCode {
+  JOB_POST_CLOSED = 'JP-001',
+  RESUME_ALREADY_SUBMITTED = 'JP-002',
+}
+
 export type ResponseCode =
   | CommonResponseCode
   | AuthExceptionCode
@@ -41,3 +46,4 @@ export type ResponseCode =
   | UserExceptionCode
   | InvalidInputValueExceptionCode
   | ResourceNotFoundExceptionCode
+  | JobPostExceptionCode

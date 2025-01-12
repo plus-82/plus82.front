@@ -1,5 +1,6 @@
 export type { GetJobPostsRequest } from './api/get-job-posts'
 export { jobPostQueries } from './api/query'
+export { submitResume } from './api/submit-resume'
 export { jobPostHandlers } from './api/__mocks__'
 export { convertStudentType } from './model/convert-to-student-type'
 export { convertToJobPost } from './model/convert-to-job-post'
