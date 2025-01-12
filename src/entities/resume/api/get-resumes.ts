@@ -21,3 +21,23 @@ export const getResumes = async () => {
 
   return response
 }
+
+export const getResumeCount = async () => {
+  const accessToken = await getCookie('accessToken')
+
+  try {
+    const response = await apiClient.get<GetResumesResponse>({
+      endpoint: '/resumes/me',
+      queryParams: {
+        rowCount: 100,
+      },
+      option: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    })
+
+    return response.numberOfElements
+  } catch (error) {
+    return null
+  }
+}
