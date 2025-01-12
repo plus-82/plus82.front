@@ -1,3 +1,5 @@
+'use client'
+
 import { isArray, isNull } from 'lodash-es'
 import { useContext, useEffect } from 'react'
 
