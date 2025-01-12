@@ -1,9 +1,10 @@
 import { colors } from 'shared/config'
-import { Layout, Image, Button, Icon } from 'shared/ui'
+import { Layout, Button, Icon } from 'shared/ui'
 
 import {
   convertToJobPost,
   PostingDetail,
+  PostingImageSwiper,
   PostingTitle,
 } from 'entities/job-post'
 import { getJobPost } from 'entities/job-post'
@@ -38,11 +39,7 @@ export const JobPostingDetailPage = async ({ params }: { params: Params }) => {
   return (
     <Layout wide className="flex gap-5">
       <div className="flex-grow">
-        <Image
-          src={data.academyImageUrls[0]}
-          alt={data.title}
-          className="mb-6 h-[410px] w-full rounded-2xl"
-        />
+        <PostingImageSwiper images={data.academyImageUrls} />
         <PostingDetail jobPost={data} />
       </div>
       <div>
