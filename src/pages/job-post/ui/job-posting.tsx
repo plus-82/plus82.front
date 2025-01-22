@@ -1,8 +1,10 @@
+import Link from 'next/link'
+
 import { useObserver } from 'shared/lib/observer'
 
 import { Card } from 'entities/job-post'
 
-import { JobPostFilter } from 'features/job-post-filter/model/filter'
+import { JobPostFilter } from 'features/job-post-filter'
 
 import { useJobPosts } from '../api/use-job-posts'
 import { transformFiltersToParams } from '../model/transform-filters-to-params'
@@ -38,7 +40,9 @@ export const JobPosting = ({ filters }: Props) => {
     <ul className="flex flex-wrap gap-x-5 gap-y-8">
       {data?.map(post => (
         <li key={post.id}>
-          <Card {...post} />
+          <Link href={`/job-board/${post.id}`}>
+            <Card {...post} />
+          </Link>
         </li>
       ))}
       {isFetchingNextPage ? <JobListSkeleton /> : <div ref={targetRef} />}

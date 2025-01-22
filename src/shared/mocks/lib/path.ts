@@ -1,6 +1,6 @@
 import { isString } from 'lodash-es'
 
-const BASE_URL = `${window.location.origin}/api/v1`
+const BASE_URL = `http://localhost:3000/api/v1`
 
 type URLFunction = (...args: any[]) => string
 

@@ -5,10 +5,10 @@ type RequestVerificationRequest = {
 }
 
 export const requestVerification = async (data: RequestVerificationRequest) => {
-  const response = await apiClient.post<null, RequestVerificationRequest>(
-    '/auth/request-verification',
-    data,
-  )
+  const response = await apiClient.post<null, RequestVerificationRequest>({
+    endpoint: '/auth/request-verification',
+    body: data,
+  })
 
   return response
 }

@@ -10,13 +10,16 @@ export { GNB } from './gnb'
 export { Heading } from './heading'
 export { HelperText, type HelperTextProps } from './helper-text'
 export { Icon } from './icon'
+export { Image } from './image'
 export { Label } from './label'
 export { Layout } from './layout'
 export { Link } from './link'
+export { Modal, useModalContext } from './modal'
 export { Radio, type RadioProps } from './radio'
 export { Select, type SelectValue, type SelectRootProps } from './select-field'
 export { Switch } from './switch'
 export { Tabs } from './tabs'
+export { TextArea } from './text-area'
 export {
   TextField,
   PasswordField,

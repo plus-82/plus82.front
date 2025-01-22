@@ -13,6 +13,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@react-google-maps/api": "^2.20.5",
     "@tanstack/react-query": "^5.51.23",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -26,6 +28,7 @@
     "react-hook-form": "^7.53.0",
     "react-toastify": "^10.0.6",
     "svg-country-flags": "^1.2.10",
+    "swiper": "^11.2.1",
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {

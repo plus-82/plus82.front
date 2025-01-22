@@ -2,14 +2,14 @@
 
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 
-import { AuthExceptionCode, HttpError } from 'shared/api'
+import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Button, HelperText, Label, Layout, Link, TextField } from 'shared/ui'
+
+import { signIn } from 'entities/auth'
 
 import { hasError } from 'features/form'
 
-import { useSignIn } from '../../api/use-sign-in'
 import { FormValues, defaultValues } from '../../model/form-values'
 import * as rules from '../../model/rules'
 
@@ -18,40 +18,32 @@ import * as css from './variants'
 export const SignInPage = () => {
   const router = useRouter()
 
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors },
-  } = useForm<FormValues>({
+  const form = useForm<FormValues>({
     defaultValues,
     reValidateMode: 'onSubmit',
   })
 
-  const signIn = useSignIn()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = form
+
+  const { handleServerError } = useServerErrorHandler(form)
 
   const handleSignInSuccess = () => {
     // TODO: Redirect to another page
     router.replace('/')
   }
 
-  const handleSignInError = (error: HttpError) => {
-    if (error.code === AuthExceptionCode.EMAIL_NOT_CORRECT) {
-      toast.error("We couldn't find an account with that email")
-    } else if (error.code === AuthExceptionCode.PW_NOT_CORRECT) {
-      setError('password', {
-        message: 'The password you entered is incorrect',
-      })
-    } else if (error.code === AuthExceptionCode.DELETED_USER) {
-      toast.error('This account has been deactivated')
-    }
-  }
+  const handleFormValid = async (data: FormValues) => {
+    const response = await signIn(data)
 
-  const handleFormValid = (data: FormValues) => {
-    signIn.mutate(data, {
-      onSuccess: handleSignInSuccess,
-      onError: handleSignInError,
-    })
+    if (isServerError(response)) {
+      handleServerError(response)
+    } else {
+      handleSignInSuccess()
+    }
   }
 
   return (

@@ -1,5 +1,7 @@
+import ArrowBack from './arrow-back.svg'
 import BookMarkOff from './bookmark-off.svg'
 import BookMarkOn from './bookmark-on.svg'
+import Business from './business.svg'
 import CheckIndeterminate from './check-indeterminate.svg'
 import CheckOutline from './check-outline.svg'
 import Check from './check.svg'
@@ -9,9 +11,12 @@ import ChevronRight from './chevron-right.svg'
 import ChevronUp from './chevron-up.svg'
 import Clear from './clear.svg'
 import Close from './close.svg'
+import Copy from './copy.svg'
 import Date from './date.svg'
 import Delete from './delete.svg'
+import DocumentSearch from './document-search.svg'
 import Dot from './dot.svg'
+import Download from './download.svg'
 import Earth from './earth.svg'
 import ExclamationMark from './exclamation-mark.svg'
 import EyesOff from './eyes-off.svg'
@@ -21,15 +26,20 @@ import Language from './language.svg'
 import LocationFilled from './location-filled.svg'
 import Message from './message.svg'
 import Money from './money.svg'
+import Pen from './pen.svg'
 import Plus from './plus.svg'
+import Queen from './queen.svg'
 import Reset from './reset.svg'
 import Search from './search.svg'
+import StarFill from './star-fill.svg'
 import Upload from './upload.svg'
 import User from './user.svg'
 
 export const IconComponent = {
+  ArrowBack,
   BookMarkOff,
   BookMarkOn,
+  Business,
   Check,
   CheckIndeterminate,
   CheckOutline,
@@ -39,9 +49,12 @@ export const IconComponent = {
   ChevronUp,
   Clear,
   Close,
+  Copy,
   Date,
   Delete,
+  DocumentSearch,
   Dot,
+  Download,
   Earth,
   ExclamationMark,
   EyesOff,
@@ -51,9 +64,12 @@ export const IconComponent = {
   LocationFilled,
   Message,
   Money,
+  Pen,
   Plus,
+  Queen,
   Reset,
   Search,
+  StarFill,
   Upload,
   User,
 } as const

@@ -6,10 +6,10 @@ type ResetPasswordRequest = {
 }
 
 export const resetPassword = async (data: ResetPasswordRequest) => {
-  const response = await apiClient.post<null, ResetPasswordRequest>(
-    '/auth/reset-password',
-    data,
-  )
+  const response = await apiClient.post<null, ResetPasswordRequest>({
+    endpoint: '/auth/reset-password',
+    body: data,
+  })
 
   return response
 }

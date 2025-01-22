@@ -6,10 +6,10 @@ type VerifyCodeRequest = {
 }
 
 export const verifyCode = async (data: VerifyCodeRequest) => {
-  const response = await apiClient.post<null, VerifyCodeRequest>(
-    '/auth/verify-code',
-    data,
-  )
+  const response = await apiClient.post<null, VerifyCodeRequest>({
+    endpoint: '/auth/verify-code',
+    body: data,
+  })
 
   return response
 }
