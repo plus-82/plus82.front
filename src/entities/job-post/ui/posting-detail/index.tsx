@@ -1,6 +1,7 @@
 import { formatDate, toDisplayValue } from 'shared/lib'
 
 import type { JobPostDetail } from '../../model/job-post-detail'
+import AcademyAddress from '../academy-address'
 
 type Props = {
   jobPost: JobPostDetail
@@ -47,9 +48,9 @@ export const PostingDetail = ({ jobPost }: Props) => {
         <h4 className="title-large font-medium text-gray-900">
           Academy address
         </h4>
-        <p className="title-small font-normal text-gray-900">
-          {toDisplayValue(jobPost.academyDetailedAddress)}
-        </p>
+        <div className="title-small font-normal text-gray-900">
+          <AcademyAddress address={jobPost.academyDetailedAddress} />
+        </div>
       </li>
     </ul>
   )
