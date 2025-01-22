@@ -32,16 +32,16 @@ export const PostingTitle = ({ jobPost, size }: Props) => {
       <ul className="flex flex-col gap-1">
         <li className={cn(css.description({ size }))}>
           <Icon name="LocationFilled" color={colors.gray[500]} size={size} />
-          <span>{capitalize(jobPost.locationType)}</span>
+          <span>{capitalize(jobPost.locationType ?? '-')}</span>
         </li>
         <li className={cn(css.description({ size }))}>
           <Icon name="User" color={colors.gray[500]} size={size} />
-          <span>{studentType}</span>
+          <span>{studentType ?? '-'}</span>
         </li>
         {size === 'medium' && (
           <li className={cn(css.description({ size }))}>
             <Icon name="Date" color={colors.gray[500]} size={size} />
-            <span>~{jobPost.dueDate}</span>
+            <span>~{jobPost.dueDate ?? '-'}</span>
           </li>
         )}
       </ul>

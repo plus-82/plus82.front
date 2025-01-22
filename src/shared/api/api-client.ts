@@ -15,7 +15,7 @@ type RequestOption = {
   authorization?: string
 }
 
-const API_URL = `http://localhost:3000/api/v1` // TODO: 배포 후 동작 체크
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? ''
 
 const DEFAULT_ERROR_MESSAGE = '기술팀에 문의해주세요'
 
