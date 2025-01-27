@@ -4,6 +4,7 @@ import plugin from 'tailwindcss/plugin'
 import { colors, fontSize, zIndex } from './src/shared/config'
 
 const config: Config = {
+  darkMode: ['class'],
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     data: {
@@ -14,9 +15,26 @@ const config: Config = {
       fontFamily: {
         'spoqa-han-sans-neo': ['var(--font-spoqa-han-sans-neo)'],
       },
-      colors,
+      colors: {
+        ...colors,
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))',
+        },
+      },
       fontSize,
       zIndex,
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
     },
   },
   plugins: [
@@ -24,6 +42,7 @@ const config: Config = {
       addVariant('not-last', '&:not(:last-child)')
       addVariant('not-checked', '&:not(:checked)')
     }),
+    require('tailwindcss-animate'),
   ],
 }
 

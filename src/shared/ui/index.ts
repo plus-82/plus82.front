@@ -1,6 +1,7 @@
 export { Button } from './button'
 export { Calendar, type CalendarProps } from './calendar'
 export { Checkbox, type CheckboxValue } from './checkbox'
+export { Collapsible } from './collapsible'
 export { Chip } from './chip'
 export { DatePicker } from './date-picker'
 export { Dropdown } from './dropdown'
@@ -17,6 +18,10 @@ export { Link } from './link'
 export { Modal, useModalContext } from './modal'
 export { Radio, type RadioProps } from './radio'
 export { Select, type SelectValue, type SelectRootProps } from './select-field'
+export { Separator } from './separator'
+export { Sheet } from './sheet'
+export { Sidebar, useSidebar } from './sidebar'
+export { Skeleton } from './skeleton'
 export { Switch } from './switch'
 export { Tabs } from './tabs'
 export { TextArea } from './text-area'
@@ -26,3 +31,4 @@ export {
   type TextFieldProps,
   type PasswordFieldProps,
 } from './text-field'
+export { Tooltip } from './tooltip'
