@@ -1,1 +1,2 @@
-export { Panel, divide } from './panel'
+export { Panel } from './panel'
+export { longDivide } from './variant'

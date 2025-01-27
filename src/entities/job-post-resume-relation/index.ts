@@ -1,3 +1,5 @@
 export { getJobPostResumeSummary } from './api/get-job-post-resume-summary'
-export type { Status, StatusSummary } from './model/status'
+export { jobPostResumeRelationQueries } from './api/query'
+export type { ApplicationStatus, StatusSummary } from './model/status'
 export { StatusPanel } from './ui/status-panel'
+export { ApplicationTable } from './ui/application-table'

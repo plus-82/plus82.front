@@ -21,7 +21,10 @@ export const SettingSidebar = () => {
   )
 
   return (
-    <Sidebar collapsible="none" className="border-l border-r border-gray-300">
+    <Sidebar
+      collapsible="none"
+      className="flex-shrink-0 border-l border-r border-gray-300"
+    >
       <Sidebar.Content className="p-6">
         <Sidebar.Menu>
           {items.map(item =>

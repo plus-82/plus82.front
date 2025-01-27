@@ -2,20 +2,25 @@ import { PropsWithChildren } from 'react'
 
 import { cn, passPropsToChildren } from 'shared/lib'
 
-export { divide } from './variant'
-
 type PanelProps = PropsWithChildren<{
   className?: string
   active?: boolean
+  onClick?: () => void
 }>
 
-const PanelRoot = ({ active = false, className, children }: PanelProps) => {
+const PanelRoot = ({
+  active = false,
+  className,
+  children,
+  onClick,
+}: PanelProps) => {
   return (
     <button
       className={cn(
         'relative flex h-[110px] min-w-32 flex-grow flex-col items-center justify-center gap-3',
         className,
       )}
+      onClick={onClick}
     >
       {passPropsToChildren(children, { active })}
     </button>

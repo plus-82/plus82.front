@@ -6,7 +6,7 @@ export const MyJobPostingPage = async () => {
   const summary = await getJobPostResumeSummary()
 
   return (
-    <div className="flex-grow px-[46px] py-10">
+    <div className="flex flex-grow flex-col gap-4 py-10 pl-[46px]">
       <MyJobPostingContent summary={summary} />
     </div>
   )

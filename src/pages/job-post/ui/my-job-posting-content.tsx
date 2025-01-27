@@ -3,22 +3,35 @@
 import { useState } from 'react'
 
 import {
-  Status,
+  ApplicationTable,
   StatusPanel,
+  ApplicationStatus,
   StatusSummary,
 } from 'entities/job-post-resume-relation'
+
+import { useJobPostRelations } from '../api/use-job-post-relations'
 
 type Props = {
   summary: StatusSummary
 }
 
 const MyJobPostingContent = ({ summary }: Props) => {
-  const [active] = useState<Status>('total')
+  const [activePanel, setActivePanel] = useState<ApplicationStatus | null>(null)
+
+  const { applications } = useJobPostRelations(activePanel)
+
+  const changeActivePanel = (status: ApplicationStatus | null) => {
+    setActivePanel(status)
+  }
 
   return (
     <>
-      <StatusPanel active={active} summary={summary} />
-      <div>Table</div>
+      <StatusPanel
+        active={activePanel}
+        onClick={changeActivePanel}
+        summary={summary}
+      />
+      <ApplicationTable applications={applications} />
     </>
   )
 }
