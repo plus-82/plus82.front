@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { QueryErrorBoundary } from 'shared/api'
-import { Form } from 'shared/form'
+import { fieldCss, Form } from 'shared/form'
 import { isEmptyString } from 'shared/lib'
 import { Button, Label, Layout } from 'shared/ui'
 
@@ -70,9 +70,9 @@ const ResetPasswordPage = () => {
       <h1 className={css.heading()}>Reset password</h1>
       <Form {...form} className={css.form()}>
         <div>
-          <div className={fieldWrapper()}>
+          <div className={fieldCss.fieldWrapper()}>
             <Label>New password</Label>
-            <div className={field()}>
+            <div className={fieldCss.field()}>
               <Form.PasswordField
                 name="password"
                 rules={passwordRules}
@@ -84,7 +84,7 @@ const ResetPasswordPage = () => {
             </div>
           </div>
 
-          <div className={field()}>
+          <div className={fieldCss.field()}>
             <Label>Confirm new password</Label>
             <Form.Control name="confirmPassword" rules={confirmPasswordRules}>
               <Form.PasswordField

@@ -10,23 +10,20 @@ import {
   ResourceNotFoundExceptionCode,
   UserExceptionCode,
 } from 'shared/api'
-import { Form, hasError } from 'shared/form'
+import { Form, hasError, fieldCss } from 'shared/form'
 import { isEmptyString } from 'shared/lib'
 import { Button, Heading, HelperText, Label } from 'shared/ui'
 
-import { useRequestVerification } from '../../api/use-request-verification'
-import { useVerifyCode } from '../../api/use-verify-code'
-import { FormValues } from '../../model/form-values'
-import * as rules from '../../model/rules'
+import { useRequestVerification } from '../api/use-request-verification'
+import { useVerifyCode } from '../api/use-verify-code'
+import { FormValues } from '../model/form-values'
+import * as rules from '../model/rules'
 import {
   isCorrectLength,
   hasLowercaseAndUppercaseLetter,
   hasNumber,
   hasSpecialChar,
-} from '../../model/rules'
-import * as commonCss from '../../style/variants'
-
-import * as css from './variants'
+} from '../model/rules'
 
 export const Account = () => {
   const [showVerificationField, setShowVerificationField] = useState(false)
@@ -145,10 +142,10 @@ export const Account = () => {
       </Heading>
 
       <div>
-        <div className={commonCss.fieldWrapper()}>
+        <div className={fieldCss.fieldWrapper()}>
           <Label required>Email</Label>
-          <div className={css.textFieldWrapper()}>
-            <div className={commonCss.field({ className: 'grow' })}>
+          <div className={fieldCss.textFieldWrapper()}>
+            <div className={fieldCss.field({ className: 'grow' })}>
               <Form.Control name="email" rules={rules.email}>
                 <Form.TextField
                   onChange={handleEmailChange}
@@ -171,8 +168,8 @@ export const Account = () => {
           </div>
 
           {showVerificationField && (
-            <div className={css.textFieldWrapper()}>
-              <div className={commonCss.field({ className: 'grow' })}>
+            <div className={fieldCss.textFieldWrapper()}>
+              <div className={fieldCss.field({ className: 'grow' })}>
                 <Form.Control name="code" rules={rules.code}>
                   <Form.TextField
                     placeholder="Enter the verification code"
@@ -205,9 +202,9 @@ export const Account = () => {
           )}
         </div>
 
-        <div className={commonCss.fieldWrapper()}>
+        <div className={fieldCss.fieldWrapper()}>
           <Label required>Password</Label>
-          <div className={css.passwordFieldWrapper()}>
+          <div className={fieldCss.passwordFieldWrapper()}>
             <Form.PasswordField
               name="password"
               rules={rules.password}
@@ -239,7 +236,7 @@ export const Account = () => {
           </div>
         </div>
 
-        <div className={commonCss.field()}>
+        <div className={fieldCss.field()}>
           <Label required>Confirm Password</Label>
           <Form.Control name="confirmPassword" rules={rules.confirmPassword}>
             <Form.PasswordField
