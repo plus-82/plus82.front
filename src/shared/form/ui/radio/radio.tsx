@@ -7,7 +7,7 @@ import { useController, useFormContext } from 'react-hook-form'
 
 import { Radio, type RadioProps } from 'shared/ui'
 
-import { commonRules, type CommonFieldProps } from 'features/form/lib'
+import { commonRules, type CommonFieldProps } from '../../lib'
 
 import { RadioContext, useRadioContext } from './context'
 

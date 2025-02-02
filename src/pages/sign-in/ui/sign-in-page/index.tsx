@@ -4,11 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
 import { isServerError, useServerErrorHandler } from 'shared/api'
+import { hasError } from 'shared/form'
 import { Button, HelperText, Label, Layout, Link, TextField } from 'shared/ui'
 
 import { signIn } from 'entities/auth'
-
-import { hasError } from 'features/form'
 
 import { FormValues, defaultValues } from '../../model/form-values'
 import * as rules from '../../model/rules'

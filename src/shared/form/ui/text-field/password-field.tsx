@@ -5,15 +5,15 @@ import type { ChangeEvent, FocusEvent } from 'react'
 import type { FieldValues, Path } from 'react-hook-form'
 import { get, useFormContext } from 'react-hook-form'
 
-import { TextField, type TextFieldProps } from 'shared/ui'
+import { PasswordField, type PasswordFieldProps } from 'shared/ui'
 
-import { CommonFieldProps, commonRules } from 'features/form/lib'
+import { commonRules, type CommonFieldProps } from '../../lib'
 
-type Props<T extends FieldValues> = CommonFieldProps<TextFieldProps, T> & {
+type Props<T extends FieldValues> = CommonFieldProps<PasswordFieldProps, T> & {
   resetErrorOnBlur?: boolean
 }
 
-export const FormTextField = <T extends FieldValues>({
+export const FormPasswordField = <T extends FieldValues>({
   name = '' as Path<T>,
   rules,
   resetErrorOnBlur = true,
@@ -44,7 +44,7 @@ export const FormTextField = <T extends FieldValues>({
   }
 
   return (
-    <TextField
+    <PasswordField
       {...restProps}
       {...textFieldRegister}
       error={!isEmpty(error)}

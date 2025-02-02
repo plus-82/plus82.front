@@ -8,7 +8,7 @@ import { useController, useFormContext } from 'react-hook-form'
 import { GetCheckboxProps, useCheckbox, UseCheckboxProps } from 'shared/lib'
 import { Checkbox, CheckboxValue } from 'shared/ui'
 
-import { commonRules } from 'features/form'
+import { commonRules } from '../../lib'
 
 import { CheckboxContext, useCheckboxContext } from './context'
 

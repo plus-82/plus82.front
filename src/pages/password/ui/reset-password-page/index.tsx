@@ -6,6 +6,7 @@ import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { QueryErrorBoundary } from 'shared/api'
+import { Form } from 'shared/form'
 import { isEmptyString } from 'shared/lib'
 import { Button, Label, Layout } from 'shared/ui'
 
@@ -14,8 +15,6 @@ import {
   passwordRules,
   PasswordValidation,
 } from 'entities/auth'
-
-import { field, fieldWrapper, Form } from 'features/form'
 
 import { useCheckCodeValidity } from '../../api/use-check-code-validity'
 import { useResetPassword } from '../../api/use-reset-password'

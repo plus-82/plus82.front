@@ -10,10 +10,9 @@ import {
   ResourceNotFoundExceptionCode,
   UserExceptionCode,
 } from 'shared/api'
+import { Form, hasError } from 'shared/form'
 import { isEmptyString } from 'shared/lib'
 import { Button, Heading, HelperText, Label } from 'shared/ui'
-
-import { Form, hasError } from 'features/form'
 
 import { useRequestVerification } from '../../api/use-request-verification'
 import { useVerifyCode } from '../../api/use-verify-code'

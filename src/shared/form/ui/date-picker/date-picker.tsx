@@ -14,7 +14,7 @@ import {
   type TextFieldProps,
 } from 'shared/ui'
 
-import { commonRules, type CommonFieldProps } from 'features/form/lib'
+import { commonRules, type CommonFieldProps } from '../../lib'
 
 type FormCalendarProps = Omit<
   CalendarProps,

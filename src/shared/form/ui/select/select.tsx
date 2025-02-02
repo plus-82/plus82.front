@@ -7,7 +7,7 @@ import { get, useController, useFormContext } from 'react-hook-form'
 
 import { Select, SelectRootProps, SelectValue } from 'shared/ui'
 
-import { commonRules, type CommonFieldProps } from 'features/form/lib'
+import { commonRules, type CommonFieldProps } from '../../lib'
 
 export type Props = Omit<SelectRootProps, 'onChange'> & {
   onChange?: SelectRootProps['onChange']

@@ -1,7 +1,6 @@
-import { Country, CountryWithFlag } from 'entities/country'
+import { Form, type FormSelectProps } from 'shared/form'
 
-import { Form } from 'features/form'
-import { FormSelectProps } from 'features/form/ui'
+import { Country, CountryWithFlag } from 'entities/country'
 
 import { useCountries } from '../api/use-countries'
 

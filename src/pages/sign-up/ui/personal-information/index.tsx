@@ -1,6 +1,5 @@
+import { Form } from 'shared/form'
 import { Heading, Label } from 'shared/ui'
-
-import { Form } from 'features/form'
 
 import { CountrySelect } from 'widgets/country'
 
