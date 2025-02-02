@@ -5,9 +5,13 @@ import { CountrySelect } from 'entities/country'
 
 import * as rules from '../model/rules'
 
-export const PersonalInformationForm = () => {
+type Props = {
+  className?: string
+}
+
+export const PersonalInformationForm = ({ className }: Props) => {
   return (
-    <div>
+    <div className={className}>
       <div className={fieldCss.fieldWrapper()}>
         <Label required>First Name</Label>
         <Form.Control name="firstName" rules={rules.firstName}>
