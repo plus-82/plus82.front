@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     data: {
       selected: 'selected~=true',
+      active: 'active~=true',
       readOnly: 'readOnly~=true',
     },
     extend: {
