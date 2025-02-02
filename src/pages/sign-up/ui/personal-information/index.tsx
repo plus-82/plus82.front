@@ -1,7 +1,7 @@
 import { Form } from 'shared/form'
 import { Heading, Label } from 'shared/ui'
 
-import { CountrySelect } from 'widgets/country'
+import { CountrySelect } from 'entities/country'
 
 import * as rules from '../../model/rules'
 import * as commonCss from '../../style/variants'
