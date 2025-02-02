@@ -1,6 +1,7 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { Form } from 'shared/form'
 import { Button } from 'shared/ui'
@@ -9,7 +10,12 @@ import { User } from 'entities/user'
 
 import { PersonalInformationForm } from 'widgets/my-account'
 
-import { convertToFormValues, type FormValues } from '../model/form-values'
+import { useUpdateUserMe } from '../api/use-update-user-me'
+import {
+  convertToFormValues,
+  convertToUpdateUserMeDTO,
+  type FormValues,
+} from '../model/form-values'
 
 type Props = {
   user: User
@@ -21,6 +27,18 @@ export const PersonalInformationContent = ({ user }: Props) => {
     reValidateMode: 'onSubmit',
   })
 
+  const updateUserMe = useUpdateUserMe()
+
+  const handleUpdateUserMeSuccess = () => {
+    toast.success('Your personal information has been updated')
+  }
+
+  const submitForm = (data: FormValues) => {
+    updateUserMe.mutate(convertToUpdateUserMeDTO(data), {
+      onSuccess: handleUpdateUserMeSuccess,
+    })
+  }
+
   return (
     <div>
       <h2 className="title-large mb-10 text-center font-bold text-gray-900">
@@ -28,7 +46,7 @@ export const PersonalInformationContent = ({ user }: Props) => {
       </h2>
       <Form {...form} className="mb-6 w-fit">
         <PersonalInformationForm className="mb-10" />
-        <Button size="large" fullWidth>
+        <Button size="large" fullWidth onClick={form.handleSubmit(submitForm)}>
           Save
         </Button>
       </Form>

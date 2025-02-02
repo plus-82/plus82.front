@@ -1,4 +1,4 @@
-import { User } from 'entities/user'
+import { UpdateUserMeRequest, User } from 'entities/user'
 
 export type FormValues = {
   firstName: string
@@ -15,5 +15,15 @@ export const convertToFormValues = (user: User): FormValues => {
     countryId: null, // TODO: countryId: user.countryId
     genderType: user.genderType,
     birthDate: user.birthDate,
+  }
+}
+
+export const convertToUpdateUserMeDTO = (
+  data: FormValues,
+): UpdateUserMeRequest => {
+  return {
+    ...data,
+    countryId: data.countryId!,
+    birthDate: data.birthDate!,
   }
 }
