@@ -4,7 +4,7 @@ import { apiClient, HttpError, ResourceNotFoundExceptionCode } from 'shared/api'
 import { getCookie } from 'shared/lib'
 
 const handleSuccess = () => {
-  return true
+  return { success: true }
 }
 
 const handleError = (error: Error) => {
@@ -22,8 +22,6 @@ const handleError = (error: Error) => {
       message: error.message || 'An error occurred while deleting the account',
     }
   }
-
-  return false
 }
 
 export const deleteUserMe = async () => {

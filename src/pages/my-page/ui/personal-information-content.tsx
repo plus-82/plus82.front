@@ -8,6 +8,8 @@ import { Button } from 'shared/ui'
 
 import { User } from 'entities/user'
 
+import { DeleteUserButton } from 'features/delete-account'
+
 import { PersonalInformationForm } from 'widgets/my-account'
 
 import { useUpdateUserMe } from '../api/use-update-user-me'
@@ -50,9 +52,7 @@ export const PersonalInformationContent = ({ user }: Props) => {
           Save
         </Button>
       </Form>
-      <button className="body-large ml-auto block text-gray-400 transition-all hover:text-gray-500">
-        Delete Account
-      </button>
+      <DeleteUserButton />
     </div>
   )
 }
