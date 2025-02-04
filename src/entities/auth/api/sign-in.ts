@@ -1,7 +1,6 @@
 'use server'
 
 import { apiClient, AuthExceptionCode, HttpError } from 'shared/api'
-import { setCookie } from 'shared/lib'
 
 type SignInRequest = {
   email: string
@@ -13,11 +12,7 @@ type SignInResponse = {
 }
 
 const handleSuccess = (accessToken: string) => {
-  setCookie('accessToken', accessToken, {
-    httpOnly: true,
-    secure: true,
-    maxAge: 86400000,
-  })
+  return { accessToken }
 }
 
 const handleError = (error: Error) => {
@@ -57,7 +52,7 @@ export const signIn = async (data: SignInRequest) => {
 
     const { accessToken } = response
 
-    handleSuccess(accessToken)
+    return handleSuccess(accessToken)
   } catch (error) {
     return handleError(error as Error)
   }

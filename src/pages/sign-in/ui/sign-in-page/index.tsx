@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { hasError } from 'shared/form'
+import { setCookie } from 'shared/lib'
 import { Button, HelperText, Label, Layout, Link, TextField } from 'shared/ui'
 
 import { signIn } from 'entities/auth'
@@ -30,7 +31,13 @@ export const SignInPage = () => {
 
   const { handleServerError } = useServerErrorHandler(form)
 
-  const handleSignInSuccess = () => {
+  const handleSignInSuccess = async (accessToken: string) => {
+    await setCookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: true,
+      maxAge: 86400000,
+    })
+
     // TODO: Redirect to another page
     router.replace('/')
   }
@@ -41,7 +48,9 @@ export const SignInPage = () => {
     if (isServerError(response)) {
       handleServerError(response)
     } else {
-      handleSignInSuccess()
+      if ('accessToken' in response) {
+        handleSignInSuccess(response.accessToken)
+      }
     }
   }
 
