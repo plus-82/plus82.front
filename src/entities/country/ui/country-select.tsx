@@ -14,7 +14,13 @@ export const CountrySelect = (props: FormSelectProps) => {
   return (
     <Form.Select
       placeholder="Choose your nationality"
-      render={([id]) => <CountryWithFlag {...getCountry(id as number)} />}
+      render={([id]) => {
+        if (countries) {
+          return <CountryWithFlag {...getCountry(id as number)} />
+        }
+
+        return null
+      }}
       {...props}
     >
       {countries?.map(country => (

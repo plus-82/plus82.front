@@ -12,7 +12,7 @@ export const convertToFormValues = (user: User): FormValues => {
   return {
     firstName: user.firstName,
     lastName: user.lastName,
-    countryId: null, // TODO: countryId: user.countryId
+    countryId: user.countryId,
     genderType: user.genderType,
     birthDate: user.birthDate,
   }

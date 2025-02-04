@@ -5,6 +5,10 @@ export type User = {
   genderType: 'MALE' | 'FEMALE'
   birthDate: string
   email: string
+  countryId: number
   countryNameEn: string
+  countryCode: string
+  countryCallingCode: string
+  flag: string
   profileImagePath: string
 }
