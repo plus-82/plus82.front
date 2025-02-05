@@ -1,6 +1,6 @@
 import { UpdateUserMeRequest, User } from 'entities/user'
 
-export type FormValues = {
+export type UpdateUserMeFormValues = {
   firstName: string
   lastName: string
   countryId: number | null
@@ -8,7 +8,9 @@ export type FormValues = {
   birthDate: string | null
 }
 
-export const convertToFormValues = (user: User): FormValues => {
+export const convertToUpdateUserMeFormValues = (
+  user: User,
+): UpdateUserMeFormValues => {
   return {
     firstName: user.firstName,
     lastName: user.lastName,
@@ -19,11 +21,21 @@ export const convertToFormValues = (user: User): FormValues => {
 }
 
 export const convertToUpdateUserMeDTO = (
-  data: FormValues,
+  data: UpdateUserMeFormValues,
 ): UpdateUserMeRequest => {
   return {
     ...data,
     countryId: data.countryId!,
     birthDate: data.birthDate!,
   }
+}
+
+export type ChangePasswordFormValues = {
+  currentPassword: string
+  newPassword: string
+}
+
+export const changePasswordFormDefaultValues: ChangePasswordFormValues = {
+  currentPassword: '',
+  newPassword: '',
 }
