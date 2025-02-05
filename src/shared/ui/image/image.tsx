@@ -1,11 +1,21 @@
 'use client'
 
 import NextImage, { type ImageProps } from 'next/image'
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 import { cn, isNilOrEmptyString } from 'shared/lib'
 
-export const Image = ({ src, alt, className, ...restProps }: ImageProps) => {
+type Props = ImageProps & {
+  fallback?: ReactNode
+}
+
+export const Image = ({
+  src,
+  alt,
+  className,
+  fallback,
+  ...restProps
+}: Props) => {
   const [error, setError] = useState(false)
 
   const handleError = () => {
@@ -13,6 +23,10 @@ export const Image = ({ src, alt, className, ...restProps }: ImageProps) => {
   }
 
   if (error || isNilOrEmptyString(src)) {
+    if (fallback) {
+      return fallback
+    }
+
     return (
       <div className={cn('border border-gray-200 bg-gray-200', className)} />
     )
