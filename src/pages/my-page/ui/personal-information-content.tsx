@@ -14,9 +14,9 @@ import { PersonalInformationForm } from 'widgets/my-account'
 
 import { useUpdateUserMe } from '../api/use-update-user-me'
 import {
-  convertToFormValues,
   convertToUpdateUserMeDTO,
-  type FormValues,
+  convertToUpdateUserMeFormValues,
+  type UpdateUserMeFormValues,
 } from '../model/form-values'
 
 type Props = {
@@ -24,8 +24,8 @@ type Props = {
 }
 
 export const PersonalInformationContent = ({ user }: Props) => {
-  const form = useForm<FormValues>({
-    defaultValues: convertToFormValues(user),
+  const form = useForm<UpdateUserMeFormValues>({
+    defaultValues: convertToUpdateUserMeFormValues(user),
     reValidateMode: 'onSubmit',
   })
 
@@ -35,7 +35,7 @@ export const PersonalInformationContent = ({ user }: Props) => {
     toast.success('Your personal information has been updated')
   }
 
-  const submitForm = (data: FormValues) => {
+  const submitForm = (data: UpdateUserMeFormValues) => {
     updateUserMe.mutate(convertToUpdateUserMeDTO(data), {
       onSuccess: handleUpdateUserMeSuccess,
     })

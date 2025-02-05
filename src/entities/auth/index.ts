@@ -5,5 +5,9 @@ export { resetPassword } from './api/reset-password'
 export { signIn } from './api/sign-in'
 export { signUp, type SignUpRequest } from './api/sign-up'
 export { verifyCode } from './api/verify-code'
-export { passwordRules, confirmPasswordRules } from './model/password'
+export {
+  currentPasswordRules,
+  confirmPasswordRules,
+  passwordRules,
+} from './model/password'
 export { PasswordValidation } from './ui/password-validation'
