@@ -6,7 +6,6 @@ export {
 } from './checkbox'
 export { cn } from './classname'
 export { useClickAway } from './click-away'
-export { getCookie, setCookie, deleteCookie } from './cookie'
 export { useDebounce } from './debounce'
 export { useDropdown } from './dropdown'
 export { useEscape } from './escape'

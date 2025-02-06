@@ -87,7 +87,7 @@ export const UserImage = ({ src, alt }: Props) => {
       </div>
       <div className="flex gap-2">
         <Button variant="lined" size="small" onClick={handleUploadButtonClick}>
-          <Icon name="Plus" size="small" color={colors.gray[700]} />
+          <Button.Icon name="Plus" />
           Upload
         </Button>
         <Button
@@ -96,7 +96,7 @@ export const UserImage = ({ src, alt }: Props) => {
           disabled={!hasImage}
           onClick={handleDeleteButtonClick}
         >
-          <Icon name="Delete" size="small" color={colors.gray[700]} />
+          <Button.Icon name="Delete" />
           Delete
         </Button>
       </div>

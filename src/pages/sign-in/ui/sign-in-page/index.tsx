@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { hasError } from 'shared/form'
-import { setCookie } from 'shared/lib'
+import { setCookie } from 'shared/server-lib'
 import { Button, HelperText, Label, Layout, Link, TextField } from 'shared/ui'
 
 import { signIn } from 'entities/auth'

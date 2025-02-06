@@ -3,7 +3,7 @@
 import { revalidateTag } from 'next/cache'
 
 import { apiClient, ContentType, HttpError } from 'shared/api'
-import { getCookie } from 'shared/lib'
+import { getCookie } from 'shared/server-lib'
 
 export type UpdateProfileImageRequest = {
   image: File | null

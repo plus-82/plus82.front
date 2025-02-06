@@ -1,5 +1,5 @@
 import { apiClient } from 'shared/api'
-import { getCookie } from 'shared/lib'
+import { getCookie } from 'shared/server-lib'
 
 import { User } from '../model/user'
 

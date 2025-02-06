@@ -1,5 +1,5 @@
 import { apiClient, Pagination, PaginationParams } from 'shared/api'
-import { getCookie } from 'shared/lib'
+import { getCookie } from 'shared/server-lib'
 
 import { JobPostRelation } from '../model/application'
 import { ApplicationStatus } from '../model/status'
