@@ -12,6 +12,7 @@ export const getUserMe = async () => {
     endpoint: '/users/me',
     option: {
       authorization: `Bearer ${accessToken}`,
+      tags: ['user-me'],
     },
   })
 
