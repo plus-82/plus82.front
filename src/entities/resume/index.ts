@@ -1,3 +1,4 @@
+export { getResumes } from './api/get-resumes'
 export { getResumeCount } from './api/get-resumes'
 export { resumeQueries } from './api/query'
 export type { Resume } from './model/resume'
