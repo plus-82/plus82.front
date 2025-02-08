@@ -6,7 +6,6 @@ import type { Resume } from 'entities/resume'
 import { colors } from 'shared/config'
 import { Checkbox, Icon } from 'shared/ui'
 
-
 type Props = {
   resume: Resume
   checked: boolean
@@ -33,7 +32,7 @@ export const ResumeCard = ({
       <Card.Footer>
         <p className="body-medium text-gray-700">{resume.updatedAt}</p>
         <Link
-          href={`/resumes/${resume.id}`}
+          href={`/setting/resume/${resume.id}`}
           target="_blank"
           className="flex items-center"
         >

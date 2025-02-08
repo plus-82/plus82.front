@@ -33,7 +33,7 @@ export const ResumeListPage = async () => {
       </div>
       <div className="flex flex-wrap gap-3">
         {resumes.map(resume => (
-          <Link href={`/resumes/${resume.id}`} key={resume.id}>
+          <Link href={`/setting/resume/${resume.id}`} key={resume.id}>
             <ResumeCard resume={resume} />
           </Link>
         ))}
