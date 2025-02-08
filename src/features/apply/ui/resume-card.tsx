@@ -1,11 +1,10 @@
 import Link from 'next/link'
 import { PropsWithChildren } from 'react'
 
-import { colors } from 'shared/config'
-import { Checkbox, Icon } from 'shared/ui'
-
 import { Card } from 'entities/resume'
 import type { Resume } from 'entities/resume'
+import { colors } from 'shared/config'
+import { Checkbox, Icon } from 'shared/ui'
 
 type Props = {
   resume: Resume
@@ -31,9 +30,9 @@ export const ResumeCard = ({
       </Card.Header>
       <Card.Title>{resume.title}</Card.Title>
       <Card.Footer>
-        <p className="body-medium text-gray-700">2024.09.30</p>
+        <p className="body-medium text-gray-700">{resume.updatedAt}</p>
         <Link
-          href={`/resumes/${resume.id}`}
+          href={`/setting/resume/${resume.id}`}
           target="_blank"
           className="flex items-center"
         >
