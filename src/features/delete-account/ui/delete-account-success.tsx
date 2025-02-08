@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
-import { deleteCookie } from 'shared/lib'
+import { deleteCookie } from 'shared/server-lib'
 import { Button, Modal } from 'shared/ui'
 
 export const DeleteUserSuccess = () => {

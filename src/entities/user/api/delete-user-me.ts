@@ -1,7 +1,7 @@
 'use server'
 
 import { apiClient, HttpError, ResourceNotFoundExceptionCode } from 'shared/api'
-import { getCookie } from 'shared/lib'
+import { getCookie } from 'shared/server-lib'
 
 const handleSuccess = () => {
   return { success: true }

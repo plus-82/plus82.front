@@ -14,3 +14,9 @@ export const longDivide =
   `
   [&>*:not(:last-child)]:after:h-[80px]
 `
+
+export const shortDivide =
+  divide +
+  `
+  [&>*:not(:last-child)]:after:h-[68px]
+`

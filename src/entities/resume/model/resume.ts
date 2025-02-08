@@ -7,5 +7,7 @@ export type Resume = {
   hasVisa: boolean
   visaType: null
   isRepresentative: boolean
+  createdAt: string
+  updatedAt: string
   hasFile: boolean
 }

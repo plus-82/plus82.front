@@ -1,5 +1,5 @@
 import { apiClient } from 'shared/api'
-import { getCookie } from 'shared/lib'
+import { getCookie } from 'shared/server-lib'
 
 import { User } from '../model/user'
 
@@ -12,6 +12,7 @@ export const getUserMe = async () => {
     endpoint: '/users/me',
     option: {
       authorization: `Bearer ${accessToken}`,
+      tags: ['user-me'],
     },
   })
 

@@ -11,7 +11,8 @@ import {
   InvalidInputValueExceptionCode,
 } from 'shared/api'
 import { fieldCss, Form } from 'shared/form'
-import { deleteCookie, isEmptyString } from 'shared/lib'
+import { isEmptyString } from 'shared/lib'
+import { deleteCookie } from 'shared/server-lib'
 import { Button, Label } from 'shared/ui'
 
 import {
