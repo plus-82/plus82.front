@@ -31,14 +31,6 @@ export const UserImage = ({ src, alt }: Props) => {
 
     if (!file) return
 
-    // TODO: 이미지 크기 제한 있는지 확인 필요
-    if (file.size > 5 * 1024 * 1024) {
-      // 5MB 제한
-      toast.error('Image size must be less than 5MB')
-
-      return
-    }
-
     const response = await updateProfileImage({ image: file })
 
     if (isServerError(response)) {
