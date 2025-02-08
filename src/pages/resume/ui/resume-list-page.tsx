@@ -6,6 +6,7 @@ import { colors } from 'shared/config'
 import { Icon } from 'shared/ui'
 
 import { ResumeCard } from './resume-card'
+import { UploadResume } from './upload-resume'
 
 export const ResumeListPage = async () => {
   const userMe = await getUserMe()
@@ -17,7 +18,7 @@ export const ResumeListPage = async () => {
         We support your successful job search, {userMe.firstName}!
       </h2>
       <div className="mb-3 flex gap-3">
-        <Link href="/setting/resume/create" className="w-full">
+        <Link href="/setting/resume/create">
           <Card
             size="medium"
             className="flex flex-col items-center justify-center gap-2"
@@ -28,19 +29,9 @@ export const ResumeListPage = async () => {
             <p className="title-small text-gray-900">Create Resume</p>
           </Card>
         </Link>
-        <button type="button">
-          <Card
-            size="medium"
-            className="flex flex-col items-center justify-center gap-2"
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
-              <Icon name="Upload" size="large" color={colors.gray[700]} />
-            </div>
-            <p className="title-small text-gray-900">Upload Resume</p>
-          </Card>
-        </button>
+        <UploadResume />
       </div>
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         {resumes.map(resume => (
           <Link href={`/resumes/${resume.id}`} key={resume.id}>
             <ResumeCard resume={resume} />

@@ -1,5 +1,6 @@
 'use client'
 
+import { format } from 'date-fns'
 import { MouseEvent } from 'react'
 
 import { Card, Resume } from 'entities/resume'
@@ -27,7 +28,9 @@ export const ResumeCard = ({ resume }: Props) => {
       </Card.Header>
       <Card.Title>{resume.title}</Card.Title>
       <Card.Footer>
-        <p className="body-medium text-gray-700">2024.09.30</p>
+        <p className="body-medium text-gray-700">
+          {format(resume.updatedAt, 'yyyy.MM.dd')}
+        </p>
         <button type="button" className="relative" onClick={handleMenuClick}>
           <Icon name="Dot" size="medium" color={colors.gray[700]} />
           {isOpen && (

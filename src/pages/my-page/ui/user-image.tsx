@@ -3,12 +3,11 @@
 import { ChangeEvent, useRef } from 'react'
 import { toast } from 'react-toastify'
 
+import { updateProfileImage } from 'entities/user'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { colors } from 'shared/config'
 import { isNilOrEmptyString } from 'shared/lib'
 import { Button, Icon, Image } from 'shared/ui'
-
-import { updateProfileImage } from 'entities/user'
 
 type Props = {
   src: string
