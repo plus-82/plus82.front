@@ -72,6 +72,7 @@ const config = [
       'react/jsx-no-useless-fragment': 'warn',
       'react/jsx-key': 'error',
       '@typescript-eslint/no-shadow': 'warn',
+      '@typescript-eslint/no-duplicate-enum-values': 'off',
       'import/order': [
         'error',
         {
