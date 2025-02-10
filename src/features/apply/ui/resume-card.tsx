@@ -2,12 +2,12 @@ import Link from 'next/link'
 import { PropsWithChildren } from 'react'
 
 import { Card } from 'entities/resume'
-import type { Resume } from 'entities/resume'
+import type { ResumeSummary } from 'entities/resume'
 import { colors } from 'shared/config'
 import { Checkbox, Icon } from 'shared/ui'
 
 type Props = {
-  resume: Resume
+  resume: ResumeSummary
   checked: boolean
   onCheckboxChange: (id: number) => void
 }

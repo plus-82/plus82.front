@@ -3,13 +3,13 @@
 import { format } from 'date-fns'
 import { MouseEvent } from 'react'
 
-import { Card, Resume } from 'entities/resume'
+import { Card, ResumeSummary } from 'entities/resume'
 import { colors } from 'shared/config'
 import { useDropdown } from 'shared/lib'
 import { Dropdown, Icon } from 'shared/ui'
 
 type Props = {
-  resume: Resume
+  resume: ResumeSummary
 }
 
 export const ResumeCard = ({ resume }: Props) => {

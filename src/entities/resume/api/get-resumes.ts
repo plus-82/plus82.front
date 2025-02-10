@@ -2,9 +2,9 @@ import { apiClient } from 'shared/api'
 import type { Pagination } from 'shared/api'
 import { getCookie } from 'shared/server-lib'
 
-import { Resume } from '../model/resume'
+import { ResumeSummary } from '../model/resume'
 
-type GetResumesResponse = Pagination<Resume>
+type GetResumesResponse = Pagination<ResumeSummary>
 
 export const getResumes = async () => {
   const accessToken = await getCookie('accessToken')
