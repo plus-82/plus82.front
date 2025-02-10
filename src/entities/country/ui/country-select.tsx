@@ -1,10 +1,12 @@
-import { Form, type FormSelectProps } from 'shared/form'
-
 import { Country, CountryWithFlag } from 'entities/country'
+import { Form, type FormSelectProps } from 'shared/form'
 
 import { useCountries } from '../api/use-countries'
 
-export const CountrySelect = (props: FormSelectProps) => {
+export const CountrySelect = ({
+  placeholder,
+  ...restProps
+}: FormSelectProps) => {
   const { data: countries } = useCountries()
 
   const getCountry = (id: number) => {
@@ -13,7 +15,7 @@ export const CountrySelect = (props: FormSelectProps) => {
 
   return (
     <Form.Select
-      placeholder="Choose your nationality"
+      placeholder={placeholder ?? 'Choose your nationality'}
       render={([id]) => {
         if (countries) {
           return <CountryWithFlag {...getCountry(id as number)} />
@@ -21,7 +23,7 @@ export const CountrySelect = (props: FormSelectProps) => {
 
         return null
       }}
-      {...props}
+      {...restProps}
     >
       {countries?.map(country => (
         <Form.SelectItem key={country.id} value={country.id}>
