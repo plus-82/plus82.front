@@ -1,5 +1,4 @@
 import { Layout } from 'shared/ui'
-
 import { SettingSidebar, SettingSidebarProvider } from 'widgets/sidebar'
 
 const PageLayout = ({ children }: { children: React.ReactNode }) => {

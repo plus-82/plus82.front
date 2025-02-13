@@ -1,5 +1,6 @@
 import { Config } from 'tailwindcss'
 import plugin from 'tailwindcss/plugin'
+import animate from 'tailwindcss-animate'
 
 import { colors, fontSize, zIndex } from './src/shared/config'
 
@@ -42,8 +43,9 @@ const config: Config = {
     plugin(function ({ addVariant }) {
       addVariant('not-last', '&:not(:last-child)')
       addVariant('not-checked', '&:not(:checked)')
+      addVariant('not-empty', '&:not(:empty)')
     }),
-    require('tailwindcss-animate'),
+    animate,
   ],
 }
 

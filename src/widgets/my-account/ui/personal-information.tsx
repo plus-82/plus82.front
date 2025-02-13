@@ -1,7 +1,6 @@
+import { CountrySelect } from 'entities/country'
 import { Form, fieldCss } from 'shared/form'
 import { Label } from 'shared/ui'
-
-import { CountrySelect } from 'entities/country'
 
 import * as rules from '../model/rules'
 

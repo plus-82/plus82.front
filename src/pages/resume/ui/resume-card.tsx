@@ -3,13 +3,13 @@
 import { format } from 'date-fns'
 import { MouseEvent } from 'react'
 
-import { Card, Resume } from 'entities/resume'
+import { Card, ResumeSummary } from 'entities/resume'
 import { colors } from 'shared/config'
 import { useDropdown } from 'shared/lib'
 import { Dropdown, Icon } from 'shared/ui'
 
 type Props = {
-  resume: Resume
+  resume: ResumeSummary
 }
 
 export const ResumeCard = ({ resume }: Props) => {
@@ -20,12 +20,16 @@ export const ResumeCard = ({ resume }: Props) => {
     toggleIsOpen()
   }
 
+  const showHeader = !resume.hasFile || resume.isRepresentative
+
   return (
     <Card size="medium">
-      <Card.Header>
-        {resume.hasFile && <Card.FileBadge />}
-        {resume.isRepresentative && <Card.RepresentativeBadge />}
-      </Card.Header>
+      {showHeader && (
+        <Card.Header>
+          {!resume.hasFile && <Card.PlatformBadge />}
+          {resume.isRepresentative && <Card.RepresentativeBadge />}
+        </Card.Header>
+      )}
       <Card.Title>{resume.title}</Card.Title>
       <Card.Footer>
         <p className="body-medium text-gray-700">

@@ -21,7 +21,7 @@ const CardRoot = ({
   )
 }
 
-const FileBadge = () => {
+const PlatformBadge = () => {
   return (
     <Chip size="small" variant="lined">
       <Chip.Label>+82 Created</Chip.Label>
@@ -63,6 +63,6 @@ export const Card = Object.assign(CardRoot, {
   Header,
   Title,
   Footer,
-  FileBadge,
+  PlatformBadge,
   RepresentativeBadge,
 })

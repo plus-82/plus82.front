@@ -17,7 +17,6 @@ import {
 } from '../../model/form-values'
 import { Account } from '../account'
 import { PersonalInformation } from '../personal-information'
-
 import * as css from './variants'
 
 export const SignUpPage = () => {

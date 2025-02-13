@@ -25,7 +25,7 @@ export { Sidebar, useSidebar } from './sidebar'
 export { Skeleton } from './skeleton'
 export { Switch } from './switch'
 export { Tabs } from './tabs'
-export { TextArea } from './text-area'
+export { TextArea, type TextAreaProps } from './text-area'
 export {
   TextField,
   PasswordField,

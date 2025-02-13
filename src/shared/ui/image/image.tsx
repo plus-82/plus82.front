@@ -7,6 +7,7 @@ import { cn, isNilOrEmptyString } from 'shared/lib'
 
 type Props = ImageProps & {
   fallback?: ReactNode
+  useCDN?: boolean
 }
 
 export const Image = ({
@@ -14,6 +15,7 @@ export const Image = ({
   alt,
   className,
   fallback,
+  useCDN = true,
   ...restProps
 }: Props) => {
   const [error, setError] = useState(false)
@@ -32,6 +34,8 @@ export const Image = ({
     )
   }
 
+  const imageSrc = useCDN ? `${process.env.NEXT_PUBLIC_CDN_URL}${src}` : src
+
   return (
     <div
       className={cn(
@@ -40,7 +44,7 @@ export const Image = ({
       )}
     >
       <NextImage
-        src={`${process.env.NEXT_PUBLIC_CDN_URL}${src}`}
+        src={imageSrc}
         alt={alt}
         fill
         className="object-cover"

@@ -37,7 +37,7 @@ export const FormDatePicker = <T extends FieldValues>({
   fullWidth,
   ...restProps
 }: Props<T>) => {
-  const { control } = useFormContext<T>()
+  const { control, clearErrors } = useFormContext<T>()
 
   return (
     <Controller
@@ -57,12 +57,14 @@ export const FormDatePicker = <T extends FieldValues>({
             onChange={(date, event) => {
               field.onChange(date, event)
               onChange?.(date, event)
+              clearErrors(field.name)
             }}
             popperPlacement="bottom-center"
             customInput={
               <TextField
                 error={!isEmpty(fieldState.error)}
                 fullWidth={fullWidth}
+                ref={ref}
               >
                 <Slot name="left">
                   <Icon
