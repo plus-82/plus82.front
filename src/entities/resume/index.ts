@@ -1,4 +1,5 @@
 export { createResume } from './api/create-resume'
+export { getResume } from './api/get-resume'
 export { getResumes } from './api/get-resumes'
 export { getResumeCount } from './api/get-resumes'
 export { uploadResumeFile } from './api/upload-resume-file'
