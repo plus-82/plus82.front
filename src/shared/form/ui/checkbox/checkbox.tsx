@@ -8,9 +8,8 @@ import { useController, useFormContext } from 'react-hook-form'
 import { GetCheckboxProps, useCheckbox, UseCheckboxProps } from 'shared/lib'
 import { Checkbox, CheckboxValue } from 'shared/ui'
 
-import { commonRules } from '../../lib'
-
 import { CheckboxContext, useCheckboxContext } from './context'
+import { commonRules } from '../../lib'
 
 type FormCheckboxGroupProps = UseCheckboxProps & {
   rules?: RegisterOptions
@@ -60,6 +59,7 @@ const FormCheckboxItem = ({
   value,
   indeterminate = false,
 }: FormCheckboxProps) => {
+  const { clearErrors } = useFormContext()
   const {
     controller,
     updateCheckedValue,
@@ -85,6 +85,7 @@ const FormCheckboxItem = ({
   const handleCheckboxChange = () => {
     checkboxProps.onChange(updatedCheckedValues => {
       field.onChange(updatedCheckedValues)
+      clearErrors(field.name)
     })
   }
 
