@@ -32,11 +32,15 @@ export const ResumeListPage = async () => {
         <UploadResume />
       </div>
       <div className="flex flex-wrap gap-3">
-        {resumes.map(resume => (
-          <Link href={`/setting/resume/${resume.id}`} key={resume.id}>
-            <ResumeCard resume={resume} />
-          </Link>
-        ))}
+        {resumes.map(resume =>
+          resume.hasFile ? (
+            <ResumeCard resume={resume} key={resume.id} />
+          ) : (
+            <Link href={`/setting/resume/${resume.id}`} key={resume.id}>
+              <ResumeCard resume={resume} />
+            </Link>
+          ),
+        )}
       </div>
     </div>
   )
