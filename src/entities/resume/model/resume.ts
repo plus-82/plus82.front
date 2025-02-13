@@ -10,7 +10,7 @@ export type Resume = {
   genderType: 'MALE' | 'FEMALE'
   birthDate: string
   hasVisa: boolean
-  visaType: 'E2' | 'Others'
+  visaType?: 'E2' | 'OTHERS' | null
   isRepresentative: boolean
   forKindergarten: boolean
   forElementary: boolean
@@ -29,7 +29,7 @@ export type CreateResume = Omit<
   Resume,
   'id' | 'createdAt' | 'updatedAt' | 'profileImagePath' | 'filePath'
 > & {
-  profileImage: File | null
+  profileImage?: File | null
 }
 
 export type ResumeSummary = Omit<
