@@ -1,3 +1,5 @@
+'use server'
+
 import { apiClient } from 'shared/api'
 import { getCookie } from 'shared/server-lib'
 

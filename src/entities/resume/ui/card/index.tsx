@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react'
+import { forwardRef, PropsWithChildren } from 'react'
 
 import { colors } from 'shared/config'
 import { cn } from 'shared/lib'
@@ -11,15 +11,16 @@ type Props = {
   className?: string
 }
 
-const CardRoot = ({
-  size = 'small',
-  className,
-  children,
-}: PropsWithChildren<Props>) => {
-  return (
-    <div className={cn(css.container({ size }), className)}>{children}</div>
-  )
-}
+const CardRoot = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
+  ({ size = 'small', className, children }, ref) => {
+    return (
+      <div className={cn(css.container({ size }), className)} ref={ref}>
+        {children}
+      </div>
+    )
+  },
+)
+CardRoot.displayName = 'Card'
 
 const PlatformBadge = () => {
   return (
@@ -55,8 +56,12 @@ const Title = ({ children }: PropsWithChildren) => {
   )
 }
 
-const Footer = ({ children }: PropsWithChildren) => {
-  return <div className="flex items-center justify-between">{children}</div>
+const Footer = ({ children, className }: PropsWithChildren<Props>) => {
+  return (
+    <div className={cn('flex items-center justify-between', className)}>
+      {children}
+    </div>
+  )
 }
 
 export const Card = Object.assign(CardRoot, {
