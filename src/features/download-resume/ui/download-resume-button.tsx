@@ -2,6 +2,7 @@
 
 import { useState, MouseEvent } from 'react'
 import { createRoot } from 'react-dom/client'
+import { toast } from 'react-toastify'
 
 import { getResume } from 'entities/resume'
 
@@ -43,8 +44,9 @@ export const DownloadResumeButton = ({ resumeId, onClick }: Props) => {
 
       // 정리: 임시 컨테이너 제거
       document.body.removeChild(container)
+      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error('다운로드 중 오류 발생:', error)
+      toast.error('Failed to download resume')
     } finally {
       setIsLoading(false)
       onClick()

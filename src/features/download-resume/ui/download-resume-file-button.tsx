@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, MouseEvent } from 'react'
+import { toast } from 'react-toastify'
 
 type Props = {
   filePath: string
@@ -29,10 +30,10 @@ export const DownloadResumeFileButton = ({ filePath, fileName }: Props) => {
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
-
       window.URL.revokeObjectURL(url)
+      // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     } catch (error) {
-      console.error('파일 다운로드 중 오류 발생:', error)
+      toast.error('Failed to download resume file')
       setIsLoading(false)
     } finally {
       setIsLoading(false)
