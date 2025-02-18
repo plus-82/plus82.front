@@ -25,22 +25,28 @@ export const ResumeCard = ({ resume }: Props) => {
     toggleIsOpen()
   }
 
-  const showHeader = !resume.hasFile || resume.isRepresentative
+  const showHeader = !resume.filePath || resume.isRepresentative
+
+  const title = resume.filePath ? resume.fileName : resume.title
 
   return (
     <Card size="medium" ref={dropdownRef}>
       {showHeader && (
         <Card.Header>
-          {!resume.hasFile && <Card.PlatformBadge />}
+          {!resume.filePath && <Card.PlatformBadge />}
           {resume.isRepresentative && <Card.RepresentativeBadge />}
         </Card.Header>
       )}
-      <Card.Title>{resume.title}</Card.Title>
+      <Card.Title className="text-left">{title}</Card.Title>
       <Card.Footer className="relative">
         <p className="body-medium text-gray-700">
           {format(resume.updatedAt, 'yyyy.MM.dd')}
         </p>
-        <button type="button" onClick={handleMenuClick}>
+        <button
+          type="button"
+          onClick={handleMenuClick}
+          className="focus:outline focus:outline-[#005fcc]"
+        >
           <Icon name="Dot" size="medium" color={colors.gray[700]} />
         </button>
         {isOpen && (

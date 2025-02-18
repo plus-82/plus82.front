@@ -46,9 +46,9 @@ const Header = ({ children }: PropsWithChildren) => {
   )
 }
 
-const Title = ({ children }: PropsWithChildren) => {
+const Title = ({ children, className }: PropsWithChildren<Props>) => {
   return (
-    <div className="flex-grow">
+    <div className={cn('flex-grow', className)}>
       <h4 className="title-small line-clamp-2 break-all text-gray-900">
         {children}
       </h4>

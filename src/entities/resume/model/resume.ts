@@ -22,7 +22,8 @@ export type Resume = {
   createdAt: string
   updatedAt: string
   profileImagePath?: string
-  filePath?: string
+  filePath: string | null
+  fileName: string | null
 }
 
 export type CreateResume = Omit<
@@ -42,7 +43,6 @@ export type ResumeSummary = Omit<
   | 'forHighSchool'
   | 'forAdult'
   | 'profileImagePath'
-  | 'filePath'
   | 'birthDate'
   | 'genderType'
   | 'degree'
@@ -50,5 +50,4 @@ export type ResumeSummary = Omit<
   | 'personalIntroduction'
 > & {
   id: number
-  hasFile: boolean
 }
