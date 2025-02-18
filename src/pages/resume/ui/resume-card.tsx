@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { MouseEvent } from 'react'
 
 import { Card, ResumeSummary } from 'entities/resume'
+import { DeleteResumeButton } from 'features/delete-resume'
 import {
   DownloadResumeButton,
   DownloadResumeFileButton,
@@ -68,7 +69,9 @@ export const ResumeCard = ({ resume }: Props) => {
               )}
             </Dropdown.Item>
             <Dropdown.Item>Copy</Dropdown.Item>
-            <Dropdown.Item className="text-error">Delete</Dropdown.Item>
+            <Dropdown.Item className="p-0">
+              <DeleteResumeButton resumeId={resume.id} />
+            </Dropdown.Item>
           </Dropdown>
         )}
       </Card.Footer>
