@@ -4,7 +4,10 @@ import { format } from 'date-fns'
 import { MouseEvent } from 'react'
 
 import { Card, ResumeSummary } from 'entities/resume'
-import { DownloadResumeButton } from 'features/download-resume'
+import {
+  DownloadResumeButton,
+  DownloadResumeFileButton,
+} from 'features/download-resume'
 import { colors } from 'shared/config'
 import { useDropdown } from 'shared/lib'
 import { Dropdown, Icon } from 'shared/ui'
@@ -52,10 +55,17 @@ export const ResumeCard = ({ resume }: Props) => {
         {isOpen && (
           <Dropdown className="left-[calc(100%-30px)] right-4 w-[210px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)]">
             <Dropdown.Item className="p-0">
-              <DownloadResumeButton
-                resumeId={resume.id}
-                onClick={handleDownloadClick}
-              />
+              {resume.filePath ? (
+                <DownloadResumeFileButton
+                  filePath={resume.filePath!}
+                  fileName={resume.fileName!}
+                />
+              ) : (
+                <DownloadResumeButton
+                  resumeId={resume.id}
+                  onClick={handleDownloadClick}
+                />
+              )}
             </Dropdown.Item>
             <Dropdown.Item>Copy</Dropdown.Item>
             <Dropdown.Item className="text-error">Delete</Dropdown.Item>
