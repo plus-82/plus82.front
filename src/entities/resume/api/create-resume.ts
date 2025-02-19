@@ -10,9 +10,9 @@ import {
 } from 'shared/api'
 import { getCookie } from 'shared/server-lib'
 
-import { CreateResume } from '../model/resume'
+import { ResumeDTO } from '../model/resume'
 
-type CreateResumeRequest = CreateResume
+type CreateResumeRequest = ResumeDTO
 
 const handleSuccess = () => {
   redirect('/setting/resume')

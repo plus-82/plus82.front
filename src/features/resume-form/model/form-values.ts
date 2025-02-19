@@ -1,10 +1,10 @@
 import { isNil } from 'lodash-es'
 
 import { convertStudentTypeToArray } from 'entities/job-post'
-import { CreateResume, Resume } from 'entities/resume'
+import { ResumeDTO, Resume } from 'entities/resume'
 
-export type CreateResumeFormValues = Omit<
-  CreateResume,
+export type ResumeFormValues = Omit<
+  ResumeDTO,
   | 'countryId'
   | 'residenceCountryId'
   | 'birthDate'
@@ -24,7 +24,7 @@ export type CreateResumeFormValues = Omit<
   hasVisa: 'true' | 'false'
 }
 
-export const defaultValues: CreateResumeFormValues = {
+export const defaultValues: ResumeFormValues = {
   title: '',
   personalIntroduction: '',
   firstName: '',
@@ -43,9 +43,7 @@ export const defaultValues: CreateResumeFormValues = {
   isRepresentative: [] as string[],
 }
 
-export const convertToFormValues = (
-  resume?: Resume,
-): CreateResumeFormValues => {
+export const convertToFormValues = (resume?: Resume): ResumeFormValues => {
   if (isNil(resume)) return defaultValues
 
   return {
@@ -59,16 +57,16 @@ export const convertToFormValues = (
       forAdult: resume.forAdult,
     }),
     isRepresentative: resume.isRepresentative ? ['true'] : [],
-    profileImage: null, // FIXME: 이력서 수정 API 개발 후 수정
+    profileImage: null,
   }
 }
 
-export const convertToCreateResumeDTO = ({
+export const convertToResumeDTO = ({
   studentType,
   visaType,
   profileImage,
   ...formValues
-}: CreateResumeFormValues): CreateResume => {
+}: ResumeFormValues): ResumeDTO => {
   return {
     ...formValues,
     forKindergarten: studentType?.includes('Kindergarten') ?? false,

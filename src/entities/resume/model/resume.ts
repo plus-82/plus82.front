@@ -26,11 +26,17 @@ export type Resume = {
   fileName: string | null
 }
 
-export type CreateResume = Omit<
+export type ResumeDTO = Omit<
   Resume,
-  'id' | 'createdAt' | 'updatedAt' | 'profileImagePath' | 'filePath'
+  | 'id'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'profileImagePath'
+  | 'filePath'
+  | 'fileName'
 > & {
   profileImage?: File | null
+  resumeId?: number
 }
 
 export type ResumeSummary = Omit<
