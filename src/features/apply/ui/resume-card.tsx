@@ -21,14 +21,14 @@ export const ResumeCard = ({
     onCheckboxChange(resume.id)
   }
 
-  const showHeader = !resume.hasFile || resume.isRepresentative
+  const showHeader = !resume.filePath || resume.isRepresentative
 
   return (
     <Card size="small">
       {showHeader && (
         <Card.Header>
           <Checkbox checked={checked} onChange={handleCheckboxChange} />
-          {!resume.hasFile && <Card.PlatformBadge />}
+          {!resume.filePath && <Card.PlatformBadge />}
           {resume.isRepresentative && <Card.RepresentativeBadge />}
         </Card.Header>
       )}

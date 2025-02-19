@@ -23,6 +23,10 @@ const nextConfig = {
         source: '/api/:path*',
         destination: `https://back.plus82.co/api/:path*`,
       },
+      {
+        source: '/cdn/:path*',
+        destination: `${process.env.NEXT_PUBLIC_CDN_URL}/:path*`,
+      },
     ]
   },
 }

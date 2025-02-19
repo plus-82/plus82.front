@@ -46,6 +46,7 @@ export enum JobPostExceptionCode {
 
 export enum ResumeExceptionCode {
   REPRESENTATIVE_RESUME_EXISTS = 'RSM-001',
+  FILE_RESUME_CANNOT_BE_MODIFIED = 'RSM-002',
 }
 
 export type ResponseCode =

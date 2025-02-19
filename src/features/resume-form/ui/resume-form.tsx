@@ -7,7 +7,7 @@ import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { CountrySelect } from 'entities/country'
-import { createResume, Resume } from 'entities/resume'
+import { Resume, ResumeDTO } from 'entities/resume'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { colors } from 'shared/config'
 import { fieldCss, Form } from 'shared/form'
@@ -15,17 +15,24 @@ import { isNilOrEmptyString } from 'shared/lib'
 import { Heading, Layout, Image, Icon, Label, Button } from 'shared/ui'
 
 import {
-  convertToCreateResumeDTO,
   convertToFormValues,
-  type CreateResumeFormValues,
+  convertToResumeDTO,
+  type ResumeFormValues,
 } from '../model/form-values'
 import * as rules from '../model/rules'
 
 type Props = {
   resume?: Resume
+  submit: (data: ResumeDTO) => Promise<
+    | {
+        type: string
+        message: string
+      }
+    | undefined
+  >
 }
 
-export const ResumeForm = ({ resume }: Props = {}) => {
+export const ResumeForm = ({ resume, submit }: Props) => {
   const router = useRouter()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -33,7 +40,7 @@ export const ResumeForm = ({ resume }: Props = {}) => {
     resume?.profileImagePath ?? null,
   )
 
-  const form = useForm<CreateResumeFormValues>({
+  const form = useForm<ResumeFormValues>({
     values: convertToFormValues(resume),
     reValidateMode: 'onSubmit',
   })
@@ -85,15 +92,28 @@ export const ResumeForm = ({ resume }: Props = {}) => {
     toast.success('Resume created successfully')
   }
 
-  const submitForm = async (data: CreateResumeFormValues) => {
-    const dto = convertToCreateResumeDTO(data)
+  const handleUpdateResumeSuccess = () => {
+    toast.success('Resume updated successfully')
+  }
 
-    const response = await createResume(dto)
+  const submitForm = async (data: ResumeFormValues) => {
+    const dto = convertToResumeDTO(data)
+
+    const isUpdating = !isNil(resume?.id)
+
+    const response = await submit({
+      ...dto,
+      ...(isUpdating && { resumeId: resume.id }),
+    })
 
     if (isServerError(response)) {
       handleServerError(response)
     } else {
-      handleCreateResumeSuccess()
+      if (isUpdating) {
+        handleUpdateResumeSuccess()
+      } else {
+        handleCreateResumeSuccess()
+      }
     }
   }
 

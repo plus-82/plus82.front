@@ -5,9 +5,8 @@ import Link from 'next/link'
 import { colors } from 'shared/config'
 import { Icon } from 'shared/ui'
 
-import { useResumes } from '../api/use-resumes'
-
 import { ResumeCard } from './resume-card'
+import { useResumes } from '../api/use-resumes'
 
 type Props = {
   selectedResumeId: number | null

@@ -1,4 +1,5 @@
 import { getResume } from 'entities/resume'
+import { updateResume } from 'entities/resume/api/update-resume'
 import { ResumeForm } from 'features/resume-form'
 
 export const UpdateResumePage = async ({
@@ -8,5 +9,5 @@ export const UpdateResumePage = async ({
 }) => {
   const resume = await getResume(params.resumeId)
 
-  return <ResumeForm resume={resume} />
+  return <ResumeForm resume={resume} submit={updateResume} />
 }

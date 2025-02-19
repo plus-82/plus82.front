@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import { Card, getResumes } from 'entities/resume'
 import { getUserMe } from 'entities/user'
+import { ShowResumeFileButton } from 'features/show-resume-file'
 import { colors } from 'shared/config'
 import { Icon } from 'shared/ui'
 
@@ -33,8 +34,14 @@ export const ResumeListPage = async () => {
       </div>
       <div className="flex flex-wrap gap-3">
         {resumes.map(resume =>
-          resume.hasFile ? (
-            <ResumeCard resume={resume} key={resume.id} />
+          resume.filePath ? (
+            <ShowResumeFileButton
+              fileName={resume.fileName!}
+              filePath={resume.filePath}
+              key={resume.id}
+            >
+              <ResumeCard resume={resume} />
+            </ShowResumeFileButton>
           ) : (
             <Link href={`/setting/resume/${resume.id}`} key={resume.id}>
               <ResumeCard resume={resume} />

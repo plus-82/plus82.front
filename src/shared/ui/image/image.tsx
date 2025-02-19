@@ -34,7 +34,7 @@ export const Image = ({
     )
   }
 
-  const imageSrc = useCDN ? `${process.env.NEXT_PUBLIC_CDN_URL}${src}` : src
+  const imageSrc = useCDN ? `${process.env.NEXT_PUBLIC_CDN_URL}/${src}` : src
 
   return (
     <div
