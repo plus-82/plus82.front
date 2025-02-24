@@ -2,26 +2,22 @@
 
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
-
-import {
-  AuthExceptionCode,
-  HttpError,
-  InvalidInputValueExceptionCode,
-} from 'shared/api'
-import { fieldCss, Form } from 'shared/form'
-import { isEmptyString } from 'shared/lib'
-import { deleteCookie } from 'shared/server-lib'
-import { Button, Label } from 'shared/ui'
 
 import {
   currentPasswordRules,
   passwordRules,
   PasswordValidation,
+  signOutWithForm,
 } from 'entities/auth'
+import { changePassword } from 'entities/user'
+import { isServerError, useServerErrorHandler } from 'shared/api'
+import { fieldCss, Form } from 'shared/form'
+import { isEmptyString } from 'shared/lib'
+import { Button, Label } from 'shared/ui'
 
-import { useChangePassword } from '../api/use-change-password'
 import {
   changePasswordFormDefaultValues,
   type ChangePasswordFormValues,
@@ -31,11 +27,11 @@ export const ChangePasswordPage = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
 
-  const changePassword = useChangePassword()
-
   const form = useForm<ChangePasswordFormValues>({
     defaultValues: changePasswordFormDefaultValues,
   })
+
+  const { handleServerError } = useServerErrorHandler(form)
 
   const [currentPassword, newPassword] = useWatch({
     name: ['currentPassword', 'newPassword'],
@@ -45,36 +41,24 @@ export const ChangePasswordPage = () => {
   const canSubmit =
     !isEmptyString(currentPassword) && !isEmptyString(newPassword)
 
-  const handleChangePasswordSuccess = () => {
+  const handleChangePasswordSuccess = async () => {
     toast.success('Your password has been changed. Please sign in again.')
 
     queryClient.removeQueries()
-    deleteCookie('accessToken')
+    await signOutWithForm()
+    signOut()
 
     router.push('/sign-in')
   }
 
-  const handleChangePasswordError = (error: HttpError) => {
-    if (error.code === AuthExceptionCode.PW_NOT_CORRECT) {
-      form.setError('currentPassword', {
-        message: 'The current password is incorrect',
-      })
-    } else if (
-      error.code === InvalidInputValueExceptionCode.INVALID_INPUT_VALUE
-    ) {
-      Object.keys(error.data).forEach(key => {
-        form.setError(key as keyof ChangePasswordFormValues, {
-          message: 'Please check your password',
-        })
-      })
-    }
-  }
+  const submitForm = async (data: ChangePasswordFormValues) => {
+    const response = await changePassword(data)
 
-  const submitForm = (data: ChangePasswordFormValues) => {
-    changePassword.mutate(data, {
-      onSuccess: handleChangePasswordSuccess,
-      onError: handleChangePasswordError,
-    })
+    if (isServerError(response)) {
+      handleServerError(response)
+    } else {
+      handleChangePasswordSuccess()
+    }
   }
 
   return (

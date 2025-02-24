@@ -2,8 +2,8 @@
 
 import { revalidateTag } from 'next/cache'
 
+import { getSession } from 'entities/auth'
 import { apiClient, ContentType, HttpError } from 'shared/api'
-import { getCookie } from 'shared/server-lib'
 
 export type UpdateProfileImageRequest = {
   image: File | null
@@ -24,7 +24,7 @@ const handleError = (error: Error) => {
 }
 
 export const updateProfileImage = async (data: UpdateProfileImageRequest) => {
-  const accessToken = await getCookie('accessToken')
+  const { accessToken } = await getSession()
 
   try {
     await apiClient.put<null, UpdateProfileImageRequest>({

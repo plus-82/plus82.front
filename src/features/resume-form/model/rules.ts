@@ -1,6 +1,6 @@
 import { isNil } from 'lodash-es'
 
-import { CreateResumeFormValues } from './form-values'
+import { ResumeFormValues } from './form-values'
 
 const REG_EMAIL =
   /^([A-Za-z0-9]+([-_.]?[A-Za-z0-9])*)@([A-Za-z0-9]+([-]?[A-Za-z0-9])*)(\.([A-Za-z0-9]+([-]?[A-Za-z0-9])*))?(\.([A-Za-z0-9]([-]?[A-Za-z0-9])*))?((\.[A-Za-z]{2,63})$)/
@@ -57,18 +57,15 @@ export const hasVisa = {
   required: true,
 }
 
+export const studentType = {
+  required: true,
+}
+
 export const visaType = {
-  validate: (
-    value: string,
-    formValues: Pick<CreateResumeFormValues, 'hasVisa'>,
-  ) => {
+  validate: (value: string, formValues: Pick<ResumeFormValues, 'hasVisa'>) => {
     if (formValues.hasVisa === 'false') return true
     if (isNil(value)) return 'Please select your visa type'
 
     return true
   },
-}
-
-export const studentType = {
-  required: true,
 }

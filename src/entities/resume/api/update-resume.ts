@@ -2,6 +2,7 @@
 
 import { revalidateTag } from 'next/cache'
 
+import { getSession } from 'entities/auth'
 import {
   apiClient,
   ContentType,
@@ -9,7 +10,6 @@ import {
   ResumeExceptionCode,
   ResourceNotFoundExceptionCode,
 } from 'shared/api'
-import { getCookie } from 'shared/server-lib'
 
 import { ResumeDTO } from '../model/resume'
 
@@ -52,7 +52,7 @@ export const updateResume = async ({
   resumeId,
   ...data
 }: UpdateResumeRequest) => {
-  const accessToken = await getCookie('accessToken')
+  const { accessToken } = await getSession()
 
   try {
     await apiClient.put<null, ResumeDTO>({

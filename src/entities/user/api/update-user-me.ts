@@ -1,5 +1,7 @@
-import { apiClient } from 'shared/api'
-import { getCookie } from 'shared/server-lib'
+'use server'
+
+import { getSession } from 'entities/auth'
+import { apiClient, HttpError } from 'shared/api'
 
 export type UpdateUserMeRequest = {
   firstName: string
@@ -9,16 +11,28 @@ export type UpdateUserMeRequest = {
   birthDate: string
 }
 
+const handleError = (error: Error) => {
+  const isHttpError = error instanceof HttpError
+  if (!isHttpError) throw error
+
+  return {
+    type: 'toast',
+    message: error.message || 'An error occurred while updating the user',
+  }
+}
+
 export const updateUserMe = async (data: UpdateUserMeRequest) => {
-  const accessToken = await getCookie('accessToken')
+  const { accessToken } = await getSession()
 
-  const response = await apiClient.put<null, UpdateUserMeRequest>({
-    endpoint: '/users/me',
-    option: {
-      authorization: `Bearer ${accessToken}`,
-    },
-    body: data,
-  })
-
-  return response
+  try {
+    await apiClient.put<null, UpdateUserMeRequest>({
+      endpoint: '/users/me',
+      option: {
+        authorization: `Bearer ${accessToken}`,
+      },
+      body: data,
+    })
+  } catch (error) {
+    return handleError(error as Error)
+  }
 }

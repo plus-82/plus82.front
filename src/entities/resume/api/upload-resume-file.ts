@@ -2,8 +2,8 @@
 
 import { revalidateTag } from 'next/cache'
 
+import { getSession } from 'entities/auth'
 import { apiClient, ContentType, HttpError } from 'shared/api'
-import { getCookie } from 'shared/server-lib'
 
 type UploadResumeFileRequest = {
   file: File
@@ -24,7 +24,7 @@ const handleError = (error: Error) => {
 }
 
 export const uploadResumeFile = async (data: UploadResumeFileRequest) => {
-  const accessToken = await getCookie('accessToken')
+  const { accessToken } = await getSession()
 
   try {
     await apiClient.post<null, UploadResumeFileRequest>({
