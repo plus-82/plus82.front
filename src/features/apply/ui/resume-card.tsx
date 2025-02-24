@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import Link from 'next/link'
 import { PropsWithChildren } from 'react'
 
@@ -21,20 +22,22 @@ export const ResumeCard = ({
     onCheckboxChange(resume.id)
   }
 
-  const showHeader = !resume.filePath || resume.isRepresentative
+  const title = resume.fileName ?? resume.title
+
+  const showPlatformBadge = !(resume.isRepresentative || resume.filePath)
 
   return (
     <Card size="small">
-      {showHeader && (
-        <Card.Header>
-          <Checkbox checked={checked} onChange={handleCheckboxChange} />
-          {!resume.filePath && <Card.PlatformBadge />}
-          {resume.isRepresentative && <Card.RepresentativeBadge />}
-        </Card.Header>
-      )}
-      <Card.Title>{resume.title}</Card.Title>
+      <Card.Header>
+        <Checkbox checked={checked} onChange={handleCheckboxChange} />
+        {showPlatformBadge && <Card.PlatformBadge />}
+        {resume.isRepresentative && <Card.RepresentativeBadge />}
+      </Card.Header>
+      <Card.Title>{title}</Card.Title>
       <Card.Footer>
-        <p className="body-medium text-gray-700">{resume.updatedAt}</p>
+        <p className="body-medium text-gray-700">
+          {format(resume.updatedAt, 'yyyy.MM.dd')}
+        </p>
         <Link
           href={`/setting/resume/${resume.id}`}
           target="_blank"
