@@ -1,5 +1,7 @@
+'use server'
+
+import { getSession } from 'entities/auth'
 import { apiClient, Pagination, PaginationParams } from 'shared/api'
-import { getCookie } from 'shared/server-lib'
 
 import { JobPostRelation } from '../model/application'
 import { ApplicationStatus } from '../model/status'
@@ -13,7 +15,7 @@ type GetJobPostResumeResponse = Pagination<JobPostRelation>
 export const getJobPostResumeRelations = async (
   queryParams: GetJobPostResumeRequest,
 ) => {
-  const accessToken = await getCookie('accessToken')
+  const { accessToken } = await getSession()
 
   const response = await apiClient.get<GetJobPostResumeResponse>({
     endpoint: '/job-post-resume-relations',

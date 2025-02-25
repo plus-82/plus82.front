@@ -1,7 +1,7 @@
 'use server'
 
+import { getSession } from 'entities/auth'
 import { apiClient, HttpError, ResourceNotFoundExceptionCode } from 'shared/api'
-import { getCookie } from 'shared/server-lib'
 
 const handleSuccess = () => {
   return { success: true }
@@ -26,7 +26,7 @@ const handleError = (error: Error) => {
 
 export const deleteUserMe = async () => {
   try {
-    const accessToken = await getCookie('accessToken')
+    const { accessToken } = await getSession()
 
     await apiClient.delete({
       endpoint: '/users/me',

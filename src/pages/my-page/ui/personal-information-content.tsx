@@ -3,16 +3,13 @@
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
+import { updateUserMe, User } from 'entities/user'
+import { DeleteUserButton } from 'features/delete-account'
+import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Form } from 'shared/form'
 import { Button } from 'shared/ui'
-
-import { User } from 'entities/user'
-
-import { DeleteUserButton } from 'features/delete-account'
-
 import { PersonalInformationForm } from 'widgets/my-account'
 
-import { useUpdateUserMe } from '../api/use-update-user-me'
 import {
   convertToUpdateUserMeDTO,
   convertToUpdateUserMeFormValues,
@@ -29,16 +26,20 @@ export const PersonalInformationContent = ({ user }: Props) => {
     reValidateMode: 'onSubmit',
   })
 
-  const updateUserMe = useUpdateUserMe()
+  const { handleServerError } = useServerErrorHandler()
 
-  const handleUpdateUserMeSuccess = () => {
+  const handleSuccess = () => {
     toast.success('Your personal information has been updated')
   }
 
   const submitForm = (data: UpdateUserMeFormValues) => {
-    updateUserMe.mutate(convertToUpdateUserMeDTO(data), {
-      onSuccess: handleUpdateUserMeSuccess,
-    })
+    const response = updateUserMe(convertToUpdateUserMeDTO(data))
+
+    if (isServerError(response)) {
+      handleServerError(response)
+    } else {
+      handleSuccess()
+    }
   }
 
   return (

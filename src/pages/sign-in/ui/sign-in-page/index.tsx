@@ -1,22 +1,21 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 
+import { signInWithCredentials } from 'entities/auth'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { hasError } from 'shared/form'
-import { setCookie } from 'shared/server-lib'
 import { Button, HelperText, Label, Layout, Link, TextField } from 'shared/ui'
 
-import { signIn } from 'entities/auth'
-
+import * as css from './variants'
 import { FormValues, defaultValues } from '../../model/form-values'
 import * as rules from '../../model/rules'
 
-import * as css from './variants'
-
 export const SignInPage = () => {
   const router = useRouter()
+  const session = useSession()
 
   const form = useForm<FormValues>({
     defaultValues,
@@ -31,26 +30,19 @@ export const SignInPage = () => {
 
   const { handleServerError } = useServerErrorHandler(form)
 
-  const handleSignInSuccess = async (accessToken: string) => {
-    await setCookie('accessToken', accessToken, {
-      httpOnly: true,
-      secure: true,
-      maxAge: 86400000,
-    })
-
+  const handleSignInSuccess = async () => {
     // TODO: Redirect to another page
     router.replace('/')
+    session.update()
   }
 
   const handleFormValid = async (data: FormValues) => {
-    const response = await signIn(data)
+    const response = await signInWithCredentials(data)
 
     if (isServerError(response)) {
       handleServerError(response)
     } else {
-      if ('accessToken' in response) {
-        handleSignInSuccess(response.accessToken)
-      }
+      handleSignInSuccess()
     }
   }
 

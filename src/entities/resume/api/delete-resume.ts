@@ -2,8 +2,8 @@
 
 import { revalidateTag } from 'next/cache'
 
+import { getSession } from 'entities/auth'
 import { apiClient, HttpError, ResourceNotFoundExceptionCode } from 'shared/api'
-import { getCookie } from 'shared/server-lib'
 
 const handleSuccess = () => {
   revalidateTag('resumes')
@@ -27,7 +27,7 @@ const handleError = (error: Error) => {
 }
 
 export const deleteResume = async (resumeId: number) => {
-  const accessToken = await getCookie('accessToken')
+  const { accessToken } = await getSession()
 
   try {
     await apiClient.delete<null>({

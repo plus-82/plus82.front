@@ -2,13 +2,13 @@
 
 import { redirect } from 'next/navigation'
 
+import { getSession } from 'entities/auth'
 import {
   apiClient,
   ContentType,
   HttpError,
   ResumeExceptionCode,
 } from 'shared/api'
-import { getCookie } from 'shared/server-lib'
 
 import { ResumeDTO } from '../model/resume'
 
@@ -36,7 +36,7 @@ const handleError = (error: Error) => {
 }
 
 export const createResume = async (data: CreateResumeRequest) => {
-  const accessToken = await getCookie('accessToken')
+  const { accessToken } = await getSession()
 
   try {
     await apiClient.post<null, CreateResumeRequest>({

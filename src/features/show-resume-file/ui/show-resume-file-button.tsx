@@ -28,7 +28,7 @@ export const ShowResumeFileButton = ({
         <Modal.Title className="title-large w-full text-center font-bold text-gray-900">
           {fileName}
         </Modal.Title>
-        <PDFViewer filePath={filePath} />
+        <PDFViewer filePath={filePath} className="h-[480px]" />
         <Modal.Close asChild>
           <Button type="button" size="large">
             Confirm

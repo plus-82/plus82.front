@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
 
+import { cn } from 'shared/lib'
+
 // PDF.js 워커 설정
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.mjs',
@@ -16,10 +18,11 @@ const LoadingSpinner = () => (
 )
 
 type Props = {
+  className?: string
   filePath: string
 }
 
-export const PDFViewer = ({ filePath }: Props) => {
+export const PDFViewer = ({ filePath, className }: Props) => {
   const [numPages, setNumPages] = useState<number>()
 
   const handleDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -27,7 +30,7 @@ export const PDFViewer = ({ filePath }: Props) => {
   }
 
   return (
-    <div className="flex h-[480px] w-full flex-col">
+    <div className={cn('flex h-full w-full flex-col', className)}>
       <div className="relative flex-1 overflow-auto">
         <Document
           file={`/cdn/${filePath}`}
