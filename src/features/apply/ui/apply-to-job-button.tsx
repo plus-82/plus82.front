@@ -15,12 +15,14 @@ export const ApplyToJobButton = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
 
-  const session = useSession()
+  const { status } = useSession()
 
   const [isOpen, setIsOpen] = useState(false)
 
+  const notAuthenticated = status !== 'authenticated'
+
   const handleButtonClick = async () => {
-    if (!session) {
+    if (notAuthenticated) {
       router.push('/sign-in')
 
       return

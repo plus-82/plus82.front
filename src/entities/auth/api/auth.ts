@@ -60,5 +60,5 @@ export const signInWithGoogle = async () => {
 }
 
 export const signOutWithForm = async () => {
-  await signOut()
+  await signOut({ redirect: false })
 }

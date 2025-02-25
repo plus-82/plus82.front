@@ -46,7 +46,7 @@ export const ChangePasswordPage = () => {
 
     queryClient.removeQueries()
     await signOutWithForm()
-    signOut()
+    await signOut({ redirect: false })
 
     router.push('/sign-in')
   }
