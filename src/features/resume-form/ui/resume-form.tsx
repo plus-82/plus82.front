@@ -155,10 +155,7 @@ export const ResumeForm = ({ resume, submit }: Props) => {
                 useCDN={isNilOrEmptyString(fileInputRef.current?.value)}
                 src={imagePreview ?? ''}
                 alt=""
-                width={110}
-                height={110}
-                fill={false}
-                className="rounded-full"
+                className="h-[110px] w-[110px] rounded-full"
                 fallback={
                   <div className="flex h-[110px] w-[110px] items-center justify-center rounded-full bg-gray-300">
                     <Icon

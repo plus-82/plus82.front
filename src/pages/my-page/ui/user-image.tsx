@@ -3,7 +3,7 @@
 import { ChangeEvent, useRef } from 'react'
 import { toast } from 'react-toastify'
 
-import { updateProfileImage } from 'entities/user'
+import { deleteProfileImage, updateProfileImage } from 'entities/user'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { colors } from 'shared/config'
 import { isNilOrEmptyString } from 'shared/lib'
@@ -39,9 +39,8 @@ export const UserImage = ({ src, alt }: Props) => {
     }
   }
 
-  // TODO: 삭제 안됨, 확인 필요
   const handleDeleteButtonClick = async () => {
-    const response = await updateProfileImage({ image: null })
+    const response = await deleteProfileImage()
 
     if (isServerError(response)) {
       handleServerError(response)
