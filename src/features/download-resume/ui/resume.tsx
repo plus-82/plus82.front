@@ -56,13 +56,13 @@ export const Resume = ({ resume }: Props) => {
             <Heading className="title-medium mb-4 h-11 border-blue-800 text-blue-800">
               Nationality
             </Heading>
-            <span>{resume.countryId ?? '―'}</span>
+            <span>{resume.countryNameEn ?? '―'}</span>
           </div>
           <div>
             <Heading className="title-medium mb-4 h-11 border-blue-800 text-blue-800">
               Current Country of Residence
             </Heading>
-            <span>{resume.residenceCountryId ?? '―'}</span>
+            <span>{resume.residenceCountryNameEn ?? '―'}</span>
           </div>
           <div>
             <Heading className="title-medium mb-4 h-11 border-blue-800 text-blue-800">
