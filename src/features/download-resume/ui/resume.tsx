@@ -3,7 +3,7 @@ import { capitalize } from 'lodash-es'
 
 import { type Resume as ResumeType } from 'entities/resume'
 import { colors } from 'shared/config'
-import { Heading, Icon, Image } from 'shared/ui'
+import { Heading, Icon } from 'shared/ui'
 
 type Props = {
   resume: ResumeType
@@ -42,11 +42,12 @@ export const Resume = ({ resume }: Props) => {
               <span className="body-large text-gray-700">{resume.email}</span>
             </div>
           </div>
-          <div>
-            <Image
-              src={resume.profileImagePath ?? ''}
+          <div className="relative overflow-hidden rounded-full border border-gray-200">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/cdn/${resume.profileImagePath}`}
               alt="profile"
-              className="h-[150px] w-[150px] rounded-full"
+              className="h-[150px] w-[150px]"
             />
           </div>
         </div>
