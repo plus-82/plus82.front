@@ -1,7 +1,7 @@
 'use client'
 
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api'
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 
 const CONTAINER_STYLE = {
   width: '720px',
@@ -21,9 +21,11 @@ const MAP_MARKER_SVG = `
 
 type Props = {
   address: string
+  lat: number
+  lng: number
 }
 
-const AcademyAddress = ({ address }: Props) => {
+const AcademyAddress = ({ address, lat, lng }: Props) => {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? '',
@@ -37,43 +39,19 @@ const AcademyAddress = ({ address }: Props) => {
       }
     : undefined
 
-  const [center, setCenter] = useState({
-    lat: 37.5665, // 서울 중심 좌표로 초기값 설정
-    lng: 126.978,
-  })
-
-  const onLoad = useCallback(
-    function callback(map: google.maps.Map) {
-      const geocoder = new window.google.maps.Geocoder()
-
-      geocoder.geocode({ address }, (results, status) => {
-        if (status === 'OK' && results?.[0]) {
-          const { location } = results[0].geometry
-
-          const newCenter = {
-            lat: location.lat(),
-            lng: location.lng(),
-          }
-
-          setCenter(newCenter)
-          map.setCenter(newCenter)
-        }
-      })
-    },
-    [address],
-  )
-
   return (
     <div className="overflow-hidden rounded-[10px] border border-gray-300">
       {isLoaded ? (
         <GoogleMap
           mapContainerStyle={CONTAINER_STYLE}
           options={MAP_OPTIONS}
-          center={center}
+          center={{
+            lat,
+            lng,
+          }}
           zoom={15}
-          onLoad={onLoad}
         >
-          <Marker position={center} icon={markerIcon} />
+          <Marker position={{ lat, lng }} icon={markerIcon} />
         </GoogleMap>
       ) : (
         <div className="h-[232px] w-full bg-gray-100" />
