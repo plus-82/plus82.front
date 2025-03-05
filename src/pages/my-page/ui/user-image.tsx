@@ -1,9 +1,10 @@
 'use client'
 
-import { ChangeEvent, useRef } from 'react'
+import { useRef } from 'react'
 import { toast } from 'react-toastify'
 
 import { deleteProfileImage, updateProfileImage } from 'entities/user'
+import { ImageUploadInput } from 'features/upload-image'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { colors } from 'shared/config'
 import { isNilOrEmptyString } from 'shared/lib'
@@ -25,11 +26,7 @@ export const UserImage = ({ src, alt }: Props) => {
     fileInputRef.current?.click()
   }
 
-  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-
-    if (!file) return
-
+  const handleFileChange = async (file: File) => {
     const response = await updateProfileImage({ image: file })
 
     if (isServerError(response)) {
@@ -67,13 +64,7 @@ export const UserImage = ({ src, alt }: Props) => {
             </div>
           }
         />
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleFileChange}
-        />
+        <ImageUploadInput ref={fileInputRef} onChange={handleFileChange} />
       </div>
       <div className="flex gap-2">
         <Button variant="lined" size="small" onClick={handleUploadButtonClick}>
