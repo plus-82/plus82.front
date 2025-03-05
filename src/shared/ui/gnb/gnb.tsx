@@ -54,7 +54,7 @@ export const GNB = () => {
                 <UserButton />
               </div>
             )}
-            <Button variant="lined" size="small">
+            <Button as="a" href="/academy" variant="lined" size="small">
               Academy
             </Button>
           </div>
