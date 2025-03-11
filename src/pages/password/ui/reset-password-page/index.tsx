@@ -18,7 +18,7 @@ import {
 } from 'shared/api'
 import { fieldCss, Form } from 'shared/form'
 import { isEmptyString } from 'shared/lib'
-import { Button, Label, Layout } from 'shared/ui'
+import { Button, Label, Layout, Spinner } from 'shared/ui'
 
 import { useCheckCodeValidity } from '../../api/use-check-code-validity'
 import {
@@ -120,7 +120,7 @@ export const ResetPasswordPageWithErrorBoundary = () => {
   return (
     <QueryErrorBoundary
       errorFallback={ErrorFallback}
-      suspenseFallback={<div>Loading</div>}
+      suspenseFallback={<Spinner size="large" />}
     >
       <ResetPasswordPage />
     </QueryErrorBoundary>
