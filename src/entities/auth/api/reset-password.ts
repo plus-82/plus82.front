@@ -1,6 +1,6 @@
 'use server'
 
-import { apiClient, HttpError } from 'shared/api'
+import { apiClient, errorHandler, HttpError } from 'shared/api'
 
 type ResetPasswordRequest = {
   code: string
@@ -11,10 +11,10 @@ const handleError = (error: Error) => {
   const isHttpError = error instanceof HttpError
   if (!isHttpError) throw error
 
-  return {
-    type: 'toast',
-    message: 'An error occurred while resetting the password',
-  }
+  return errorHandler.toast(
+    'An error occurred while resetting the password',
+    error,
+  )
 }
 
 export const resetPassword = async (data: ResetPasswordRequest) => {
