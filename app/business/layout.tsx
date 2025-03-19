@@ -1,26 +1,23 @@
 import type { Metadata } from 'next'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale } from 'next-intl/server'
 import { ReactNode } from 'react'
 
 import { AppProviders } from 'app/providers'
 import { SpoqaHanSansNeo } from 'app/styles'
-import { LocaleType } from 'shared/config/localization/setting'
 import { cn } from 'shared/lib'
 import { GNB } from 'shared/ui'
 
-import '../../globals.css'
+import '../globals.css'
 
 export const metadata: Metadata = {
   title: 'Plus82',
   description: '',
 }
 
-const RootLayout = ({
-  params: { locale },
-  children,
-}: {
-  params: { locale: LocaleType }
-  children: ReactNode
-}) => {
+const RootLayout = async ({ children }: { children: ReactNode }) => {
+  const locale = await getLocale()
+
   return (
     <html lang={locale} className={SpoqaHanSansNeo.variable}>
       <body
@@ -29,10 +26,12 @@ const RootLayout = ({
           'flex min-h-dvh w-full flex-col',
         )}
       >
-        <AppProviders>
-          <GNB />
-          {children}
-        </AppProviders>
+        <NextIntlClientProvider>
+          <AppProviders>
+            <GNB />
+            {children}
+          </AppProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   )
