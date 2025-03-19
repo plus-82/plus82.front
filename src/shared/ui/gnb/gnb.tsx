@@ -1,8 +1,10 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
+import { useTranslation } from 'shared/config/localization/client'
+import { LocaleTypes } from 'shared/config/localization/setting'
 import { cn } from 'shared/lib'
 
 import { Button } from '../button'
@@ -16,6 +18,12 @@ export const GNB = () => {
   const router = useRouter()
   const pathname = usePathname()
   const session = useSession()
+
+  const locale = useParams()?.locale as LocaleTypes
+
+  console.log(locale)
+
+  const { t } = useTranslation(locale, 'gnb')
 
   const handleLogoClick = () => {
     router.push('/')
@@ -34,7 +42,9 @@ export const GNB = () => {
           <div className={cn(css.leftSection())}>
             <Logo onClick={handleLogoClick} />
             <Tabs value={pathname ?? '/'} onChange={handleTabChange}>
-              <Tabs.Trigger value="/job-board">Job Board</Tabs.Trigger>
+              <Tabs.Trigger value="/job-board">
+                {t('tab.job-board')}
+              </Tabs.Trigger>
             </Tabs>
           </div>
           <div className={cn(css.rightSection())}>
