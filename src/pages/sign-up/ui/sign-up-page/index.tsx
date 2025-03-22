@@ -92,6 +92,9 @@ export const SignUpPage = () => {
               <a
                 href="/terms-and-conditions-of-use"
                 target="_blank"
+                onClick={event => {
+                  event.stopPropagation()
+                }}
                 className={linkVariants({ variant: 'secondary' })}
               >
                 Terms and Conditions of Use. (Essential)
