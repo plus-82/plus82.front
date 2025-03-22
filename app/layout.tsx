@@ -8,7 +8,7 @@ import { SpoqaHanSansNeo } from 'app/styles'
 import { cn } from 'shared/lib'
 import { GNB } from 'shared/ui'
 
-import '../globals.css'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Plus82',
