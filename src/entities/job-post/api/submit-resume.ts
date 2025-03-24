@@ -1,5 +1,7 @@
 'use server'
 
+import { revalidateTag } from 'next/cache'
+
 import { getSession } from 'entities/auth'
 import {
   apiClient,
@@ -13,6 +15,11 @@ type SubmitResumeRequest = {
   jobPostId: number
   resumeId: number
   coverLetter: string
+}
+
+const handleSuccess = () => {
+  revalidateTag('job-posts')
+  revalidateTag('job-post-teacher-application-status')
 }
 
 const handleError = (error: Error): ServerError => {
@@ -48,6 +55,8 @@ export const submitResume = async ({
         coverLetter,
       },
     })
+
+    handleSuccess()
   } catch (error) {
     return handleError(error as Error)
   }
