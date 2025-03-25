@@ -9,6 +9,9 @@ export default getRequestConfig(async () => {
 
   const messages = {
     ...(await import(`./locales/${locale}/gnb.json`)).default,
+    ...(await import(`./locales/${locale}/auth.json`)).default,
+    ...(await import(`./locales/${locale}/validation.json`)).default,
+    ...(await import(`./locales/${locale}/exception.json`)).default,
   }
 
   return {
