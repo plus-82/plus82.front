@@ -27,14 +27,13 @@ const handleError = (error: Error): ServerError => {
   if (!isHttpError) throw error
 
   if (error.code === JobPostExceptionCode.JOB_POST_CLOSED) {
-    return errorHandler.toast('This job post is closed', error)
+    return errorHandler.toast('This job post is closed', { error })
   } else if (error.code === JobPostExceptionCode.RESUME_ALREADY_SUBMITTED) {
     return errorHandler.toast('You have already applied for this job post')
   } else {
-    return errorHandler.toast(
-      'An error occurred while submitting the resume',
+    return errorHandler.toast('An error occurred while submitting the resume', {
       error,
-    )
+    })
   }
 }
 
