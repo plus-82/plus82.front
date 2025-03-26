@@ -2,6 +2,11 @@ name: Preview Deploy
 
 on:
   workflow_dispatch:
+    inputs:
+      commit_message:
+        description: 'Commit message for deployment'
+        required: true
+        default: 'Manual preview deployment'
 
 jobs:
   build:
@@ -26,7 +31,7 @@ jobs:
           destination-github-username: 'mina-gwak'
           destination-repository-name: 'plus82.front'
           user-email: ${{ secrets.EMAIL }}
-          commit-message: ${{ github.event.commits[0].message }}
+          commit-message: ${{ github.event.inputs.commit_message }}
           target-branch: development
 
       - name: Test get variable exported by push-to-another-repository
