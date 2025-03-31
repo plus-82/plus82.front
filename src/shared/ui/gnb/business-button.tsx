@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react'
 import { useLocale } from 'next-intl'
 import { startTransition } from 'react'
 
-import { teacherSignOut } from 'entities/auth'
+import { businessSignOut } from 'entities/auth'
 import { colors, type Locale } from 'shared/config'
 import { useDropdown } from 'shared/lib'
 import { setLocale } from 'shared/server-lib'
@@ -12,7 +12,7 @@ import { setLocale } from 'shared/server-lib'
 import { Dropdown } from '../dropdown'
 import { Icon } from '../icon'
 
-export const UserButton = () => {
+export const BusinessButton = () => {
   const router = useRouter()
   const queryClient = useQueryClient()
 
@@ -31,17 +31,17 @@ export const UserButton = () => {
   }
 
   const handleMyPageClick = () => {
-    router.push('/setting/my-page')
+    router.push('/business/setting/my-page')
     close()
   }
 
   const handleSignOutClick = async () => {
     queryClient.removeQueries()
 
-    await teacherSignOut()
+    await businessSignOut()
     await signOut({ redirect: false })
 
-    router.push('/')
+    router.push('/business')
     close()
   }
 
