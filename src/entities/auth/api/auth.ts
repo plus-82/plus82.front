@@ -1,6 +1,11 @@
 'use server'
 
-import { signIn, signOut } from 'auth'
+import {
+  teacherSignIn as _teacherSignIn,
+  teacherSignOut as _teacherSignOut,
+  businessSignIn as _businessSignIn,
+  businessSignOut as _businessSignOut,
+} from 'auth'
 import {
   AuthExceptionCode,
   errorHandler,
@@ -45,9 +50,9 @@ const handleError = (error: Error) => {
   }
 }
 
-export const signInWithCredentials = async (data: SignInRequest) => {
+export const teacherSignIn = async (data: SignInRequest) => {
   try {
-    await signIn('credentials', {
+    await _teacherSignIn('credentials', {
       ...data,
       redirect: false,
       callbackUrl: '/',
@@ -59,10 +64,24 @@ export const signInWithCredentials = async (data: SignInRequest) => {
   }
 }
 
-export const signInWithGoogle = async () => {
-  await signIn('google')
+export const teacherSignOut = async () => {
+  await _teacherSignOut({ redirect: false })
 }
 
-export const signOutWithForm = async () => {
-  await signOut({ redirect: false })
+export const businessSignIn = async (data: SignInRequest) => {
+  try {
+    await _businessSignIn('credentials', {
+      ...data,
+      redirect: false,
+      callbackUrl: '/',
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return handleError(error.cause?.err as Error)
+  }
+}
+
+export const businessSignOut = async () => {
+  await _businessSignOut({ redirect: false })
 }

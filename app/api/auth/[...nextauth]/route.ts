@@ -1,3 +1,3 @@
-import { handlers } from '../../../../src/auth'
+import { teacherHandlers } from '../../../../src/auth'
 
-export const { GET, POST } = handlers
+export const { GET, POST } = teacherHandlers

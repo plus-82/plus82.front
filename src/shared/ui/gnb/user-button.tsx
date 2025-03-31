@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react'
 import { useLocale } from 'next-intl'
 import { startTransition } from 'react'
 
-import { signOutWithForm } from 'entities/auth'
+import { teacherSignOut } from 'entities/auth'
 import { colors, type Locale } from 'shared/config'
 import { useDropdown } from 'shared/lib'
 import { setUserLocale } from 'shared/server-lib/locale'
@@ -38,7 +38,7 @@ export const UserButton = () => {
   const handleSignOutClick = async () => {
     queryClient.removeQueries()
 
-    await signOutWithForm()
+    await teacherSignOut()
     await signOut({ redirect: false })
 
     router.push('/')

@@ -1,4 +1,4 @@
-export { signInWithCredentials, signOutWithForm } from './api/auth'
+export { teacherSignIn, teacherSignOut } from './api/auth'
 export { authQueries } from './api/query'
 export { refreshToken } from './api/refresh-token'
 export { requestPasswordReset } from './api/request-password-reset'
@@ -13,4 +13,8 @@ export {
   passwordRules,
 } from './model/password'
 export { PasswordValidation } from './ui/password-validation'
-export { getSession, getNullableSession, updateSession } from './lib/session'
+export {
+  getTeacherSession,
+  getNullableTeacherSession,
+  updateTeacherSession,
+} from './lib/session'

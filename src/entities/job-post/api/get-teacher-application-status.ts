@@ -1,4 +1,4 @@
-import { getSession } from 'entities/auth'
+import { getTeacherSession } from 'entities/auth'
 import { apiClient } from 'shared/api'
 
 type GetJobPostRequest = {
@@ -8,7 +8,7 @@ type GetJobPostRequest = {
 export const getTeacherApplicationStatus = async ({
   jobPostId,
 }: GetJobPostRequest) => {
-  const { accessToken } = await getSession()
+  const { accessToken } = await getTeacherSession()
 
   let submitted = false
 

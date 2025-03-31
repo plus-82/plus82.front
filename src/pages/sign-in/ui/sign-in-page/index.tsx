@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 
-import { signInWithCredentials } from 'entities/auth'
+import { teacherSignIn } from 'entities/auth'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Form } from 'shared/form'
 import { Button, Label, Layout, Link } from 'shared/ui'
@@ -39,7 +39,7 @@ export const SignInPage = () => {
   }
 
   const handleFormValid = async (data: FormValues) => {
-    const response = await signInWithCredentials(data)
+    const response = await teacherSignIn(data)
 
     if (isServerError(response)) {
       handleServerError(response)

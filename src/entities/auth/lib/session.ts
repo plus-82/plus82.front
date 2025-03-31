@@ -1,9 +1,12 @@
 import { redirect } from 'next/navigation'
 
-import { auth, update } from 'auth'
+import {
+  getTeacherSession as _getTeacherSession,
+  updateTeacherSession,
+} from 'auth'
 
-const getSession = async () => {
-  const session = await auth()
+const getTeacherSession = async () => {
+  const session = await _getTeacherSession()
 
   if (!session) {
     redirect('/sign-in')
@@ -12,4 +15,8 @@ const getSession = async () => {
   return session
 }
 
-export { getSession, auth as getNullableSession, update as updateSession }
+export {
+  getTeacherSession,
+  _getTeacherSession as getNullableTeacherSession,
+  updateTeacherSession,
+}
