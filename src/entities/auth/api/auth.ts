@@ -45,6 +45,14 @@ const handleError = (error: Error) => {
     return errorHandler.toast('exception.invalid-input-value.invalid-email', {
       translate: true,
     })
+  } else if (error.code === 'NOT_ACADEMY_ROLE') {
+    return errorHandler.toast('exception.auth.not-academy-role', {
+      translate: true,
+    })
+  } else if (error.code === 'NOT_TEACHER_ROLE') {
+    return errorHandler.toast('exception.auth.not-teacher-role', {
+      translate: true,
+    })
   } else {
     return errorHandler.toast('sign-in.error.sign-in', { error })
   }

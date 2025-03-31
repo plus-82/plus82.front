@@ -3,7 +3,9 @@
     "auth": {
       "email-not-correct": "이메일을 확인해주세요",
       "pw-not-correct": "비밀번호를 확인해주세요",
-      "deleted-user": "이 계정은 비활성화되었습니다"
+      "deleted-user": "이 계정은 비활성화되었습니다",
+      "not-academy-role": "학원 계정으로 로그인해주세요",
+      "not-teacher-role": "선생님 계정으로 로그인해주세요"
     },
     "invalid-input-value": {
       "invalid-email": "이메일과 비밀번호를 확인해주세요",

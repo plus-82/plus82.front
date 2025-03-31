@@ -6,7 +6,8 @@ import {
   refreshToken,
   type SignInRequest,
 } from 'entities/auth'
-import { isServerError } from 'shared/api'
+import { HttpError, isServerError } from 'shared/api'
+import { decodeToken } from 'shared/lib'
 
 const ACCESS_TOKEN_REFRESH_THRESHOLD = 600000 // 10분을 밀리초로 표현
 export const REFRESH_TOKEN_ERROR = 'RefreshTokenError'
@@ -43,7 +44,34 @@ export const authConfig = (name: string, basePath: string) =>
         authorize: async credentials => {
           const userInfo = credentials as unknown as SignInRequest
 
-          return _signIn(userInfo)
+          const response = await _signIn(userInfo)
+
+          const decodedToken = decodeToken(response.accessToken)
+
+          if (decodedToken.valid) {
+            if (
+              name === 'business' &&
+              decodedToken.decoded.role !== 'ACADEMY'
+            ) {
+              throw new HttpError({
+                code: 'NOT_ACADEMY_ROLE',
+                message: '학원 권한이 없습니다.',
+                status: 403,
+              })
+            }
+
+            if (name === 'teacher' && decodedToken.decoded.role !== 'TEACHER') {
+              throw new HttpError({
+                code: 'NOT_TEACHER_ROLE',
+                message: '선생님 권한이 없습니다.',
+                status: 403,
+              })
+            }
+
+            return response
+          }
+
+          return response
         },
       }),
     ],
