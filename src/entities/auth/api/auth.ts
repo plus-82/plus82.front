@@ -54,7 +54,10 @@ const handleError = (error: Error) => {
       translate: true,
     })
   } else {
-    return errorHandler.toast('sign-in.error.sign-in', { error })
+    return errorHandler.toast('sign-in.error.sign-in', {
+      translate: true,
+      error,
+    })
   }
 }
 
