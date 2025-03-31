@@ -1,4 +1,9 @@
-export { teacherSignIn, teacherSignOut } from './api/auth'
+export {
+  teacherSignIn,
+  teacherSignOut,
+  businessSignIn,
+  businessSignOut,
+} from './api/auth'
 export { authQueries } from './api/query'
 export { refreshToken } from './api/refresh-token'
 export { requestPasswordReset } from './api/request-password-reset'
@@ -17,4 +22,7 @@ export {
   getTeacherSession,
   getNullableTeacherSession,
   updateTeacherSession,
+  getBusinessSession,
+  getNullableBusinessSession,
+  updateBusinessSession,
 } from './lib/session'
