@@ -7,7 +7,7 @@ import { startTransition } from 'react'
 import { teacherSignOut } from 'entities/auth'
 import { colors, type Locale } from 'shared/config'
 import { useDropdown } from 'shared/lib'
-import { setTeacherLocale } from 'shared/server-lib/locale'
+import { setLocale } from 'shared/server-lib'
 
 import { Dropdown } from '../dropdown'
 import { Icon } from '../icon'
@@ -57,7 +57,7 @@ export const UserButton = () => {
     const locale = value as Locale
 
     startTransition(() => {
-      setTeacherLocale(locale)
+      setLocale(locale)
     })
 
     close()

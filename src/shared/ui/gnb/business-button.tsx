@@ -7,7 +7,7 @@ import { startTransition } from 'react'
 import { businessSignOut } from 'entities/auth'
 import { colors, type Locale } from 'shared/config'
 import { useDropdown } from 'shared/lib'
-import { setBusinessLocale } from 'shared/server-lib/locale'
+import { setLocale } from 'shared/server-lib'
 
 import { Dropdown } from '../dropdown'
 import { Icon } from '../icon'
@@ -57,7 +57,7 @@ export const BusinessButton = () => {
     const locale = value as Locale
 
     startTransition(() => {
-      setBusinessLocale(locale)
+      setLocale(locale)
     })
 
     close()
