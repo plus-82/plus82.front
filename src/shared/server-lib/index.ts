@@ -1,2 +1,7 @@
 export { setCookie, getCookie, deleteCookie } from './cookie'
-export { getUserLocale, setUserLocale } from './locale'
+export {
+  getTeacherLocale,
+  setTeacherLocale,
+  getBusinessLocale,
+  setBusinessLocale,
+} from './locale'
