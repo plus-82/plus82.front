@@ -1,5 +1,5 @@
 import { getJobPostResumeByCode } from 'entities/job-post-resume-relation'
-import { Resume } from 'features/download-resume/ui/resume'
+import { CoverLetter, Resume } from 'features/download-resume'
 import { PDFViewer } from 'features/show-resume-file'
 import { Layout } from 'shared/ui'
 
@@ -17,15 +17,27 @@ export const ResumeViewerPage = async ({
   if (jobPostResume.filePath) {
     return (
       <Layout wide>
-        <PDFViewer filePath={jobPostResume.filePath} />
+        <div className="flex flex-col items-center gap-2">
+          <PDFViewer
+            width={927}
+            className="h-fit"
+            filePath={jobPostResume.filePath}
+          />
+          {jobPostResume.coverLetter && (
+            <CoverLetter coverLetter={jobPostResume.coverLetter} />
+          )}
+        </div>
       </Layout>
     )
   }
 
   return (
     <Layout wide>
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center gap-2">
         <Resume resume={convertToResume(jobPostResume)} />
+        {jobPostResume.coverLetter && (
+          <CoverLetter coverLetter={jobPostResume.coverLetter} />
+        )}
       </div>
     </Layout>
   )
