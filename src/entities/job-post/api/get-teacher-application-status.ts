@@ -10,7 +10,7 @@ export const getTeacherApplicationStatus = async ({
 }: GetJobPostRequest) => {
   const { accessToken } = await getTeacherSession()
 
-  let submitted = false
+  let submitted: boolean
 
   try {
     await apiClient.get<boolean>({
@@ -22,8 +22,9 @@ export const getTeacherApplicationStatus = async ({
     })
 
     submitted = true
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    console.log(error)
+    submitted = false
   }
 
   return submitted
