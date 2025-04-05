@@ -1,4 +1,4 @@
-import { formatDate, toDisplayValue } from 'shared/lib'
+import { formatDate, formatCurrency, toDisplayValue } from 'shared/lib'
 
 import type { JobPostDetail } from '../../model/job-post-detail'
 import AcademyAddress from '../academy-address'
@@ -27,7 +27,9 @@ export const PostingDetail = ({ jobPost }: Props) => {
       <li className="flex flex-col gap-[6px]">
         <h4 className="title-large font-medium text-gray-900">Salary</h4>
         <p className="title-small font-normal text-gray-900">
-          {toDisplayValue(jobPost.salary)}
+          {toDisplayValue(
+            formatCurrency({ number: jobPost.salary, code: 'KRW' }),
+          )}
         </p>
       </li>
       <li className="flex flex-col gap-[6px]">
