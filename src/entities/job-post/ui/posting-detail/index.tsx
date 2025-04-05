@@ -14,14 +14,38 @@ export const PostingDetail = ({ jobPost }: Props) => {
         <h4 className="title-large font-medium text-gray-900">
           Academy information
         </h4>
-        <p className="title-small font-normal text-gray-900">
+        <p className="title-small whitespace-pre-line font-normal text-gray-900">
           {toDisplayValue(jobPost.academyDescription)}
         </p>
       </li>
       <li className="flex flex-col gap-[6px]">
-        <h4 className="title-large font-medium text-gray-900">Job details</h4>
-        <p className="title-small font-normal text-gray-900">
-          {toDisplayValue(jobPost.description)}
+        <h4 className="title-large font-medium text-gray-900">
+          Job Description
+        </h4>
+        <p className="title-small whitespace-pre-line font-normal text-gray-900">
+          {toDisplayValue(jobPost.jobDescription)}
+        </p>
+      </li>
+      <li className="flex flex-col gap-[6px]">
+        <h4 className="title-large font-medium text-gray-900">
+          Required Qualification
+        </h4>
+        <p className="title-small whitespace-pre-line font-normal text-gray-900">
+          {toDisplayValue(jobPost.requiredQualification)}
+        </p>
+      </li>
+      <li className="flex flex-col gap-[6px]">
+        <h4 className="title-large font-medium text-gray-900">
+          Preferred Qualification
+        </h4>
+        <p className="title-small whitespace-pre-line font-normal text-gray-900">
+          {toDisplayValue(jobPost.preferredQualification)}
+        </p>
+      </li>
+      <li className="flex flex-col gap-[6px]">
+        <h4 className="title-large font-medium text-gray-900">Benefits</h4>
+        <p className="title-small whitespace-pre-line font-normal text-gray-900">
+          {toDisplayValue(jobPost.benefits)}
         </p>
       </li>
       <li className="flex flex-col gap-[6px]">
