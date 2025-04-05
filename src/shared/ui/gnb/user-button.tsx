@@ -18,6 +18,8 @@ export const UserButton = () => {
 
   const locale = useLocale()
 
+  const isDev = process.env.NODE_ENV === 'development'
+
   const { isOpen, toggleIsOpen, close, dropdownRef } = useDropdown()
   const {
     isOpen: isSubMenuOpen,
@@ -82,31 +84,33 @@ export const UserButton = () => {
           scrollable={false}
         >
           <Dropdown.Item onClick={handleMyPageClick}>My Page</Dropdown.Item>
-          <Dropdown.Item
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            className="relative"
-          >
-            <div className="h-full w-full" ref={dropdownRefSubMenu}>
-              Language
-              {isSubMenuOpen && (
-                <Dropdown className="absolute -top-1 left-[90%] w-[140px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)]">
-                  <Dropdown.Item
-                    selected={locale === 'en'}
-                    onClick={handleLanguageClick('en')}
-                  >
-                    English
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    selected={locale === 'ko'}
-                    onClick={handleLanguageClick('ko')}
-                  >
-                    Korean
-                  </Dropdown.Item>
-                </Dropdown>
-              )}
-            </div>
-          </Dropdown.Item>
+          {isDev && (
+            <Dropdown.Item
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              className="relative"
+            >
+              <div className="h-full w-full" ref={dropdownRefSubMenu}>
+                Language
+                {isSubMenuOpen && (
+                  <Dropdown className="absolute -top-1 left-[90%] w-[140px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.08)]">
+                    <Dropdown.Item
+                      selected={locale === 'en'}
+                      onClick={handleLanguageClick('en')}
+                    >
+                      English
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      selected={locale === 'ko'}
+                      onClick={handleLanguageClick('ko')}
+                    >
+                      Korean
+                    </Dropdown.Item>
+                  </Dropdown>
+                )}
+              </div>
+            </Dropdown.Item>
+          )}
           <Dropdown.Item onClick={handleSignOutClick}>Sign Out</Dropdown.Item>
         </Dropdown>
       )}
