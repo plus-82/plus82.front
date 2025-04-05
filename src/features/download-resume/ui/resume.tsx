@@ -43,12 +43,23 @@ export const Resume = ({ resume }: Props) => {
             </div>
           </div>
           <div className="relative overflow-hidden rounded-full border border-gray-200">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`/cdn/${resume.profileImagePath}`}
-              alt="profile"
-              className="h-[150px] w-[150px]"
-            />
+            {resume.profileImagePath ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={`/cdn/${resume.profileImagePath}`}
+                alt="profile"
+                className="h-[150px] w-[150px]"
+              />
+            ) : (
+              <div className="flex h-[150px] w-[150px] items-center justify-center rounded-full bg-gray-200">
+                <Icon
+                  name="User"
+                  size="custom"
+                  className="h-[100px] w-[100px]"
+                  color={colors.gray[700]}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="mb-20">{resume.personalIntroduction}</div>
