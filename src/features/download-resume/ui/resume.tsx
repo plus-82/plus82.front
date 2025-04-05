@@ -26,7 +26,7 @@ export const Resume = ({ resume }: Props) => {
     <div className="flex h-[1311px] w-[927px] bg-white">
       <div className="h-full w-[52px] bg-blue-800" />
       <div className="my-[60px] ml-[80px] w-[654px]">
-        <div className="mb-5 flex items-center justify-between border-b border-gray-200 pb-5">
+        <div className="mb-5 flex items-center justify-between pb-5">
           <div>
             <h2 className="title-large mb-1 text-gray-900">
               {capitalize(resume.firstName)} {capitalize(resume.lastName)}
