@@ -1,10 +1,7 @@
 'use client'
 
-import { Email, Password } from 'features/sign-up'
-import { Form, fieldCss } from 'shared/form'
-import { Heading, Label } from 'shared/ui'
-
-import * as rules from '../model/rules'
+import { Email, Password, ConfirmPassword } from 'features/sign-up'
+import { Heading } from 'shared/ui'
 
 export const Account = () => {
   return (
@@ -16,18 +13,7 @@ export const Account = () => {
       <div>
         <Email />
         <Password />
-
-        <div className={fieldCss.field()}>
-          <Label required>Confirm Password</Label>
-          <Form.Control name="confirmPassword" rules={rules.confirmPassword}>
-            <Form.PasswordField
-              placeholder="Check the password"
-              autoComplete="one-time-code"
-              showToggle
-            />
-            <Form.ErrorMessage />
-          </Form.Control>
-        </div>
+        <ConfirmPassword />
       </div>
     </div>
   )
