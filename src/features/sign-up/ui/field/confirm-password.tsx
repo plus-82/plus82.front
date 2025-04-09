@@ -5,7 +5,7 @@ import { confirmPassword as confirmPasswordRule } from '../../model/rules'
 
 export const ConfirmPassword = () => {
   return (
-    <div className={fieldCss.field()}>
+    <div className={fieldCss.fieldWrapper()}>
       <Label required>Confirm Password</Label>
       <Form.Control name="confirmPassword" rules={confirmPasswordRule}>
         <Form.PasswordField
