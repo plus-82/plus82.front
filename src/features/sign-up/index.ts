@@ -1,5 +1,6 @@
 export { AcademyName } from './ui/field/academy-name'
 export { AcademyNameEn } from './ui/field/academy-name-en'
+export { Address } from './ui/field/address'
 export { BirthDate } from './ui/field/birth-date'
 export { BusinessRegistrationNumber } from './ui/field/business-registration-number'
 export { ConfirmPassword } from './ui/field/confirm-password'
