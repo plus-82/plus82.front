@@ -5,12 +5,12 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { signUp } from 'entities/auth'
+import { useEmailValidationState } from 'features/sign-up'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Form } from 'shared/form'
 import { useCheckbox } from 'shared/lib'
 import { Button, Checkbox, Layout, Link, linkVariants } from 'shared/ui'
 
-import { useEmailValidationState } from '../../lib/use-email-validation-state'
 import {
   FormValues,
   defaultValues,
