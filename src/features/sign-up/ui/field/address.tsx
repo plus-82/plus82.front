@@ -6,10 +6,13 @@ import { useFormContext } from 'react-hook-form'
 import { fieldCss } from 'shared/form'
 import { Button, Label, Modal, TextField } from 'shared/ui'
 
+import { useGeocoding } from '../../lib/use-geocoding'
 import { convertToLocationType } from '../../lib/util'
 
 export const Address = () => {
   const t = useTranslations()
+
+  const { geocode } = useGeocoding()
 
   const [isOpen, setIsOpen] = useState(false)
   const [address, setAddress] = useState('')
@@ -22,11 +25,17 @@ export const Address = () => {
   }
 
   const handleCompleteSearchingCode = (data: AddressType) => {
+    setAddress(data.address)
+    setDetailedAddress('')
+
     form.setValue('detailedAddress', data.address)
     form.setValue('locationType', convertToLocationType(data.sido))
 
-    setAddress(data.address)
-    setDetailedAddress('')
+    geocode(data.address, ({ lat, lng }) => {
+      form.setValue('lat', lat)
+      form.setValue('lng', lng)
+    })
+
     setIsOpen(false)
   }
 
