@@ -4,6 +4,7 @@ export {
   businessSignIn,
   businessSignOut,
 } from './api/auth'
+export { academySignUp, type AcademySignUpRequest } from './api/academy-sign-up'
 export { authQueries } from './api/query'
 export { refreshToken } from './api/refresh-token'
 export { requestPasswordReset } from './api/request-password-reset'
@@ -12,6 +13,7 @@ export { resetPassword } from './api/reset-password'
 export { signIn, type SignInRequest } from './api/sign-in'
 export { signUp, type SignUpRequest } from './api/sign-up'
 export { verifyCode } from './api/verify-code'
+export { Location } from './config/location'
 export {
   currentPasswordRules,
   confirmPasswordRules,
