@@ -15,6 +15,23 @@
     "confirm-password": {
       "required": "Please enter your password",
       "match": "The password you entered do not match"
+    },
+    "code": {
+      "required": "Please enter your email verification code"
+    },
+    "firstName": {
+      "required": "Please enter your first name",
+      "maxLength": "First name exceeds the maximum allowed length of 254 characters"
+    },
+    "lastName": {
+      "required": "Please enter your last name",
+      "maxLength": "Last name exceeds the maximum allowed length of 254 characters"
+    },
+    "country": {
+      "required": "Please select your nationality"
+    },
+    "birthDate": {
+      "required": "Please enter your date of birth"
     }
   }
 }

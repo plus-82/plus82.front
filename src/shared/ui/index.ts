@@ -1,6 +1,6 @@
 export { Button } from './button'
 export { Calendar, type CalendarProps } from './calendar'
-export { Checkbox, type CheckboxValue } from './checkbox'
+export { Checkbox, type CheckboxValue, type CheckboxProps } from './checkbox'
 export { Collapsible } from './collapsible'
 export { Chip } from './chip'
 export { DatePicker } from './date-picker'
