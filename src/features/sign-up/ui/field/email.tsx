@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -17,6 +18,8 @@ import { FormValues } from '../../model/form-values'
 import { email as emailRule, code as codeRule } from '../../model/rules'
 
 export const Email = () => {
+  const t = useTranslations()
+
   const [showVerificationField, setShowVerificationField] = useState(false)
 
   const {
@@ -48,22 +51,20 @@ export const Email = () => {
   }
 
   const handleRequestVerificationSuccess = () => {
-    toast.success('A verification email has been sent')
+    toast.success(t('sign-up.success.request-verification'))
 
     if (!showVerificationField) setShowVerificationField(true)
   }
 
   const handleRequestVerificationError = (error: HttpError) => {
     if (error.code === EmailVerificationCodeExceptionCode.TOO_MANY_REQUEST) {
-      toast.error(
-        'You have requested the verification code too many times. Please try again in 10 minutes.',
-      )
+      toast.error(t('exception.email.too-many-request'))
     } else if (error.code === UserExceptionCode.ALREADY_USED_EMAIL) {
       setError('email', {
-        message: 'An account with that email already exists',
+        message: t('exception.user.already-used-email'),
       })
     } else {
-      toast.error('An error occurred while requesting verification')
+      toast.error(t('sign-up.error.request-verification'))
     }
   }
 
@@ -85,18 +86,18 @@ export const Email = () => {
       error.code === EmailVerificationCodeExceptionCode.ALREADY_VERIFIED_CODE
     ) {
       setError('code', {
-        message: 'The verification code you entered has already been used',
+        message: t('exception.email.already-verified-code'),
       })
     } else if (error.code === EmailVerificationCodeExceptionCode.EXPIRED_CODE) {
       setError('code', {
-        message: 'The verification code has expired. Please request a new one.',
+        message: t('exception.email.expired-code'),
       })
     } else if (
       error.code ===
       ResourceNotFoundExceptionCode.EMAIL_VERIFICATION_CODE_NOT_FOUND
     ) {
       setError('code', {
-        message: 'The verification code you entered is incorrect',
+        message: t('exception.resource-not-found.email-verification-code'),
       })
     }
   }
@@ -108,7 +109,7 @@ export const Email = () => {
 
     if (requestVerification.isPending || requestVerification.isIdle) {
       setError('email', {
-        message: 'Please verify the email first',
+        message: t('sign-up.error.not-verified-email'),
       })
 
       return
@@ -123,13 +124,13 @@ export const Email = () => {
 
   return (
     <div className={fieldCss.fieldWrapper()}>
-      <Label required>Email</Label>
+      <Label required>{t('field.email.label')}</Label>
       <div className={fieldCss.textFieldWrapper()}>
         <div className={fieldCss.field({ className: 'grow' })}>
           <Form.Control name="email" rules={emailRule}>
             <Form.TextField
               onChange={handleEmailChange}
-              placeholder="example@email.com"
+              placeholder={t('field.email.placeholder')}
               autoComplete="one-time-code"
               fullWidth
             />
@@ -143,7 +144,7 @@ export const Email = () => {
           disabled={requestVerification.isSuccess}
           className="w-[95px]"
         >
-          Send
+          {t('sign-up.button.send-verification-code')}
         </Button>
       </div>
 
@@ -152,7 +153,7 @@ export const Email = () => {
           <div className={fieldCss.field({ className: 'grow' })}>
             <Form.Control name="code" rules={codeRule}>
               <Form.TextField
-                placeholder="Enter the verification code"
+                placeholder={t('field.email-verification-code.placeholder')}
                 readOnly={verifyCode.isSuccess}
                 fullWidth
               />
@@ -160,11 +161,13 @@ export const Email = () => {
             </Form.Control>
             {!hasError(errors?.code) && verifyCode.isSuccess && (
               <HelperText variant="success">
-                Authentication completed
+                {t('sign-up.success.verify-code')}
               </HelperText>
             )}
             {!hasError(errors?.code) && !verifyCode.isSuccess && (
-              <HelperText>Please enter the code sent to the email</HelperText>
+              <HelperText>
+                {t('sign-up.error.not-enter-verification-code')}
+              </HelperText>
             )}
           </div>
           <Button
@@ -174,7 +177,7 @@ export const Email = () => {
             className="w-[95px] shrink-0"
             disabled={verifyCode.isSuccess}
           >
-            Verify
+            {t('sign-up.button.verify-code')}
           </Button>
         </div>
       )}

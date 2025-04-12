@@ -1,5 +1,6 @@
 'use client'
 
+import { useLocale, useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -11,22 +12,20 @@ import {
   RepresentativeName,
   BusinessRegistrationNumber,
   Address,
+  TermsAndConditionsOfUse,
 } from 'features/sign-up'
 import { Email, Password, ConfirmPassword } from 'features/sign-up'
+import { Locale } from 'shared/config'
 import { Form } from 'shared/form'
 import { useCheckbox } from 'shared/lib'
-import {
-  Button,
-  Checkbox,
-  Heading,
-  Layout,
-  Link,
-  linkVariants,
-} from 'shared/ui'
+import { Button, Heading, Layout, Link } from 'shared/ui'
 
 import { FormValues, defaultValues } from '../../model/form-values'
 
 export const BusinessSignUpPage = () => {
+  const t = useTranslations('sign-up')
+  const locale = useLocale() as Locale
+
   const form = useForm<FormValues>({
     defaultValues,
     reValidateMode: 'onSubmit',
@@ -37,16 +36,16 @@ export const BusinessSignUpPage = () => {
   return (
     <Layout>
       <div className="mb-[30px] flex flex-col items-center gap-1">
-        <h1 className="display-small font-bold text-gray-900">Sign Up</h1>
+        <h1 className="display-small font-bold text-gray-900">{t('title')}</h1>
         <div className="body-large flex items-center gap-1 text-gray-700">
-          <p>Have an account?</p>
-          <Link href="/sign-in">Sign In</Link>
+          <p>{t('description')}</p>
+          <Link href="/sign-in">{t('link.sign-in')}</Link>
         </div>
       </div>
       <Form {...form}>
         <div className="mb-[50px]">
           <Heading as="h3" size="medium" className="mb-6">
-            Account
+            {t('heading.personal-information')}
           </Heading>
           <div>
             <Email />
@@ -59,7 +58,7 @@ export const BusinessSignUpPage = () => {
         </div>
         <div className="mb-10">
           <Heading as="h3" size="medium" className="mb-6">
-            학원 정보
+            {t('heading.academy-information')}
           </Heading>
           <div>
             <RepresentativeName />
@@ -69,27 +68,12 @@ export const BusinessSignUpPage = () => {
             <BusinessRegistrationNumber />
           </div>
         </div>
-        <Checkbox
+        <TermsAndConditionsOfUse
+          locale={locale}
           {...getCheckboxProps('checked')}
-          className="mb-4"
-          label={className => (
-            <p className={className}>
-              <a
-                href="/terms-and-conditions-of-use"
-                target="_blank"
-                onClick={event => {
-                  event.stopPropagation()
-                }}
-                className={linkVariants({ variant: 'secondary' })}
-              >
-                개인정보 수집 및 이용 정책과 이용 약관
-              </a>
-              에 동의합니다.
-            </p>
-          )}
         />
         <Button size="large" fullWidth disabled={!isChecked('checked')}>
-          Sign Up
+          {t('button.sign-up')}
         </Button>
       </Form>
     </Layout>

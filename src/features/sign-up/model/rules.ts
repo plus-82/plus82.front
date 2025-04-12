@@ -4,19 +4,19 @@ const REG_EMAIL =
   /^([A-Za-z0-9]+([-_.]?[A-Za-z0-9])*)@([A-Za-z0-9]+([-]?[A-Za-z0-9])*)(\.([A-Za-z0-9]+([-]?[A-Za-z0-9])*))?(\.([A-Za-z0-9]([-]?[A-Za-z0-9])*))?((\.[A-Za-z]{2,63})$)/
 
 export const email = {
-  required: 'Please enter your email',
+  required: 'validation.email.required',
   maxLength: {
     value: 254,
-    message: 'Input exceeds maximum allowed length of 254 characters',
+    message: 'validation.email.maxLength',
   },
   pattern: {
     value: REG_EMAIL,
-    message: "Invalid email format. Please use the format 'example@domain.com'",
+    message: 'validation.email.pattern',
   },
 }
 
 export const code = {
-  required: 'Please enter your email verification code',
+  required: 'validation.code.required',
 }
 
 const REG_UPPER_LOWER_CASE_LETTERS = /(?=.*[a-z])(?=.*[A-Z])/
@@ -43,34 +43,34 @@ export const password = {
 }
 
 export const confirmPassword = {
-  required: 'Please enter your password',
+  required: 'validation.confirm-password.required',
   validate: (value: string | number | null, formValues: FormValues) => {
     if (value === formValues.password) return true
 
-    return 'The password you entered do not match'
+    return 'validation.confirm-password.match'
   },
 }
 
 export const firstName = {
-  required: 'Please enter your first name',
+  required: 'validation.firstName.required',
   maxLength: {
     value: 254,
-    message: 'First name exceeds the maximum allowed length of 254 characters',
+    message: 'validation.firstName.maxLength',
   },
 }
 
 export const lastName = {
-  required: 'Please enter your last name',
+  required: 'validation.lastName.required',
   maxLength: {
     value: 254,
-    message: 'Last name exceeds the maximum allowed length of 254 characters',
+    message: 'validation.lastName.maxLength',
   },
 }
 
 export const country = {
-  required: 'Please select your nationality',
+  required: 'validation.country.required',
 }
 
 export const birthDate = {
-  required: 'Please enter your date of birth',
+  required: 'validation.birthDate.required',
 }

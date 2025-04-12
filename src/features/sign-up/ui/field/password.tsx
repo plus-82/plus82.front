@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import { fieldCss, Form } from 'shared/form'
@@ -14,6 +15,8 @@ import {
 } from '../../model/rules'
 
 export const Password = () => {
+  const t = useTranslations()
+
   const { control } = useFormContext<FormValues>()
 
   const password = useWatch({
@@ -30,29 +33,29 @@ export const Password = () => {
 
   return (
     <div className={fieldCss.fieldWrapper()}>
-      <Label required>Password</Label>
+      <Label required>{t('field.password.label')}</Label>
       <div className={fieldCss.passwordFieldWrapper()}>
         <Form.PasswordField
           name="password"
           rules={passwordRule}
-          placeholder="Enter the password"
+          placeholder={t('field.password.placeholder')}
           autoComplete="one-time-code"
           showToggle
         />
         <HelperText hasIcon variant={checkPasswordCondition(isCorrectLength)}>
-          9 ~ 28 characters long
+          {t('validation.password.length')}
         </HelperText>
         <HelperText
           hasIcon
           variant={checkPasswordCondition(hasLowercaseAndUppercaseLetter)}
         >
-          Upper & lower case letters
+          {t('validation.password.has-lowercase-and-uppercase-letter')}
         </HelperText>
         <HelperText hasIcon variant={checkPasswordCondition(hasNumber)}>
-          At least one number
+          {t('validation.password.has-number')}
         </HelperText>
         <HelperText hasIcon variant={checkPasswordCondition(hasSpecialChar)}>
-          At least special character
+          {t('validation.password.has-special-char')}
         </HelperText>
       </div>
     </div>
