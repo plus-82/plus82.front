@@ -24,6 +24,7 @@ import { FormValues, defaultValues } from '../../model/form-values'
 
 export const BusinessSignUpPage = () => {
   const t = useTranslations('sign-up')
+
   const locale = useLocale() as Locale
 
   const form = useForm<FormValues>({
