@@ -109,7 +109,7 @@ export const Email = () => {
 
     if (requestVerification.isPending || requestVerification.isIdle) {
       setError('email', {
-        message: t('sign-up.error.not-verified-email'),
+        message: t('sign-up.error.email-verification-required'),
       })
 
       return
@@ -165,9 +165,7 @@ export const Email = () => {
               </HelperText>
             )}
             {!hasError(errors?.code) && !verifyCode.isSuccess && (
-              <HelperText>
-                {t('sign-up.error.not-enter-verification-code')}
-              </HelperText>
+              <HelperText>{t('sign-up.message.verification-code')}</HelperText>
             )}
           </div>
           <Button

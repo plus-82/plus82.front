@@ -2,11 +2,12 @@ import { AcademySignUpRequest, Location } from 'entities/auth'
 
 export type FormValues = {
   email: string
+  code: string
   password: string
   confirmPassword: string
   fullName: string
   genderType: 'FEMALE' | 'MALE'
-  birthDate: string
+  birthDate: string | null
   representativeName: string
   academyName: string
   academyNameEn: string
@@ -20,11 +21,12 @@ export type FormValues = {
 
 export const defaultValues: FormValues = {
   email: '',
+  code: '',
   password: '',
   confirmPassword: '',
   fullName: '',
   genderType: 'FEMALE',
-  birthDate: '',
+  birthDate: null,
   representativeName: '',
   academyName: '',
   academyNameEn: '',
@@ -37,12 +39,15 @@ export const defaultValues: FormValues = {
 }
 
 export const convertToAcademySignUpDTO = ({
+  code,
+  confirmPassword,
   address,
   detailedAddress,
   ...restFormValues
 }: FormValues): AcademySignUpRequest => {
   return {
     ...restFormValues,
+    birthDate: restFormValues.birthDate!,
     locationType: restFormValues.locationType!,
     lat: restFormValues.lat!,
     lng: restFormValues.lng!,

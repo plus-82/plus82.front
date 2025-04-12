@@ -1,8 +1,11 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
+import { academySignUp } from 'entities/auth'
 import {
   AcademyName,
   AcademyNameEn,
@@ -13,17 +16,25 @@ import {
   BusinessRegistrationNumber,
   Address,
   TermsAndConditionsOfUse,
+  useEmailValidationState,
 } from 'features/sign-up'
 import { Email, Password, ConfirmPassword } from 'features/sign-up'
+import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Locale } from 'shared/config'
 import { Form } from 'shared/form'
 import { useCheckbox } from 'shared/lib'
 import { Button, Heading, Layout, Link } from 'shared/ui'
 
-import { FormValues, defaultValues } from '../../model/form-values'
+import {
+  FormValues,
+  convertToAcademySignUpDTO,
+  defaultValues,
+} from '../../model/form-values'
 
 export const BusinessSignUpPage = () => {
   const t = useTranslations('sign-up')
+
+  const router = useRouter()
 
   const locale = useLocale() as Locale
 
@@ -33,6 +44,42 @@ export const BusinessSignUpPage = () => {
   })
 
   const { isChecked, getCheckboxProps } = useCheckbox({ options: ['checked'] })
+
+  const { handleServerError } = useServerErrorHandler()
+
+  const { isEmailVerificationRequested, isEmailVerificationCompleted } =
+    useEmailValidationState()
+
+  const handleSignUpSuccess = () => {
+    toast.success(t('success.sign-up'))
+    router.push('/business/sign-in')
+  }
+
+  const submitForm = async (data: FormValues) => {
+    if (!isEmailVerificationRequested) {
+      form.setError('email', {
+        message: t('error.email-not-verified'),
+      })
+
+      return
+    }
+
+    if (!isEmailVerificationCompleted) {
+      form.setError('code', {
+        message: t('error.email-verification-code-not-checked'),
+      })
+
+      return
+    }
+
+    const response = await academySignUp(convertToAcademySignUpDTO(data))
+
+    if (isServerError(response)) {
+      handleServerError(response)
+    } else {
+      handleSignUpSuccess()
+    }
+  }
 
   return (
     <Layout>
@@ -73,7 +120,12 @@ export const BusinessSignUpPage = () => {
           locale={locale}
           {...getCheckboxProps('checked')}
         />
-        <Button size="large" fullWidth disabled={!isChecked('checked')}>
+        <Button
+          size="large"
+          fullWidth
+          disabled={!isChecked('checked')}
+          onClick={form.handleSubmit(submitForm)}
+        >
           {t('button.sign-up')}
         </Button>
       </Form>

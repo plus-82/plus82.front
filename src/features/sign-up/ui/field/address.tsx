@@ -1,13 +1,17 @@
 import { useTranslations } from 'next-intl'
-import { ChangeEvent, useState } from 'react'
+import { useState } from 'react'
 import DaumPostcode, { type Address as AddressType } from 'react-daum-postcode'
 import { useFormContext } from 'react-hook-form'
 
-import { fieldCss } from 'shared/form'
-import { Button, Label, Modal, TextField } from 'shared/ui'
+import { fieldCss, Form } from 'shared/form'
+import { Button, Label, Modal } from 'shared/ui'
 
 import { useGeocoding } from '../../lib/use-geocoding'
 import { convertToLocationType } from '../../lib/util'
+import {
+  address as addressRule,
+  detailedAddress as detailedAddressRule,
+} from '../../model/rules'
 
 export const Address = () => {
   const t = useTranslations()
@@ -15,8 +19,6 @@ export const Address = () => {
   const { geocode } = useGeocoding()
 
   const [isOpen, setIsOpen] = useState(false)
-  const [address, setAddress] = useState('')
-  const [detailedAddress, setDetailedAddress] = useState('')
 
   const form = useFormContext()
 
@@ -25,10 +27,7 @@ export const Address = () => {
   }
 
   const handleCompleteSearchingCode = (data: AddressType) => {
-    setAddress(data.address)
-    setDetailedAddress('')
-
-    form.setValue('detailedAddress', data.address)
+    form.setValue('address', data.address)
     form.setValue('locationType', convertToLocationType(data.sido))
 
     geocode(data.address, ({ lat, lng }) => {
@@ -39,16 +38,13 @@ export const Address = () => {
     setIsOpen(false)
   }
 
-  const handleAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
-    form.setValue('detailedAddress', `${address} ${event.target.value}`)
-    setDetailedAddress(event.target.value)
-  }
-
   return (
     <div className={fieldCss.fieldWrapper()}>
       <Label required>{t('field.address.label')}</Label>
       <div className="flex gap-2">
-        <TextField value={address} readOnly className="bg-gray-100" />
+        <Form.Control name="address" rules={addressRule}>
+          <Form.TextField readOnly className="bg-gray-100" />
+        </Form.Control>
         <Modal open={isOpen} onOpenChange={setIsOpen}>
           <Button
             variant="lined"
@@ -66,11 +62,10 @@ export const Address = () => {
           </Modal.Content>
         </Modal>
       </div>
-      <TextField
-        value={detailedAddress}
-        placeholder={t('field.address.placeholder')}
-        onChange={handleAddressChange}
-      />
+      <Form.Control name="detailedAddress" rules={detailedAddressRule}>
+        <Form.TextField placeholder={t('field.address.placeholder')} />
+        <Form.ErrorMessage />
+      </Form.Control>
     </div>
   )
 }
