@@ -49,6 +49,27 @@
     "business-registration-number": {
       "label": "Business Registration Number",
       "placeholder": "Enter 10 digits only (no dashes)"
+    },
+    "location": {
+      "option": {
+        "seoul": "Seoul",
+        "busan": "Busan",
+        "daegu": "Daegu",
+        "incheon": "Incheon",
+        "gwangju": "Gwangju",
+        "daejeon": "Daejeon",
+        "ulsan": "Ulsan",
+        "sejong": "Sejong",
+        "gyeonggi": "Gyeonggi",
+        "gangwon": "Gangwon",
+        "chungbuk": "Chungcheongbuk-do",
+        "chungnam": "Chungcheongnam-do",
+        "jeonbuk": "Jeollabuk-do",
+        "jeonnam": "Jeollanam-do",
+        "gyeongbuk": "Gyeongsangbuk-do",
+        "gyeongnam": "Gyeongsangnam-do",
+        "jeju": "Jeju"
+      }
     }
   }
 }
