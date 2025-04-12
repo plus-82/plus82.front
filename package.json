@@ -34,6 +34,7 @@
     "path-to-regexp": "^8.2.0",
     "react": "^19",
     "react-datepicker": "^7.4.0",
+    "react-daum-postcode": "^3.2.0",
     "react-dom": "^19",
     "react-error-boundary": "^4.1.2",
     "react-hook-form": "^7.53.0",
