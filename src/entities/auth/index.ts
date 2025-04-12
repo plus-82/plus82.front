@@ -5,6 +5,9 @@ export {
   businessSignOut,
 } from './api/auth'
 export { academySignUp, type AcademySignUpRequest } from './api/academy-sign-up'
+export { academyRequestPasswordReset } from './api/academy-request-password-reset'
+export { academyRequestVerification } from './api/academy-request-verification'
+export { academySignIn, type AcademySignInRequest } from './api/academy-sign-in'
 export { authQueries } from './api/query'
 export { refreshToken } from './api/refresh-token'
 export { requestPasswordReset } from './api/request-password-reset'

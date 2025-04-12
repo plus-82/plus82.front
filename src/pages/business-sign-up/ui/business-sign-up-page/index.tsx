@@ -48,7 +48,7 @@ export const BusinessSignUpPage = () => {
   const { handleServerError } = useServerErrorHandler()
 
   const { isEmailVerificationRequested, isEmailVerificationCompleted } =
-    useEmailValidationState()
+    useEmailValidationState({ isBusiness: true })
 
   const handleSignUpSuccess = () => {
     toast.success(t('success.sign-up'))

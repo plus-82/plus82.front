@@ -24,6 +24,8 @@ const handleError = (error: Error) => {
   const isHttpError = error instanceof HttpError
   if (!isHttpError) throw error
 
+  console.log(error.code)
+
   return errorHandler.toast('An error occurred while signing up', { error })
 }
 
