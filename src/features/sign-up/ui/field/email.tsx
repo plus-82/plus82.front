@@ -1,3 +1,4 @@
+import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { useFormContext, useWatch } from 'react-hook-form'
@@ -12,6 +13,7 @@ import {
 import { fieldCss, Form, hasError } from 'shared/form'
 import { Button, HelperText, Label } from 'shared/ui'
 
+import { useAcademyRequestVerification } from '../../api/use-academy-request-verification'
 import { useRequestVerification } from '../../api/use-request-verification'
 import { useVerifyCode } from '../../api/use-verify-code'
 import { FormValues } from '../../model/form-values'
@@ -19,6 +21,9 @@ import { email as emailRule, code as codeRule } from '../../model/rules'
 
 export const Email = () => {
   const t = useTranslations()
+  const pathname = usePathname()
+
+  const isBusiness = pathname?.includes('business')
 
   const [showVerificationField, setShowVerificationField] = useState(false)
 
@@ -37,6 +42,7 @@ export const Email = () => {
   })
 
   const requestVerification = useRequestVerification()
+  const academyRequestVerification = useAcademyRequestVerification()
   const verifyCode = useVerifyCode()
 
   const handleEmailChange = () => {
@@ -75,10 +81,17 @@ export const Email = () => {
 
     const data = { email }
 
-    requestVerification.mutate(data, {
-      onSuccess: handleRequestVerificationSuccess,
-      onError: handleRequestVerificationError,
-    })
+    if (isBusiness) {
+      academyRequestVerification.mutate(data, {
+        onSuccess: handleRequestVerificationSuccess,
+        onError: handleRequestVerificationError,
+      })
+    } else {
+      requestVerification.mutate(data, {
+        onSuccess: handleRequestVerificationSuccess,
+        onError: handleRequestVerificationError,
+      })
+    }
   }
 
   const handleVerifyCodeError = (error: HttpError) => {
@@ -109,7 +122,7 @@ export const Email = () => {
 
     if (requestVerification.isPending || requestVerification.isIdle) {
       setError('email', {
-        message: t('sign-up.error.not-verified-email'),
+        message: t('sign-up.error.email-verification-required'),
       })
 
       return
@@ -165,9 +178,7 @@ export const Email = () => {
               </HelperText>
             )}
             {!hasError(errors?.code) && !verifyCode.isSuccess && (
-              <HelperText>
-                {t('sign-up.error.not-enter-verification-code')}
-              </HelperText>
+              <HelperText>{t('sign-up.message.verification-code')}</HelperText>
             )}
           </div>
           <Button
