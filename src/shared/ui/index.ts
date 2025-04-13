@@ -25,6 +25,7 @@ export { Sidebar, useSidebar } from './sidebar'
 export { Skeleton } from './skeleton'
 export { Spinner } from './spinner'
 export { Switch } from './switch'
+export { Table } from './table'
 export { Tabs } from './tabs'
 export { TextArea, type TextAreaProps } from './text-area'
 export {
