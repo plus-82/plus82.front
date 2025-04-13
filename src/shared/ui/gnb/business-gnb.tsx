@@ -65,7 +65,7 @@ export const BusinessGNB = () => {
                     variant="text"
                     size="small"
                   >
-                    Sign In
+                    {t('button.sign-in')}
                   </Button>
                   <div className={cn(css.divider())} />
                   <Button
@@ -74,7 +74,7 @@ export const BusinessGNB = () => {
                     variant="text"
                     size="small"
                   >
-                    Sign Up
+                    {t('button.sign-up')}
                   </Button>
                 </div>
               ) : (
@@ -84,7 +84,7 @@ export const BusinessGNB = () => {
                 </div>
               ))}
             <Button as="a" href="/" variant="lined" size="small">
-              Academy
+              {t('button.go-to-teacher-home')}
             </Button>
           </div>
         </div>
