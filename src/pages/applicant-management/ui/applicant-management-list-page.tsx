@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 import { Layout, Tabs, Table, Pagination } from 'shared/ui'
@@ -24,6 +25,7 @@ const relations = [
 ]
 
 export const ApplicantManagementListPage = () => {
+  const t = useTranslations('applicant-management-list')
   const [currentPage, setCurrentPage] = useState(0)
 
   const handlePageChange = ({ selected }: { selected: number }) => {
@@ -34,24 +36,30 @@ export const ApplicantManagementListPage = () => {
   return (
     <Layout wide>
       <h1 className="display-small mb-10 text-center font-bold text-gray-900">
-        지원자 관리
+        {t('title')}
       </h1>
       <Tabs.Root defaultValue="SUBMITTED" className="w-[480px]">
         <Tabs.List size="small" width="full" variant="box" className="mb-4">
-          <Tabs.Trigger value="SUBMITTED">접수</Tabs.Trigger>
-          <Tabs.Trigger value="REVIEWED">검토</Tabs.Trigger>
-          <Tabs.Trigger value="ACCEPTED">합격</Tabs.Trigger>
-          <Tabs.Trigger value="REJECTED">불합격</Tabs.Trigger>
+          <Tabs.Trigger value="SUBMITTED">{t('tabs.submitted')}</Tabs.Trigger>
+          <Tabs.Trigger value="REVIEWED">{t('tabs.reviewed')}</Tabs.Trigger>
+          <Tabs.Trigger value="ACCEPTED">{t('tabs.accepted')}</Tabs.Trigger>
+          <Tabs.Trigger value="REJECTED">{t('tabs.rejected')}</Tabs.Trigger>
         </Tabs.List>
       </Tabs.Root>
       <div className="mb-10 h-[584px]">
         <Table.Root className="w-full">
           <Table.Header>
             <Table.Row>
-              <Table.Head className="w-[260px]">지원자</Table.Head>
-              <Table.Head className="w-[380px]">공고 제목</Table.Head>
-              <Table.Head className="w-[300px]">메모</Table.Head>
-              <Table.Head className="w-[120px]">지원 일자</Table.Head>
+              <Table.Head className="w-[240px]">
+                {t('table.applicant')}
+              </Table.Head>
+              <Table.Head className="w-[380px]">
+                {t('table.job-title')}
+              </Table.Head>
+              <Table.Head className="w-[300px]">{t('table.memo')}</Table.Head>
+              <Table.Head className="w-[140px]">
+                {t('table.application-date')}
+              </Table.Head>
             </Table.Row>
           </Table.Header>
           <Table.Body>
