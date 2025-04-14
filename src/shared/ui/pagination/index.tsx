@@ -8,14 +8,14 @@ import { cn } from 'shared/lib'
 import { Icon } from '../icon'
 
 interface PaginationProps {
-  pageCount: number
+  pageCount?: number
   currentPage: number
   onPageChange: (selectedItem: { selected: number }) => void
   className?: string
 }
 
 export const Pagination = ({
-  pageCount,
+  pageCount = 1,
   currentPage,
   onPageChange,
   className,
@@ -32,7 +32,7 @@ export const Pagination = ({
         'body-large flex h-8 w-8 items-center justify-center rounded-md font-bold text-gray-900 transition-colors',
         'hover:bg-gray-100',
       )}
-      activeLinkClassName={cn('bg-blue-800 text-white', 'hover:bg-blue-700')}
+      activeLinkClassName={cn('bg-blue-800 text-white', 'hover:!bg-blue-700')}
       previousLinkClassName={cn(
         'flex h-8 w-8 items-center justify-center rounded-md text-gray-700',
         'hover:bg-gray-100',

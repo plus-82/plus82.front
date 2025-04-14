@@ -13,6 +13,7 @@ export type JobPostRelation = {
   jobPostTitle: string
   academyId: number
   academyName: string
+  academyMemo: string | null
 }
 
 export type JobPostRelationDetail = {

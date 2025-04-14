@@ -11,7 +11,8 @@
       "applicant": "Applicant",
       "job-title": "Job Title",
       "memo": "Memo",
-      "application-date": "Application Date"
+      "application-date": "Application Date",
+      "no-data": "No applications have been received yet"
     }
   }
 }
