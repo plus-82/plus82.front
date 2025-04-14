@@ -90,6 +90,7 @@ export const ApplicantManagementListPage = () => {
                       <Table.Row
                         key={application.id}
                         onClick={handleItemClick(application.id)}
+                        className="cursor-pointer"
                       >
                         <Table.Cell>
                           {application.resumeFirstName}{' '}
