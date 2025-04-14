@@ -1,7 +1,8 @@
 import { queryOptions } from '@tanstack/react-query'
 
 import {
-  getJobPostResumeRelations,
+  getBusinessJobPostResumeRelations,
+  getTeacherJobPostResumeRelations,
   GetJobPostResumeRequest,
 } from './get-job-post-resume'
 
@@ -11,6 +12,11 @@ export const jobPostResumeRelationQueries = {
   list: (params: GetJobPostResumeRequest) =>
     queryOptions({
       queryKey: [...jobPostResumeRelationQueries.lists(), params],
-      queryFn: () => getJobPostResumeRelations(params),
+      queryFn: () => getTeacherJobPostResumeRelations(params),
+    }),
+  businessList: (params: GetJobPostResumeRequest) =>
+    queryOptions({
+      queryKey: [...jobPostResumeRelationQueries.lists(), params],
+      queryFn: () => getBusinessJobPostResumeRelations(params),
     }),
 }
