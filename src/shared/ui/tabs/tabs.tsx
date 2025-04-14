@@ -96,7 +96,8 @@ const ToggleGroupContext = createContext<
   width: 'full',
 })
 
-export const { Root } = TabsPrimitive
+// eslint-disable-next-line prefer-destructuring
+export const Root = TabsPrimitive.Root
 
 type ListProps = ComponentProps<typeof TabsPrimitive.List> &
   VariantProps<typeof groupVariants> & {
