@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
@@ -12,6 +13,8 @@ import { useJobPostRelations } from '../api/use-job-post-relations'
 export const ApplicantManagementListPage = () => {
   const t = useTranslations('applicant-management-list')
 
+  const router = useRouter()
+
   const [currentPage, setCurrentPage] = useState(0)
   const [status, setStatus] = useState<ApplicationStatus>(
     ApplicationStatus.SUBMITTED,
@@ -22,6 +25,8 @@ export const ApplicantManagementListPage = () => {
     pageNumber: currentPage,
   })
 
+  const hasNoApplications = applications.length === 0
+
   const handlePageChange = ({ selected }: { selected: number }) => {
     setCurrentPage(selected)
   }
@@ -30,7 +35,9 @@ export const ApplicantManagementListPage = () => {
     setStatus(value as ApplicationStatus)
   }
 
-  const hasNoApplications = applications.length === 0
+  const handleItemClick = (id: number) => () => {
+    router.push(`/business/applicant-management/${id}`)
+  }
 
   return (
     <Layout wide>
@@ -80,7 +87,10 @@ export const ApplicantManagementListPage = () => {
                 return (
                   <Table.Body>
                     {applications.map(application => (
-                      <Table.Row key={application.id}>
+                      <Table.Row
+                        key={application.id}
+                        onClick={handleItemClick(application.id)}
+                      >
                         <Table.Cell>
                           {application.resumeFirstName}{' '}
                           {application.resumeLastName}
