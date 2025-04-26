@@ -6,7 +6,7 @@ import { getBusinessSession } from 'entities/auth'
 import { apiClient, HttpError, errorHandler, ServerError } from 'shared/api'
 
 const handleSuccess = () => {
-  revalidateTag('job-posts')
+  revalidateTag('job-post-resume-relation')
 }
 
 const handleError = (error: Error): ServerError => {

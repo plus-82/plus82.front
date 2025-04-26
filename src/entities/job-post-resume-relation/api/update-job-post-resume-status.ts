@@ -8,7 +8,7 @@ import { apiClient, HttpError, errorHandler, ServerError } from 'shared/api'
 import { ApplicationStatus } from '../model/status'
 
 const handleSuccess = () => {
-  revalidateTag('job-posts')
+  revalidateTag('job-post-resume-relation')
 }
 
 const handleError = (error: Error): ServerError => {
