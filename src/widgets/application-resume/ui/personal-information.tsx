@@ -65,12 +65,16 @@ export const PersonalInformation = ({ jobPostResumeRelation }: Props) => {
                 <dt className="w-[28px] text-gray-500">학력</dt>
                 <dd className="flex-grow text-gray-900">
                   {jobPostResumeRelation.degree}
+                  {jobPostResumeRelation.major &&
+                    ` / ${jobPostResumeRelation.major}`}
                 </dd>
               </div>
               <div className="flex gap-2">
                 <dt className="w-[28px] text-gray-500">비자</dt>
                 <dd className="flex-grow text-gray-900">
-                  {jobPostResumeRelation.hasVisa ? 'Yes' : 'No'}
+                  {jobPostResumeRelation.hasVisa
+                    ? jobPostResumeRelation.visaType
+                    : 'No'}
                 </dd>
               </div>
             </div>
