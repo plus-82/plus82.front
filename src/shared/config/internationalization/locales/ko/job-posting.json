@@ -13,7 +13,8 @@
       "posted-date": "등록일",
       "expiration-date": "마감일",
       "no-data": "아직 등록한 공고가 없어요",
-      "no-expiration-date": "상시 채용"
+      "no-expiration-date": "상시 채용",
+      "draft": "등록 안됨"
     },
     "button": {
       "register-job-posting": "공고 등록하기"

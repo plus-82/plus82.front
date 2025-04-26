@@ -1,6 +1,7 @@
 import { MouseEvent } from 'react'
 
 import { colors } from 'shared/config'
+import { cn } from 'shared/lib'
 import { Button, Icon } from 'shared/ui'
 
 import { useCopyJobPosting } from '../lib/copy-job-posting'
@@ -39,7 +40,11 @@ export const CopyJobPostingButton = ({
         disabled={disabled}
         onClick={handleCopyButtonClick}
       >
-        <Icon name="Copy" size="large" color={colors.gray[700]} />
+        <Icon
+          name="Copy"
+          size="large"
+          color={disabled ? colors.gray[300] : colors.gray[700]}
+        />
       </button>
     )
   }

@@ -13,7 +13,8 @@
       "posted-date": "Posted Date",
       "expiration-date": "Expiration Date",
       "no-data": "No job postings have been registered yet",
-      "no-expiration-date": "Open Recruitment"
+      "no-expiration-date": "Open Recruitment",
+      "draft": "Not Posted"
     },
     "button": {
       "register-job-posting": "Register Job Posting"

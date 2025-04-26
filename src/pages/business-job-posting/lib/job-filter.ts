@@ -7,7 +7,10 @@ export enum JobFilter {
 export const convertJobFilterToParams = (filter: JobFilter) => {
   switch (filter) {
     case JobFilter.IN_PROGRESS:
-      return {}
+      return {
+        isDraft: false,
+        closed: false,
+      }
     case JobFilter.SAVED:
       return {
         isDraft: true,

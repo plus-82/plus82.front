@@ -128,9 +128,13 @@ export const BusinessJobPostingListPage = () => {
                           })}
                         </Table.Cell>
                         <Table.Cell>
-                          {format(jobPost.createdAt, 'yyyy.MM.dd')}
+                          {jobPost.createdAt
+                            ? format(jobPost.createdAt, 'yyyy.MM.dd')
+                            : t('table.draft')}
                         </Table.Cell>
-                        <Table.Cell>
+                        <Table.Cell
+                          className={cn(!jobPost.dueDate && 'text-blue-800')}
+                        >
                           {jobPost.dueDate
                             ? format(jobPost.dueDate, 'yyyy.MM.dd')
                             : t('table.no-expiration-date')}
@@ -143,7 +147,11 @@ export const BusinessJobPostingListPage = () => {
                             <Icon
                               name="Pen"
                               size="large"
-                              color={colors.gray[700]}
+                              color={
+                                status === JobFilter.CLOSED
+                                  ? colors.gray[300]
+                                  : colors.gray[700]
+                              }
                             />
                           </button>
                           <CopyJobPostingButton

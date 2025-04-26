@@ -23,7 +23,6 @@ export const PreviewJobPostingButton = ({
   const handlePreviewButtonClick = async (
     event: MouseEvent<HTMLButtonElement>,
   ) => {
-    console.log('PreviewJobPostingButton clicked')
     event.stopPropagation()
     event.preventDefault()
 
@@ -45,7 +44,11 @@ export const PreviewJobPostingButton = ({
         disabled={disabled}
         onClick={handlePreviewButtonClick}
       >
-        <Icon name="DocumentSearch" size="large" color={colors.gray[700]} />
+        <Icon
+          name="DocumentSearch"
+          size="large"
+          color={disabled ? colors.gray[300] : colors.gray[700]}
+        />
       </button>
     )
   }
