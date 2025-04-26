@@ -14,3 +14,12 @@ export type JobPost = {
   forAdult: boolean
   imageUrls: string[]
 }
+
+export type BusinessJobPost = {
+  id: number
+  title: string
+  dueDate: string
+  createdAt: string
+  salary: number
+  resumeCount: number
+}
