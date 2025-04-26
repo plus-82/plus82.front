@@ -13,10 +13,7 @@ export const FileResume = ({
   return (
     <div className="flex gap-5">
       <div className="flex-grow">
-        <Header
-          jobPostTitle={jobPostResumeRelation.jobPostTitle}
-          submittedDate={jobPostResumeRelation.submittedDate}
-        />
+        <Header resumeRelation={jobPostResumeRelation} />
         <PDFViewer
           filePath={jobPostResumeRelation.filePath!}
           className="mb-8 h-fit"
