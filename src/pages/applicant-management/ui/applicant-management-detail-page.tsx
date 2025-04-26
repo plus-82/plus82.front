@@ -6,7 +6,7 @@ type Params = {
   jobPostResumeRelationId: string
 }
 
-export const ApplicantAnagementDetailPage = async ({
+export const ApplicantManagementDetailPage = async ({
   params,
 }: {
   params: Promise<Params>
