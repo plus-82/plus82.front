@@ -8,6 +8,7 @@ import { useState } from 'react'
 
 import { jobPostQueries } from 'entities/job-post'
 import { CopyJobPostingButton } from 'features/copy-job-posting'
+import { PreviewJobPostingButton } from 'features/preview-job-posting'
 import { colors } from 'shared/config'
 import { cn, formatCurrency } from 'shared/lib'
 import { Layout, Tabs, Table, Pagination, Icon, Button } from 'shared/ui'
@@ -151,16 +152,11 @@ export const BusinessJobPostingListPage = () => {
                             disabled={status === JobFilter.SAVED}
                             onSuccess={handleCopySuccess}
                           />
-                          <button
-                            className="flex h-10 w-10 items-center justify-center"
+                          <PreviewJobPostingButton
+                            type="icon"
+                            jobPostId={jobPost.id}
                             disabled={status === JobFilter.SAVED}
-                          >
-                            <Icon
-                              name="DocumentSearch"
-                              size="large"
-                              color={colors.gray[700]}
-                            />
-                          </button>
+                          />
                         </Table.Cell>
                       </Table.Row>
                     ))}

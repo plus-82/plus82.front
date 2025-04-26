@@ -3,7 +3,7 @@ import { Location } from '../config/location'
 export type JobPost = {
   id: number
   title: string
-  dueDate: string
+  dueDate: string | null
   academyId: number
   academyName: string
   locationType: Location
