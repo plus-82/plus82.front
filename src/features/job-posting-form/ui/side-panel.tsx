@@ -1,6 +1,12 @@
 import { Button } from 'shared/ui'
 
-export const SidePanel = () => {
+type Props = {
+  type: 'register' | 'update'
+  onRegister?: () => void
+  onSave?: () => void
+}
+
+export const SidePanel = ({ type }: Props) => {
   return (
     <div className="h-fit w-[340px] shrink-0 rounded-2xl border border-gray-300 p-6">
       <p className="body-large mb-2 text-blue-800">
@@ -18,9 +24,11 @@ export const SidePanel = () => {
         <Button variant="primary" size="large" fullWidth>
           등록하기
         </Button>
-        <Button variant="lined" size="large" fullWidth>
-          임시 저장
-        </Button>
+        {type === 'register' && (
+          <Button variant="lined" size="large" fullWidth>
+            임시 저장
+          </Button>
+        )}
       </div>
     </div>
   )
