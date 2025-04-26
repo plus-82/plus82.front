@@ -5,7 +5,6 @@ export type JobPostRelation = {
   coverLetter: string
   status: ApplicationStatus
   submittedDate: string
-  resumeId: number
   resumeTitle: string
   resumeFirstName: string
   resumeLastName: string
@@ -21,6 +20,7 @@ export type JobPostRelationDetail = {
   coverLetter: string
   status: ApplicationStatus
   submittedDate: string
+  academyMemo: string | null
   resumeTitle: string
   personalIntroduction: string
   firstName: string
