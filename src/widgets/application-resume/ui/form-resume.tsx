@@ -13,10 +13,7 @@ type Props = {
 export const FormResume = ({ jobPostResumeRelation }: Props) => {
   return (
     <>
-      <Header
-        jobPostTitle={jobPostResumeRelation.jobPostTitle}
-        submittedDate={jobPostResumeRelation.submittedDate}
-      />
+      <Header resumeRelation={jobPostResumeRelation} />
       <div className="space-y-8">
         <PersonalInformation jobPostResumeRelation={jobPostResumeRelation} />
         <div className="flex gap-5">
