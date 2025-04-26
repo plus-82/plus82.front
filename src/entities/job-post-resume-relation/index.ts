@@ -1,5 +1,6 @@
 export { getJobPostResumeSummary } from './api/get-job-post-resume-summary'
 export { getJobPostResumeByCode } from './api/get-job-post-resume-by-code'
+export { getBusinessJobPostResumeRelation } from './api/get-job-post-resume'
 export { jobPostResumeRelationQueries } from './api/query'
 export { ApplicationStatus, type StatusSummary } from './model/status'
 export type { JobPostRelationDetail } from './model/application'

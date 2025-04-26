@@ -4,7 +4,7 @@ import {
   getBusinessJobPostResumeRelations,
   getTeacherJobPostResumeRelations,
   GetJobPostResumeRequest,
-} from './get-job-post-resume'
+} from './get-job-post-resumes'
 
 export const jobPostResumeRelationQueries = {
   all: () => ['job-post-resume-relation'],

@@ -1,41 +1,23 @@
 'use server'
 
-import { getBusinessSession, getTeacherSession } from 'entities/auth'
-import { apiClient, Pagination, PaginationParams } from 'shared/api'
+import { getBusinessSession } from 'entities/auth'
+import { apiClient } from 'shared/api'
 
-import { JobPostRelation } from '../model/application'
-import { ApplicationStatus } from '../model/status'
+import { JobPostRelationDetail } from '../model/application'
 
-export type GetJobPostResumeRequest = PaginationParams<{
-  status?: ApplicationStatus
-}>
-
-type GetJobPostResumeResponse = Pagination<JobPostRelation>
-
-export const getTeacherJobPostResumeRelations = async (
-  queryParams: GetJobPostResumeRequest,
-) => {
-  const { accessToken } = await getTeacherSession()
-
-  const response = await apiClient.get<GetJobPostResumeResponse>({
-    endpoint: '/job-post-resume-relations',
-    queryParams,
-    option: {
-      authorization: `Bearer ${accessToken}`,
-    },
-  })
-
-  return response
+export type GetJobPostResumeRequest = {
+  jobPostResumeRelationId: number
 }
 
-export const getBusinessJobPostResumeRelations = async (
-  queryParams: GetJobPostResumeRequest,
-) => {
+type GetJobPostResumeResponse = JobPostRelationDetail
+
+export const getBusinessJobPostResumeRelation = async ({
+  jobPostResumeRelationId,
+}: GetJobPostResumeRequest) => {
   const { accessToken } = await getBusinessSession()
 
   const response = await apiClient.get<GetJobPostResumeResponse>({
-    endpoint: '/job-post-resume-relations',
-    queryParams,
+    endpoint: `/job-post-resume-relations/${jobPostResumeRelationId}`,
     option: {
       authorization: `Bearer ${accessToken}`,
     },
