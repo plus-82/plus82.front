@@ -17,6 +17,9 @@
     },
     "button": {
       "register-job-posting": "Register Job Posting"
+    },
+    "success": {
+      "job-posting-copy": "Job posting copied successfully"
     }
   }
 }

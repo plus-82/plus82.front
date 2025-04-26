@@ -25,6 +25,7 @@ export const getBusinessJobPosts = async (
     queryParams,
     option: {
       authorization: `Bearer ${accessToken}`,
+      tags: ['business-job-posts'],
     },
   })
 

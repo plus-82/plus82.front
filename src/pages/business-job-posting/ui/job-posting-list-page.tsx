@@ -1,10 +1,13 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
+import { jobPostQueries } from 'entities/job-post'
+import { CopyJobPostingButton } from 'features/copy-job-posting'
 import { colors } from 'shared/config'
 import { cn, formatCurrency } from 'shared/lib'
 import { Layout, Tabs, Table, Pagination, Icon, Button } from 'shared/ui'
@@ -14,6 +17,8 @@ import { convertJobFilterToParams, JobFilter } from '../lib/job-filter'
 
 export const BusinessJobPostingListPage = () => {
   const t = useTranslations('job-posting-list')
+
+  const queryClient = useQueryClient()
 
   const router = useRouter()
 
@@ -37,6 +42,12 @@ export const BusinessJobPostingListPage = () => {
 
   const handleItemClick = (id: number) => () => {
     router.push(`/business/job-posting/${id}`)
+  }
+
+  const handleCopySuccess = () => {
+    queryClient.invalidateQueries({
+      queryKey: jobPostQueries.businessLists(),
+    })
   }
 
   return (
@@ -134,16 +145,12 @@ export const BusinessJobPostingListPage = () => {
                               color={colors.gray[700]}
                             />
                           </button>
-                          <button
-                            className="flex h-10 w-10 items-center justify-center"
+                          <CopyJobPostingButton
+                            type="icon"
+                            jobPostId={jobPost.id}
                             disabled={status === JobFilter.SAVED}
-                          >
-                            <Icon
-                              name="Copy"
-                              size="large"
-                              color={colors.gray[700]}
-                            />
-                          </button>
+                            onSuccess={handleCopySuccess}
+                          />
                           <button
                             className="flex h-10 w-10 items-center justify-center"
                             disabled={status === JobFilter.SAVED}
