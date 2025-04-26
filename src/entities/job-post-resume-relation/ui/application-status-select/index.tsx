@@ -1,7 +1,7 @@
 import { ApplicationStatus } from 'entities/job-post-resume-relation'
 import { Form, FormSelectProps } from 'shared/form'
 
-const StatusLabel = {
+export const StatusLabel = {
   [ApplicationStatus.SUBMITTED]: '접수',
   [ApplicationStatus.REVIEWED]: '검토',
   [ApplicationStatus.ACCEPTED]: '합격',
