@@ -3,15 +3,17 @@ import { MouseEvent } from 'react'
 import { getJobPost } from 'entities/job-post'
 import { JobPostDetail } from 'entities/job-post'
 import { colors } from 'shared/config'
+import { cn } from 'shared/lib'
 import { Button, Icon } from 'shared/ui'
 
 import { setPreviewJobPosting } from '../lib/storage'
 
 type Props = {
-  type: 'icon' | 'button'
+  type: 'icon' | 'button' | 'text-button'
   jobPostId?: number
   onLoad?: () => Promise<JobPostDetail>
   disabled?: boolean
+  className?: string
 }
 
 export const PreviewJobPostingButton = ({
@@ -19,6 +21,7 @@ export const PreviewJobPostingButton = ({
   jobPostId,
   onLoad,
   disabled,
+  className,
 }: Props) => {
   const handlePreviewButtonClick = async (
     event: MouseEvent<HTMLButtonElement>,
@@ -40,7 +43,7 @@ export const PreviewJobPostingButton = ({
   if (type === 'icon') {
     return (
       <button
-        className="flex h-10 w-10 items-center justify-center"
+        className={cn('flex h-10 w-10 items-center justify-center', className)}
         disabled={disabled}
         onClick={handlePreviewButtonClick}
       >
@@ -53,6 +56,18 @@ export const PreviewJobPostingButton = ({
     )
   }
 
+  if (type === 'text-button') {
+    return (
+      <button
+        className={cn('body-large text-gray-700', className)}
+        disabled={disabled}
+        onClick={handlePreviewButtonClick}
+      >
+        미리 보기
+      </button>
+    )
+  }
+
   return (
     <Button
       type="button"
@@ -60,6 +75,7 @@ export const PreviewJobPostingButton = ({
       size="small"
       onClick={handlePreviewButtonClick}
       disabled={disabled}
+      className={className}
     >
       <Button.Icon name="DocumentSearch" />
       미리 보기
