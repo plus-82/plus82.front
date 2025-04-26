@@ -20,6 +20,7 @@ export const getBusinessJobPostResumeRelation = async ({
     endpoint: `/job-post-resume-relations/${jobPostResumeRelationId}`,
     option: {
       authorization: `Bearer ${accessToken}`,
+      tags: ['job-post-resume-relation'],
     },
   })
 

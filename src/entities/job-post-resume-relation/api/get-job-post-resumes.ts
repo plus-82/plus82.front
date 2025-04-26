@@ -33,8 +33,6 @@ export const getBusinessJobPostResumeRelations = async (
 ) => {
   const { accessToken } = await getBusinessSession()
 
-  console.log(accessToken)
-
   const response = await apiClient.get<GetJobPostResumeResponse>({
     endpoint: '/job-post-resume-relations',
     queryParams,

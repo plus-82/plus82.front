@@ -1,1 +1,1 @@
-export { ApplicantAnagementDetailPage as default } from 'pages/applicant-management'
+export { ApplicantManagementDetailPage as default } from 'pages/applicant-management'
