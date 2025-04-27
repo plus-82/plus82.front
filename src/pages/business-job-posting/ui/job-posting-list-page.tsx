@@ -78,7 +78,12 @@ export const BusinessJobPostingListPage = () => {
               {t('tabs.closed')}
             </Tabs.Trigger>
           </Tabs.List>
-          <Button variant="lined" size="medium">
+          <Button
+            variant="lined"
+            size="medium"
+            as="a"
+            href="/business/job-posting/create"
+          >
             <Button.Icon name="Plus" />
             {t('button.register-job-posting')}
           </Button>
