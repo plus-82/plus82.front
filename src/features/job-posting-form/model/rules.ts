@@ -39,7 +39,13 @@ export const benefits = {
 
 export const salary = {
   required: 'validation.jobPostingSalary.required',
-  validate: (value: number) => {
+  validate: (value: string) => {
+    const isNumber = /^\d+$/.test(value)
+
+    if (!isNumber) {
+      return 'validation.jobPostingSalary.invalid'
+    }
+
     const salary = value.toString().replace(/,/g, '')
 
     if (salary.length > 10) {

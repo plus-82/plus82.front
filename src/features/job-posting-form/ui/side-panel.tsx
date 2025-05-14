@@ -1,4 +1,13 @@
+import { isEqual } from 'lodash-es'
+import { useFormContext, useWatch } from 'react-hook-form'
+
 import { Button } from 'shared/ui'
+
+import {
+  canRegisterForm,
+  defaultValues,
+  FormValues,
+} from '../model/form-values'
 
 type Props = {
   type: 'register' | 'update'
@@ -6,7 +15,34 @@ type Props = {
   onSave?: () => void
 }
 
-export const SidePanel = ({ type }: Props) => {
+export const SidePanel = ({ type, onRegister, onSave }: Props) => {
+  const { handleSubmit, control, getValues } = useFormContext<FormValues>()
+
+  const [
+    title,
+    jobDescription,
+    salary,
+    studentType,
+    dueDate,
+    noExpirationDate,
+  ] = useWatch({
+    control,
+    name: [
+      'title',
+      'jobDescription',
+      'salary',
+      'studentType',
+      'dueDate',
+      'noExpirationDate',
+    ],
+  })
+
+  const canSave = isEqual(getValues(), defaultValues)
+
+  const submitForm = handleSubmit(() => {
+    onRegister?.()
+  })
+
   return (
     <div className="h-fit w-[340px] shrink-0 rounded-2xl border border-gray-300 p-6">
       <p className="body-large mb-2 text-blue-800">
@@ -21,11 +57,32 @@ export const SidePanel = ({ type }: Props) => {
         </p>
       </div>
       <div className="space-y-2">
-        <Button variant="primary" size="large" fullWidth>
+        <Button
+          variant="primary"
+          size="large"
+          fullWidth
+          onClick={submitForm}
+          disabled={
+            !canRegisterForm({
+              title,
+              jobDescription,
+              salary,
+              studentType,
+              dueDate,
+              noExpirationDate,
+            })
+          }
+        >
           등록하기
         </Button>
         {type === 'register' && (
-          <Button variant="lined" size="large" fullWidth>
+          <Button
+            variant="lined"
+            size="large"
+            fullWidth
+            disabled={canSave}
+            onClick={onSave}
+          >
             임시 저장
           </Button>
         )}

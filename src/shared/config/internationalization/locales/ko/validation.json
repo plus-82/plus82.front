@@ -78,7 +78,8 @@
     },
     "jobPostingSalary": {
       "required": "월급을 입력해 주세요",
-      "maxLength": "월급은 최대 10자를 초과할 수 없습니다"
+      "maxLength": "월급은 최대 10자를 초과할 수 없습니다",
+      "invalid": "숫자만 입력해 주세요"
     },
     "jobPostingDueDate": {
       "required": "공고 마감일을 입력해 주세요"

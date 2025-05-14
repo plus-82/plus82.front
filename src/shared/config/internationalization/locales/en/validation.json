@@ -78,7 +78,8 @@
     },
     "jobPostingSalary": {
       "required": "Please enter the salary",
-      "maxLength": "Please enter less than 10 characters"
+      "maxLength": "Please enter less than 10 characters",
+      "invalid": "Please enter a number only"
     },
     "jobPostingDueDate": {
       "required": "Please enter the due date"

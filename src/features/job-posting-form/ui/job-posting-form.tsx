@@ -1,9 +1,9 @@
-import { isEqual, isNull } from 'lodash-es'
+import { isEqual } from 'lodash-es'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import { fieldCss, Form } from 'shared/form'
 import { cn, Slot } from 'shared/lib'
-import { Checkbox, Label } from 'shared/ui'
+import { Checkbox, CheckboxValue, Label } from 'shared/ui'
 
 import { FormValues } from '../model/form-values'
 import * as rules from '../model/rules'
@@ -20,9 +20,9 @@ export const JobPostingForm = ({ className }: Props) => {
     clearErrors,
   } = useFormContext<FormValues>()
 
-  const [studentType, dueDate] = useWatch({
+  const [studentType, noExpirationDate] = useWatch({
     control,
-    name: ['studentType', 'dueDate'],
+    name: ['studentType', 'noExpirationDate'],
   })
 
   const studentTypeOptions = [
@@ -45,13 +45,11 @@ export const JobPostingForm = ({ className }: Props) => {
     clearErrors('studentType')
   }
 
-  const noExpirationDate = isNull(dueDate)
-
-  const handleExpirationDateChange = () => {
-    if (noExpirationDate) {
-      setValue('dueDate', undefined)
-    } else {
+  const handleExpirationDateChange = (value: CheckboxValue[]) => {
+    if (value.includes('true')) {
       setValue('dueDate', null)
+    } else {
+      setValue('dueDate', undefined)
     }
 
     clearErrors('dueDate')
@@ -178,17 +176,23 @@ export const JobPostingForm = ({ className }: Props) => {
           <Form.DatePicker
             placeholder="공고 마감 날짜를 선택해 주세요"
             fullWidth
-            disabled={noExpirationDate}
+            disabled={noExpirationDate.includes('true')}
             dateFormat="yyyy-MM-dd"
           />
           <Form.ErrorMessage className="-mt-[6px] mb-[6px]" />
         </Form.Control>
-        <Checkbox
-          label="상시 채용"
-          checked={noExpirationDate}
-          onChange={handleExpirationDateChange}
-          className="[&:last-child]:-mt-[6px]"
-        />
+        <Form.Control name="noExpirationDate">
+          <Form.CheckboxGroup
+            options={['true']}
+            onChange={handleExpirationDateChange}
+          >
+            <Form.Checkbox
+              label="상시 채용"
+              value="true"
+              className="[&:last-child]:-mt-[6px]"
+            />
+          </Form.CheckboxGroup>
+        </Form.Control>
       </div>
     </div>
   )

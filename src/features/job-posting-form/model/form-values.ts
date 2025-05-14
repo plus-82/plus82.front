@@ -19,6 +19,7 @@ export type FormValues = {
   salaryNegotiable: string[]
   jobStartDate?: string
   dueDate?: string | null
+  noExpirationDate: string[]
   studentType: string[] | null
 }
 
@@ -33,6 +34,7 @@ export const defaultValues: FormValues = {
   jobStartDate: undefined,
   dueDate: undefined,
   studentType: null,
+  noExpirationDate: [],
 }
 
 export const convertToFormValues = (jobPost?: CreateJobPost): FormValues => {
@@ -44,6 +46,7 @@ export const convertToFormValues = (jobPost?: CreateJobPost): FormValues => {
       ? undefined
       : jobPost.jobStartDate,
     dueDate: isNilOrEmptyString(jobPost.dueDate) ? undefined : jobPost.dueDate,
+    noExpirationDate: isNil(jobPost.dueDate) ? ['true'] : [],
     studentType: convertStudentTypeToArray({
       forKindergarten: jobPost.forKindergarten,
       forElementary: jobPost.forElementary,
@@ -57,6 +60,7 @@ export const convertToFormValues = (jobPost?: CreateJobPost): FormValues => {
 
 export const convertToCreateJobPostDTO = ({
   studentType,
+  noExpirationDate,
   ...formValues
 }: FormValues): CreateJobPost => {
   return {
@@ -67,7 +71,9 @@ export const convertToCreateJobPostDTO = ({
     forMiddleSchool: studentType?.includes('MiddleSchool') ?? false,
     forHighSchool: studentType?.includes('HighSchool') ?? false,
     forAdult: studentType?.includes('Adult') ?? false,
-    dueDate: formValues.dueDate || null,
+    dueDate: noExpirationDate.includes('true')
+      ? null
+      : formValues.dueDate || null,
     jobStartDate: formValues.jobStartDate || '',
     salaryNegotiable:
       isArray(formValues.salaryNegotiable) &&
@@ -98,11 +104,16 @@ export const convertToJobDetail = (
 export const canRegisterForm = (
   formValues: Pick<
     FormValues,
-    'title' | 'jobDescription' | 'salary' | 'studentType' | 'dueDate'
+    | 'title'
+    | 'jobDescription'
+    | 'salary'
+    | 'studentType'
+    | 'dueDate'
+    | 'noExpirationDate'
   >,
 ) => {
-  const isDateString = (str?: string) => {
-    if (isUndefined(str)) return false
+  const isDateString = (str?: string | null) => {
+    if (isNil(str)) return false
 
     const parsedDate = parse(str, 'yyyy-MM-dd', new Date())
 
@@ -115,6 +126,8 @@ export const canRegisterForm = (
     formValues.salary &&
     !isNil(formValues.studentType) &&
     formValues.studentType.length > 0 &&
-    (isNull(formValues.dueDate) || isDateString(formValues.dueDate))
+    ((formValues.noExpirationDate.includes('true') &&
+      isNil(formValues.dueDate)) ||
+      isDateString(formValues.dueDate))
   )
 }

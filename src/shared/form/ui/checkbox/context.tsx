@@ -5,6 +5,7 @@ import { useCheckbox } from 'shared/lib'
 
 type CheckboxState = ReturnType<typeof useCheckbox> & {
   controller: UseControllerReturn
+  onChange?: (value: CheckboxValue[]) => void
 }
 
 export const CheckboxContext = createContext<CheckboxState | null>(null)
