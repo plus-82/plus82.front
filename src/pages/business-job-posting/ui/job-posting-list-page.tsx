@@ -42,7 +42,9 @@ export const BusinessJobPostingListPage = () => {
   }
 
   const handleItemClick = (id: number) => () => {
-    router.push(`/business/job-posting/${id}`)
+    if (status === JobFilter.SAVED) return
+
+    router.push(`/business/job-posting/${id}/applicant-management`)
   }
 
   const handleCopySuccess = () => {
@@ -122,7 +124,10 @@ export const BusinessJobPostingListPage = () => {
                       <Table.Row
                         key={jobPost.id}
                         onClick={handleItemClick(jobPost.id)}
-                        className="min-h-[54px] cursor-pointer"
+                        className={cn('min-h-[54px]', {
+                          'cursor-pointer': status !== JobFilter.SAVED,
+                          'hover:bg-white': status === JobFilter.SAVED,
+                        })}
                       >
                         <Table.Cell>{jobPost.title}</Table.Cell>
                         <Table.Cell>{jobPost.resumeCount}명</Table.Cell>

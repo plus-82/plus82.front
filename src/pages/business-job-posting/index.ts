@@ -1,3 +1,5 @@
 export { CreateJobPostingPage } from './ui/create-job-posting-page'
 export { BusinessJobPostingListPage } from './ui/job-posting-list-page'
 export { UpdateJobPostingPage } from './ui/update-job-posting-page'
+export { JobPostApplicantManagementListPage } from './ui/job-post-applicant-management-list-page'
+export { JobPostApplicantManagementDetailPage } from './ui/job-post-applicant-management-detail-page'
