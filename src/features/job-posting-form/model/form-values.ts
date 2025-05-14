@@ -1,4 +1,5 @@
-import { isArray, isNil } from 'lodash-es'
+import { isValid, parse } from 'date-fns'
+import { isArray, isNil, isNull, isUndefined } from 'lodash-es'
 
 import { AcademyDetail } from 'entities/academy'
 import {
@@ -6,6 +7,7 @@ import {
   CreateJobPost,
   JobPostDetail,
 } from 'entities/job-post'
+import { isNilOrEmptyString } from 'shared/lib'
 
 export type FormValues = {
   title: string
@@ -15,7 +17,7 @@ export type FormValues = {
   benefits: string
   salary: number | null
   salaryNegotiable: string[]
-  jobStartDate: string
+  jobStartDate?: string
   dueDate?: string | null
   studentType: string[] | null
 }
@@ -28,8 +30,8 @@ export const defaultValues: FormValues = {
   benefits: '',
   salary: null,
   salaryNegotiable: [],
-  jobStartDate: '',
-  dueDate: '',
+  jobStartDate: undefined,
+  dueDate: undefined,
   studentType: null,
 }
 
@@ -38,6 +40,10 @@ export const convertToFormValues = (jobPost?: CreateJobPost): FormValues => {
 
   return {
     ...jobPost,
+    jobStartDate: isNilOrEmptyString(jobPost.jobStartDate)
+      ? undefined
+      : jobPost.jobStartDate,
+    dueDate: isNilOrEmptyString(jobPost.dueDate) ? undefined : jobPost.dueDate,
     studentType: convertStudentTypeToArray({
       forKindergarten: jobPost.forKindergarten,
       forElementary: jobPost.forElementary,
@@ -87,4 +93,28 @@ export const convertToJobDetail = (
     academyImageUrls: academy.imageUrls,
     id: academy.id,
   }
+}
+
+export const canRegisterForm = (
+  formValues: Pick<
+    FormValues,
+    'title' | 'jobDescription' | 'salary' | 'studentType' | 'dueDate'
+  >,
+) => {
+  const isDateString = (str?: string) => {
+    if (isUndefined(str)) return false
+
+    const parsedDate = parse(str, 'yyyy-MM-dd', new Date())
+
+    return isValid(parsedDate)
+  }
+
+  return (
+    formValues.title &&
+    formValues.jobDescription &&
+    formValues.salary &&
+    !isNil(formValues.studentType) &&
+    formValues.studentType.length > 0 &&
+    (isNull(formValues.dueDate) || isDateString(formValues.dueDate))
+  )
 }
