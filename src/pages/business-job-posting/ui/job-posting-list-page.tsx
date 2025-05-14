@@ -137,9 +137,11 @@ export const BusinessJobPostingListPage = () => {
                             code: '만원',
                           })}
                         </Table.Cell>
-                        <Table.Cell>
-                          {jobPost.createdAt
-                            ? format(jobPost.createdAt, 'yyyy.MM.dd')
+                        <Table.Cell
+                          className={cn(!jobPost.openDate && 'text-blue-800')}
+                        >
+                          {jobPost.openDate
+                            ? format(jobPost.openDate, 'yyyy.MM.dd')
                             : t('table.draft')}
                         </Table.Cell>
                         <Table.Cell
