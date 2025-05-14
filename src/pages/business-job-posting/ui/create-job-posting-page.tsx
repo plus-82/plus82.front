@@ -1,14 +1,30 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 
+import { academyQueries } from 'entities/academy'
 import { JobPostingForm, SidePanel } from 'features/job-posting-form'
+import {
+  convertToCreateJobPostDTO,
+  convertToJobDetail,
+  FormValues,
+} from 'features/job-posting-form'
 import { PreviewJobPostingButton } from 'features/preview-job-posting'
 import { Form } from 'shared/form'
 import { Layout } from 'shared/ui'
 
 export const CreateJobPostingPage = () => {
-  const form = useForm()
+  const { data: academyMe } = useQuery(academyQueries.me())
+
+  const form = useForm<FormValues>()
+
+  const getJobPosting = async () => {
+    const values = form.getValues()
+    const createJobPost = convertToCreateJobPostDTO(values)
+
+    return convertToJobDetail(createJobPost, academyMe!)
+  }
 
   return (
     <Layout wide>
@@ -22,6 +38,7 @@ export const CreateJobPostingPage = () => {
           <PreviewJobPostingButton
             type="text-button"
             className="ml-auto block"
+            onLoad={getJobPosting}
           />
         </div>
       </Form>

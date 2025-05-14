@@ -1,6 +1,11 @@
 import { isArray, isNil } from 'lodash-es'
 
-import { convertStudentTypeToArray, CreateJobPost } from 'entities/job-post'
+import { AcademyDetail } from 'entities/academy'
+import {
+  convertStudentTypeToArray,
+  CreateJobPost,
+  JobPostDetail,
+} from 'entities/job-post'
 
 export type FormValues = {
   title: string
@@ -61,5 +66,25 @@ export const convertToCreateJobPostDTO = ({
     salaryNegotiable:
       isArray(formValues.salaryNegotiable) &&
       formValues.salaryNegotiable.includes('true'),
+  }
+}
+
+export const convertToJobDetail = (
+  jobPost: CreateJobPost,
+  academy: AcademyDetail,
+): JobPostDetail => {
+  return {
+    ...jobPost,
+    academyId: academy.id,
+    academyName: academy.name,
+    academyNameEn: academy.nameEn,
+    academyRepresentativeName: academy.representativeName,
+    academyDescription: academy.description,
+    academyLocationType: academy.locationType,
+    academyDetailedAddress: academy.detailedAddress,
+    lat: academy.lat,
+    lng: academy.lng,
+    academyImageUrls: academy.imageUrls,
+    id: academy.id,
   }
 }
