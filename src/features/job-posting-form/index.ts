@@ -5,4 +5,5 @@ export {
   convertToCreateJobPostDTO,
   type FormValues,
   defaultValues,
+  convertToFormValues,
 } from './model/form-values'

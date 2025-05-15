@@ -37,11 +37,17 @@ export const defaultValues: FormValues = {
   noExpirationDate: [],
 }
 
-export const convertToFormValues = (jobPost?: CreateJobPost): FormValues => {
+export const convertToFormValues = (jobPost?: JobPostDetail): FormValues => {
   if (isNil(jobPost)) return defaultValues
 
   return {
-    ...jobPost,
+    title: jobPost.title,
+    jobDescription: jobPost.jobDescription,
+    requiredQualification: jobPost.requiredQualification,
+    preferredQualification: jobPost.preferredQualification,
+    benefits: jobPost.benefits,
+    salary: jobPost.salary,
+    salaryNegotiable: jobPost.salaryNegotiable ? ['true'] : [],
     jobStartDate: isNilOrEmptyString(jobPost.jobStartDate)
       ? undefined
       : jobPost.jobStartDate,
@@ -54,7 +60,6 @@ export const convertToFormValues = (jobPost?: CreateJobPost): FormValues => {
       forHighSchool: jobPost.forHighSchool,
       forAdult: jobPost.forAdult,
     }),
-    salaryNegotiable: jobPost.salaryNegotiable ? ['true'] : [],
   }
 }
 

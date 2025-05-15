@@ -32,7 +32,7 @@ export const updateJobPost = async ({
   const { accessToken } = await getBusinessSession()
 
   try {
-    await apiClient.post<null, CreateJobPost>({
+    await apiClient.put<null, CreateJobPost>({
       endpoint: `/job-posts/${jobPostId}`,
       option: {
         authorization: `Bearer ${accessToken}`,

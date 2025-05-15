@@ -15,11 +15,13 @@ import { useJobPostRelations } from '../api/use-job-post-relations'
 type Props = {
   title: string
   jobPostId: number
+  isExpired: boolean
 }
 
 export const JobPostApplicantManagementListPage = ({
   title,
   jobPostId,
+  isExpired,
 }: Props) => {
   const t = useTranslations('applicant-management-list')
 
@@ -50,6 +52,10 @@ export const JobPostApplicantManagementListPage = ({
     router.push(`/business/job-posting/${jobPostId}/applicant-management/${id}`)
   }
 
+  const handleEditButtonClick = () => {
+    router.push(`/business/job-posting/${jobPostId}/update`)
+  }
+
   const handleCopySuccess = () => {
     router.push(`/business/job-posting`)
   }
@@ -75,7 +81,12 @@ export const JobPostApplicantManagementListPage = ({
             <Tabs.Trigger value="REJECTED">{t('tabs.rejected')}</Tabs.Trigger>
           </Tabs.List>
           <div className="mb-4 flex gap-2">
-            <Button variant="lined" size="small">
+            <Button
+              variant="lined"
+              size="small"
+              onClick={handleEditButtonClick}
+              disabled={isExpired}
+            >
               <Button.Icon name="Pen" />
               공고 수정
             </Button>

@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { type MouseEvent } from 'react'
 import { useState } from 'react'
 
 import { jobPostQueries } from 'entities/job-post'
@@ -45,6 +46,17 @@ export const BusinessJobPostingListPage = () => {
     if (status === JobFilter.SAVED) return
 
     router.push(`/business/job-posting/${id}/applicant-management`)
+  }
+
+  const handleEditButtonClick = (id: number) => (event: MouseEvent) => {
+    event.stopPropagation()
+    event.preventDefault()
+
+    if (status === JobFilter.SAVED) {
+      router.push(`/business/job-posting/${id}/update/draft`)
+    } else {
+      router.push(`/business/job-posting/${id}/update`)
+    }
   }
 
   const handleCopySuccess = () => {
@@ -155,6 +167,7 @@ export const BusinessJobPostingListPage = () => {
                           <button
                             className="flex h-10 w-10 items-center justify-center"
                             disabled={status === JobFilter.CLOSED}
+                            onClick={handleEditButtonClick(jobPost.id)}
                           >
                             <Icon
                               name="Pen"

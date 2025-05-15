@@ -1,7 +1,5 @@
-import { isAfter, parseISO } from 'date-fns'
-
 import { getJobPost } from 'entities/job-post'
-import { JobPostApplicantManagementListPage } from 'pages/business-job-posting'
+import { UpdateJobPostingPage } from 'pages/business-job-posting'
 
 type Params = {
   jobPostId: string
@@ -12,15 +10,10 @@ const Page = async ({ params }: { params: Promise<Params> }) => {
 
   const jobPost = await getJobPost({ jobPostId: Number(jobPostId) })
 
-  const isExpired = jobPost.dueDate
-    ? isAfter(new Date(), parseISO(jobPost.dueDate))
-    : false
-
   return (
-    <JobPostApplicantManagementListPage
-      title={jobPost.title}
+    <UpdateJobPostingPage
       jobPostId={Number(jobPostId)}
-      isExpired={isExpired}
+      jobPostDetail={jobPost}
     />
   )
 }

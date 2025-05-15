@@ -165,6 +165,7 @@ export const JobPostingForm = ({ className }: Props) => {
           <Form.DatePicker
             placeholder="업무 시작 날짜를 선택해 주세요"
             fullWidth
+            dateFormat="yyyy-MM-dd"
           />
           <Form.ErrorMessage />
         </Form.Control>

@@ -6,7 +6,11 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { academyQueries } from 'entities/academy'
-import { JobPostDetail, updateJobPost } from 'entities/job-post'
+import {
+  createJobPost,
+  JobPostDetail,
+  updateJobPostDraft,
+} from 'entities/job-post'
 import { JobPostingForm, SidePanel } from 'features/job-posting-form'
 import {
   convertToCreateJobPostDTO,
@@ -24,7 +28,10 @@ type Props = {
   jobPostDetail: JobPostDetail
 }
 
-export const UpdateJobPostingPage = ({ jobPostId, jobPostDetail }: Props) => {
+export const UpdateJobPostingDraftPage = ({
+  jobPostId,
+  jobPostDetail,
+}: Props) => {
   const router = useRouter()
 
   const { data: academyMe } = useQuery(academyQueries.me())
@@ -43,15 +50,32 @@ export const UpdateJobPostingPage = ({ jobPostId, jobPostDetail }: Props) => {
     return convertToJobDetail(createJobPost, academyMe!)
   }
 
-  const handleUpdateJobPostingSuccess = () => {
+  const handleRegisterJobPostingSuccess = () => {
     router.push('/business/job-posting')
-    toast.success('공고를 수정했어요')
+    toast.success('공고를 등록했어요')
   }
 
-  const updateJobPosting = async () => {
+  const registerJobPosting = async () => {
     const values = form.getValues()
 
-    const response = await updateJobPost({
+    const response = await createJobPost(convertToCreateJobPostDTO(values))
+
+    if (isServerError(response)) {
+      handleServerError(response)
+    } else {
+      handleRegisterJobPostingSuccess()
+    }
+  }
+
+  const handleSaveJobPostingDraftSuccess = () => {
+    router.push('/business/job-posting')
+    toast.success('임시 저장된 공고를 수정했어요')
+  }
+
+  const saveJobPostingDraft = async () => {
+    const values = form.getValues()
+
+    const response = await updateJobPostDraft({
       jobPostId,
       jobPost: convertToCreateJobPostDTO(values),
     })
@@ -59,19 +83,23 @@ export const UpdateJobPostingPage = ({ jobPostId, jobPostDetail }: Props) => {
     if (isServerError(response)) {
       handleServerError(response)
     } else {
-      handleUpdateJobPostingSuccess()
+      handleSaveJobPostingDraftSuccess()
     }
   }
 
   return (
     <Layout wide>
       <h1 className="display-small mb-10 text-center font-bold text-gray-900">
-        공고 수정
+        공고 등록
       </h1>
       <Form {...form} className="flex gap-[20px]">
         <JobPostingForm className="flex-grow" />
         <div className="space-y-2">
-          <SidePanel type="update" onRegister={updateJobPosting} />
+          <SidePanel
+            type="register"
+            onRegister={registerJobPosting}
+            onSave={saveJobPostingDraft}
+          />
           <PreviewJobPostingButton
             type="text-button"
             className="ml-auto block"
