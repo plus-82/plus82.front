@@ -18,3 +18,10 @@ export type AcademyDetail = {
   forAdult: boolean
   imageUrls: string[]
 }
+
+export type UpdateAcademyDetail = Omit<
+  AcademyDetail,
+  'id' | 'imageUrls' | 'businessRegistrationNumber'
+> & {
+  images: File[]
+}

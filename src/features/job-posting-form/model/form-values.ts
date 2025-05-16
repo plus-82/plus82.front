@@ -1,5 +1,5 @@
 import { isValid, parse } from 'date-fns'
-import { isArray, isNil, isNull, isUndefined } from 'lodash-es'
+import { isArray, isNil } from 'lodash-es'
 
 import { AcademyDetail } from 'entities/academy'
 import {
