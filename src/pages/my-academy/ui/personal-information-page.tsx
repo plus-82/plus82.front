@@ -1,0 +1,69 @@
+'use client'
+
+import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
+
+import { updateUserMe, User } from 'entities/user'
+import { DeleteUserButton } from 'features/delete-account'
+import { BirthDate, FullName, Gender } from 'features/sign-up'
+import { isServerError, useServerErrorHandler } from 'shared/api'
+import { Form } from 'shared/form'
+import { Button } from 'shared/ui'
+
+import {
+  convertToUpdateUserMeDTO,
+  convertToUpdateUserMeFormValues,
+  UpdateUserMeFormValues,
+} from '../model/form-values'
+
+type Props = {
+  user: User
+}
+
+export const PersonalInformationPage = ({ user }: Props) => {
+  const form = useForm<UpdateUserMeFormValues>({
+    defaultValues: convertToUpdateUserMeFormValues(user),
+    reValidateMode: 'onSubmit',
+  })
+
+  const { handleServerError } = useServerErrorHandler()
+
+  const handleSuccess = () => {
+    toast.success('Your personal information has been updated')
+  }
+
+  const submitForm = (data: UpdateUserMeFormValues) => {
+    const response = updateUserMe(convertToUpdateUserMeDTO(data))
+
+    if (isServerError(response)) {
+      handleServerError(response)
+    } else {
+      handleSuccess()
+    }
+  }
+
+  return (
+    <div className="flex flex-grow justify-center p-10">
+      <div>
+        <h2 className="title-large mb-10 text-center font-bold text-gray-900">
+          개인 정보
+        </h2>
+        <Form {...form} className="mb-6 w-fit">
+          <div className="mb-9">
+            <FullName />
+            <Gender />
+            <BirthDate />
+          </div>
+          <Button
+            size="large"
+            fullWidth
+            onClick={form.handleSubmit(submitForm)}
+          >
+            저장하기
+          </Button>
+        </Form>
+        <DeleteUserButton />
+      </div>
+    </div>
+  )
+}

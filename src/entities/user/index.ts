@@ -1,4 +1,7 @@
-export { changePassword } from './api/change-password'
+export {
+  changePassword,
+  changeBusinessUserPassword,
+} from './api/change-password'
 export { deleteProfileImage } from './api/delete-profile-image'
 export { deleteUserMe } from './api/delete-user-me'
 export { getUserMe, getBusinessUserMe } from './api/get-user-me'
