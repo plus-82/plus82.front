@@ -1,11 +1,15 @@
 import { Layout } from 'shared/ui'
-import { SettingSidebar, SettingSidebarProvider, items } from 'widgets/sidebar'
+import {
+  SettingSidebar,
+  SettingSidebarProvider,
+  businessItems,
+} from 'widgets/sidebar'
 
 const PageLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Layout wide className="relative my-0 flex">
       <SettingSidebarProvider>
-        <SettingSidebar items={items} />
+        <SettingSidebar items={businessItems} />
         {children}
       </SettingSidebarProvider>
     </Layout>
