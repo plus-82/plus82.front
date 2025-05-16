@@ -14,7 +14,7 @@ import {
 import { UpdateAcademyDetail } from '../model/academy-detail'
 
 const handleSuccess = () => {
-  revalidateTag('academy-detail')
+  revalidateTag('academy-me')
 }
 
 const handleError = (error: Error): ServerError => {

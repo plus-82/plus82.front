@@ -14,7 +14,7 @@ export const getAcademyMe = async () => {
     endpoint: `/academies/me`,
     option: {
       authorization: `Bearer ${accessToken}`,
-      tags: ['academy', 'me'],
+      tags: ['academy-me'],
     },
   })
 

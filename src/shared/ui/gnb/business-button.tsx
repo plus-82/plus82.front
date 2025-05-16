@@ -36,12 +36,12 @@ export const BusinessButton = () => {
   }
 
   const handleSignOutClick = async () => {
-    queryClient.removeQueries()
-
     await businessSignOut()
     await signOut({ redirect: false })
 
     router.push('/business')
+
+    queryClient.removeQueries()
     close()
   }
 
