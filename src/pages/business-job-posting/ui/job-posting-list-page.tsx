@@ -141,7 +141,7 @@ export const BusinessJobPostingListPage = () => {
                           'hover:bg-white': status === JobFilter.SAVED,
                         })}
                       >
-                        <Table.Cell>{jobPost.title}</Table.Cell>
+                        <Table.Cell>{jobPost.title ?? '-'}</Table.Cell>
                         <Table.Cell>
                           {jobPost.resumeCount}
                           {t('application-count')}
@@ -150,7 +150,7 @@ export const BusinessJobPostingListPage = () => {
                           {formatCurrency({
                             number: jobPost.salary,
                             code: t('currency-unit'),
-                          })}
+                          }) ?? '-'}
                         </Table.Cell>
                         <Table.Cell
                           className={cn(!jobPost.openDate && 'text-blue-800')}

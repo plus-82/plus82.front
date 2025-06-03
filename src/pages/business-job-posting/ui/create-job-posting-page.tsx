@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -23,6 +24,8 @@ import { Form } from 'shared/form'
 import { Layout } from 'shared/ui'
 
 export const CreateJobPostingPage = () => {
+  const t = useTranslations()
+
   const router = useRouter()
 
   const { data: academyMe } = useQuery(academyQueries.me())
@@ -43,7 +46,7 @@ export const CreateJobPostingPage = () => {
 
   const handleRegisterJobPostingSuccess = () => {
     router.push('/business/job-posting')
-    toast.success('공고를 등록했어요')
+    toast.success(t('create-job-posting.success.job-posting-register'))
   }
 
   const registerJobPosting = async () => {
@@ -60,7 +63,7 @@ export const CreateJobPostingPage = () => {
 
   const handleSaveJobPostingDraftSuccess = () => {
     router.push('/business/job-posting')
-    toast.success('공고를 임시 저장했어요')
+    toast.success(t('create-job-posting.success.job-posting-draft-register'))
   }
 
   const saveJobPostingDraft = async () => {
@@ -78,7 +81,7 @@ export const CreateJobPostingPage = () => {
   return (
     <Layout wide>
       <h1 className="display-small mb-10 text-center font-bold text-gray-900">
-        공고 등록
+        {t('create-job-posting.create-title')}
       </h1>
       <Form {...form} className="flex gap-[20px]">
         <JobPostingForm className="flex-grow" />
