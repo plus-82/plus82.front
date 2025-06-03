@@ -19,6 +19,7 @@ export type BusinessJobPost = {
   id: number
   title: string
   dueDate: string
+  openDate: string
   createdAt: string
   salary: number
   resumeCount: number

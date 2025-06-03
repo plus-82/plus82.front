@@ -38,12 +38,12 @@ export const UserButton = () => {
   }
 
   const handleSignOutClick = async () => {
-    queryClient.removeQueries()
-
     await teacherSignOut()
     await signOut({ redirect: false })
 
     router.push('/')
+
+    queryClient.removeQueries()
     close()
   }
 

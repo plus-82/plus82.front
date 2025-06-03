@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { type MouseEvent } from 'react'
 import { useState } from 'react'
 
 import { jobPostQueries } from 'entities/job-post'
@@ -42,7 +43,20 @@ export const BusinessJobPostingListPage = () => {
   }
 
   const handleItemClick = (id: number) => () => {
-    router.push(`/business/job-posting/${id}`)
+    if (status === JobFilter.SAVED) return
+
+    router.push(`/business/job-posting/${id}/applicant-management`)
+  }
+
+  const handleEditButtonClick = (id: number) => (event: MouseEvent) => {
+    event.stopPropagation()
+    event.preventDefault()
+
+    if (status === JobFilter.SAVED) {
+      router.push(`/business/job-posting/${id}/update/draft`)
+    } else {
+      router.push(`/business/job-posting/${id}/update`)
+    }
   }
 
   const handleCopySuccess = () => {
@@ -122,7 +136,10 @@ export const BusinessJobPostingListPage = () => {
                       <Table.Row
                         key={jobPost.id}
                         onClick={handleItemClick(jobPost.id)}
-                        className="min-h-[54px] cursor-pointer"
+                        className={cn('min-h-[54px]', {
+                          'cursor-pointer': status !== JobFilter.SAVED,
+                          'hover:bg-white': status === JobFilter.SAVED,
+                        })}
                       >
                         <Table.Cell>{jobPost.title}</Table.Cell>
                         <Table.Cell>{jobPost.resumeCount}명</Table.Cell>
@@ -132,9 +149,11 @@ export const BusinessJobPostingListPage = () => {
                             code: '만원',
                           })}
                         </Table.Cell>
-                        <Table.Cell>
-                          {jobPost.createdAt
-                            ? format(jobPost.createdAt, 'yyyy.MM.dd')
+                        <Table.Cell
+                          className={cn(!jobPost.openDate && 'text-blue-800')}
+                        >
+                          {jobPost.openDate
+                            ? format(jobPost.openDate, 'yyyy.MM.dd')
                             : t('table.draft')}
                         </Table.Cell>
                         <Table.Cell
@@ -148,6 +167,7 @@ export const BusinessJobPostingListPage = () => {
                           <button
                             className="flex h-10 w-10 items-center justify-center"
                             disabled={status === JobFilter.CLOSED}
+                            onClick={handleEditButtonClick(jobPost.id)}
                           >
                             <Icon
                               name="Pen"

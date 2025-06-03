@@ -31,17 +31,17 @@ export const BusinessButton = () => {
   }
 
   const handleMyPageClick = () => {
-    router.push('/business/setting/my-page')
+    router.push('/business/setting/my-academy')
     close()
   }
 
   const handleSignOutClick = async () => {
-    queryClient.removeQueries()
-
     await businessSignOut()
     await signOut({ redirect: false })
 
     router.push('/business')
+
+    queryClient.removeQueries()
     close()
   }
 
