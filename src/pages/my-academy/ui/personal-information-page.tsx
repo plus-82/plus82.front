@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
-import { updateUserMe, User } from 'entities/user'
+import { updateBusinessUserMe, User } from 'entities/user'
 import { DeleteUserButton } from 'features/delete-account'
 import { BirthDate, FullName, Gender } from 'features/sign-up'
 import { isServerError, useServerErrorHandler } from 'shared/api'
@@ -35,8 +35,8 @@ export const PersonalInformationPage = ({ user }: Props) => {
     toast.success(t('success.save'))
   }
 
-  const submitForm = (data: UpdateUserMeFormValues) => {
-    const response = updateUserMe(convertToUpdateUserMeDTO(data))
+  const submitForm = async (data: UpdateUserMeFormValues) => {
+    const response = await updateBusinessUserMe(convertToUpdateUserMeDTO(data))
 
     if (isServerError(response)) {
       handleServerError(response)

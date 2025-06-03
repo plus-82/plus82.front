@@ -1,4 +1,4 @@
-import { UpdateUserMeRequest, User } from 'entities/user'
+import { UpdateBusinessUserMeRequest, User } from 'entities/user'
 
 export type UpdateUserMeFormValues = {
   fullName: string
@@ -10,22 +10,18 @@ export const convertToUpdateUserMeFormValues = (
   user: User,
 ): UpdateUserMeFormValues => {
   return {
-    fullName: user.firstName + ' ' + user.lastName,
+    fullName: user.fullName ?? '',
     genderType: user.genderType,
     birthDate: user.birthDate,
   }
 }
 
-// FIXME: 타입 수정 후 변경 필요
 export const convertToUpdateUserMeDTO = (
   data: UpdateUserMeFormValues,
-): UpdateUserMeRequest => {
+): UpdateBusinessUserMeRequest => {
   return {
     ...data,
     birthDate: data.birthDate!,
-    countryId: null,
-    firstName: '',
-    lastName: '',
   }
 }
 
