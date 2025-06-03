@@ -70,6 +70,32 @@
         "gyeongnam": "경남",
         "jeju": "제주"
       }
+    },
+    "application-date": {
+      "label": "지원 일자"
+    },
+    "nationality": {
+      "label": "국적"
+    },
+    "residence-country": {
+      "label": "거주 지역"
+    },
+    "degree": {
+      "label": "학력"
+    },
+    "visa": {
+      "label": "비자"
+    },
+    "student-type": {
+      "label": "학생 유형"
+    },
+    "application-status": {
+      "option": {
+        "submitted": "접수",
+        "reviewed": "검토",
+        "accepted": "합격",
+        "rejected": "불합격"
+      }
     }
   }
 }

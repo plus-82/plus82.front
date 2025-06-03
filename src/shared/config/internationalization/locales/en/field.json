@@ -70,6 +70,32 @@
         "gyeongnam": "Gyeongsangnam-do",
         "jeju": "Jeju"
       }
+    },
+    "application-date": {
+      "label": "Application Date"
+    },
+    "nationality": {
+      "label": "Nationality"
+    },
+    "residence-country": {
+      "label": "Current Country of Residence"
+    },
+    "degree": {
+      "label": "Degree"
+    },
+    "visa": {
+      "label": "Visa"
+    },
+    "student-type": {
+      "label": "Student Type"
+    },
+    "application-status": {
+      "option": {
+        "submitted": "Submitted",
+        "reviewed": "Reviewed",
+        "accepted": "Accepted",
+        "rejected": "Rejected"
+      }
     }
   }
 }
