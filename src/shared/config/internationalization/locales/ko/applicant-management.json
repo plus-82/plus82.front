@@ -7,8 +7,15 @@
       "accepted": "합격",
       "rejected": "불합격"
     },
+    "button": {
+      "edit": "공고 수정",
+      "copy": "공고 복사",
+      "preview": "미리보기",
+      "copying": "복사 중..."
+    },
     "table": {
       "applicant": "지원자",
+      "nationality": "국적",
       "job-title": "공고 제목",
       "memo": "메모",
       "application-date": "지원 일자",

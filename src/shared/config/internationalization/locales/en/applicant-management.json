@@ -7,8 +7,15 @@
       "accepted": "Accepted",
       "rejected": "Rejected"
     },
+    "button": {
+      "edit": "Edit",
+      "copy": "Copy",
+      "preview": "Preview",
+      "copying": "Copying..."
+    },
     "table": {
       "applicant": "Applicant",
+      "nationality": "Nationality",
       "job-title": "Job Title",
       "memo": "Memo",
       "application-date": "Application Date",

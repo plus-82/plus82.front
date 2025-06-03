@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { ApplicationStatus } from 'entities/job-post-resume-relation'
 import { CopyJobPostingButton } from 'features/copy-job-posting'
 import { PreviewJobPostingButton } from 'features/preview-job-posting'
-import { cn } from 'shared/lib'
+import { cn, formatDate } from 'shared/lib'
 import { Layout, Tabs, Table, Pagination, Button } from 'shared/ui'
 
 import { useJobPostRelations } from '../api/use-job-post-relations'
@@ -88,7 +88,7 @@ export const JobPostApplicantManagementListPage = ({
               disabled={isExpired}
             >
               <Button.Icon name="Pen" />
-              공고 수정
+              {t('button.edit')}
             </Button>
             <CopyJobPostingButton
               type="button"
@@ -107,7 +107,7 @@ export const JobPostApplicantManagementListPage = ({
                     {t('table.applicant')}
                   </Table.Head>
                   <Table.Head className="w-[380px]">
-                    {t('table.job-title')}
+                    {t('table.nationality')}
                   </Table.Head>
                   <Table.Head className="w-[300px]">
                     {t('table.memo')}
@@ -134,11 +134,15 @@ export const JobPostApplicantManagementListPage = ({
                           {application.resumeFirstName}{' '}
                           {application.resumeLastName}
                         </Table.Cell>
-                        <Table.Cell>{application.jobPostTitle}</Table.Cell>
                         <Table.Cell>
-                          {application?.academyMemo ?? ''}
+                          {application?.countryNameEn ?? '-'}
                         </Table.Cell>
-                        <Table.Cell>{application.submittedDate}</Table.Cell>
+                        <Table.Cell>
+                          {application?.academyMemo ?? '-'}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {formatDate(application.submittedDate)}
+                        </Table.Cell>
                       </Table.Row>
                     ))}
                   </Table.Body>
