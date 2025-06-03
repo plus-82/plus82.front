@@ -13,6 +13,7 @@ export default getRequestConfig(async () => {
     ...(await import(`./locales/${locale}/gnb.json`)).default,
     ...(await import(`./locales/${locale}/job-posting.json`)).default,
     ...(await import(`./locales/${locale}/validation.json`)).default,
+    ...(await import(`./locales/${locale}/academy-detail.json`)).default,
   }
 
   return {

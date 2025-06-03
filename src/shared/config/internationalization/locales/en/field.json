@@ -42,9 +42,19 @@
       "label": "Academy Name (English)",
       "placeholder": "Enter the academy name (English)"
     },
+    "academy-description": {
+      "label": "Academy Description",
+      "placeholder": "Please enter in English"
+    },
     "address": {
       "label": "Academy Address",
-      "placeholder": "Enter the remaining address"
+      "placeholder": "Enter the remaining address",
+      "button": "Search"
+    },
+    "introduction-image": {
+      "label": "Introduction Image",
+      "placeholder": "Upload Image",
+      "description": "Please upload at least one introduction image."
     },
     "business-registration-number": {
       "label": "Business Registration Number",
@@ -124,7 +134,7 @@
     "job-posting-salary-negotiable": {
       "label": "Negotiable"
     },
-    "job-posting-target-student": {
+    "target-student": {
       "label": "Target Student",
       "option": {
         "all": "All",

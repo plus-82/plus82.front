@@ -152,7 +152,7 @@ export const JobPostingForm = ({ className }: Props) => {
       </div>
 
       <div className={fieldCss.fieldWrapper({ className: 'not-last:mb-8' })}>
-        <Label required>{t('field.job-posting-target-student.label')}</Label>
+        <Label required>{t('field.target-student.label')}</Label>
         <div
           className={cn(
             'flex',
@@ -166,30 +166,30 @@ export const JobPostingForm = ({ className }: Props) => {
             options={studentTypeOptions}
           >
             <Checkbox
-              label={t('field.job-posting-target-student.option.all')}
+              label={t('field.target-student.option.all')}
               value="All"
               checked={isAllChecked}
               onChange={handleAllCheckboxClick}
               error={!!errors?.studentType}
             />
             <Form.Checkbox
-              label={t('field.job-posting-target-student.option.kindergarten')}
+              label={t('field.target-student.option.kindergarten')}
               value="Kindergarten"
             />
             <Form.Checkbox
-              label={t('field.job-posting-target-student.option.elementary')}
+              label={t('field.target-student.option.elementary')}
               value="Elementary"
             />
             <Form.Checkbox
-              label={t('field.job-posting-target-student.option.middle-school')}
+              label={t('field.target-student.option.middle-school')}
               value="MiddleSchool"
             />
             <Form.Checkbox
-              label={t('field.job-posting-target-student.option.high-school')}
+              label={t('field.target-student.option.high-school')}
               value="HighSchool"
             />
             <Form.Checkbox
-              label={t('field.job-posting-target-student.option.adult')}
+              label={t('field.target-student.option.adult')}
               value="Adult"
             />
           </Form.CheckboxGroup>

@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -12,6 +13,8 @@ import {
 } from '../model/form-values'
 
 export const SidePanel = () => {
+  const t = useTranslations('academy-detail')
+
   const { handleSubmit, control } = useFormContext<FormValues>()
 
   const { handleServerError } = useServerErrorHandler()
@@ -40,7 +43,7 @@ export const SidePanel = () => {
   })
 
   const handleRegisterSuccess = () => {
-    toast.success('정보를 저장했어요')
+    toast.success(t('success.register'))
   }
 
   const submitForm = async (data: FormValues) => {
@@ -55,13 +58,13 @@ export const SidePanel = () => {
 
   return (
     <div className="h-fit w-[340px] shrink-0 rounded-2xl border border-gray-300 p-6">
-      <p className="body-large mb-2 text-blue-800">작성에 유의해 주세요</p>
+      <p className="body-large mb-2 text-blue-800">{t('side-panel.title')}</p>
       <div className="mb-6">
         <p className="body-medium text-gray-700">
-          입력한 정보는 검색에 반영돼요.
+          {t('side-panel.description1')}
         </p>
         <p className="body-medium text-gray-700">
-          중요한 정보를 빠뜨리지 않았는지 확인해 주세요.
+          {t('side-panel.description2')}
         </p>
       </div>
       <div className="space-y-2">
@@ -83,7 +86,7 @@ export const SidePanel = () => {
             })
           }
         >
-          저장하기
+          {t('button.save')}
         </Button>
       </div>
     </div>

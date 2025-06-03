@@ -27,7 +27,7 @@ export const academyNameEn = {
 }
 
 export const address = {
-  required: 'validation.address.required',
+  required: true,
 }
 
 export const detailedAddress = {
@@ -55,10 +55,10 @@ export const businessRegistrationNumber = {
 }
 
 export const description = {
-  required: 'validation.description.required',
+  required: 'validation.academyDescription.required',
   maxLength: {
     value: 1000,
-    message: 'validation.description.maxLength',
+    message: 'validation.academyDescription.maxLength',
   },
 }
 
