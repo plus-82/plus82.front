@@ -142,11 +142,14 @@ export const BusinessJobPostingListPage = () => {
                         })}
                       >
                         <Table.Cell>{jobPost.title}</Table.Cell>
-                        <Table.Cell>{jobPost.resumeCount}명</Table.Cell>
+                        <Table.Cell>
+                          {jobPost.resumeCount}
+                          {t('application-count')}
+                        </Table.Cell>
                         <Table.Cell>
                           {formatCurrency({
                             number: jobPost.salary,
-                            code: '만원',
+                            code: t('currency-unit'),
                           })}
                         </Table.Cell>
                         <Table.Cell

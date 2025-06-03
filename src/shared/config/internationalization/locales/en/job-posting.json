@@ -6,6 +6,8 @@
       "saved": "Saved",
       "closed": "Closed"
     },
+    "application-count": " applicants",
+    "currency-unit": "in 10,000 KRW",
     "table": {
       "job-title": "Job Title",
       "application": "Application",

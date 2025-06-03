@@ -6,6 +6,8 @@
       "saved": "임시 저장",
       "closed": "채용 마감"
     },
+    "currency-unit": "만원",
+    "application-count": "명",
     "table": {
       "job-title": "공고명",
       "application": "지원 현황",
