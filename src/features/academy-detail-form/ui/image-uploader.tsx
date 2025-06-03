@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useRef, useState } from 'react'
 
 import { ImageUploadInput } from 'features/upload-image'
@@ -20,6 +21,8 @@ export const ImageUploader = ({
   onDelete,
   className,
 }: Props) => {
+  const t = useTranslations('field')
+
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const [isHovering, setIsHovering] = useState(false)
@@ -104,7 +107,9 @@ export const ImageUploader = ({
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
               <Icon name="Plus" size="large" color={colors.gray[700]} />
             </div>
-            <p className="body-large font-normal text-gray-900">이미지 추가</p>
+            <p className="body-large font-normal text-gray-900">
+              {t('introduction-image.placeholder')}
+            </p>
           </button>
         )
       })()}

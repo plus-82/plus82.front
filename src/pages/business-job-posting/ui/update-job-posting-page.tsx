@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -25,6 +26,8 @@ type Props = {
 }
 
 export const UpdateJobPostingPage = ({ jobPostId, jobPostDetail }: Props) => {
+  const t = useTranslations()
+
   const router = useRouter()
 
   const { data: academyMe } = useQuery(academyQueries.me())
@@ -45,7 +48,7 @@ export const UpdateJobPostingPage = ({ jobPostId, jobPostDetail }: Props) => {
 
   const handleUpdateJobPostingSuccess = () => {
     router.push('/business/job-posting')
-    toast.success('공고를 수정했어요')
+    toast.success(t('create-job-posting.success.job-posting-update'))
   }
 
   const updateJobPosting = async () => {
@@ -66,7 +69,7 @@ export const UpdateJobPostingPage = ({ jobPostId, jobPostDetail }: Props) => {
   return (
     <Layout wide>
       <h1 className="display-small mb-10 text-center font-bold text-gray-900">
-        공고 수정
+        {t('create-job-posting.update-title')}
       </h1>
       <Form {...form} className="flex gap-[20px]">
         <JobPostingForm className="flex-grow" />

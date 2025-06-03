@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 
 import { AcademyDetail } from 'entities/academy'
@@ -16,6 +17,8 @@ type Props = {
 }
 
 export const AcademyDetailPage = ({ academyDetail }: Props) => {
+  const t = useTranslations()
+
   const form = useForm({
     defaultValues: convertToFormValues(academyDetail),
   })
@@ -23,7 +26,7 @@ export const AcademyDetailPage = ({ academyDetail }: Props) => {
   return (
     <Layout wide>
       <h1 className="display-small mb-10 text-center font-bold text-gray-900">
-        학원 상세 정보
+        {t('academy-detail.title')}
       </h1>
       <Form {...form} className="flex gap-[20px]">
         <AcademyDetailForm className="flex-grow" />

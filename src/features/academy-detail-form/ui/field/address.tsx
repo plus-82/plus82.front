@@ -53,7 +53,7 @@ export const Address = () => {
             className="w-[120px] shrink-0"
             onClick={handleButtonClick}
           >
-            주소 검색
+            {t('field.address.button')}
           </Button>
           <Modal.Content className="h-[600px] w-[450px]">
             <DaumPostcode

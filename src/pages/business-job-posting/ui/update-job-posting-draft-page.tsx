@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -9,6 +10,7 @@ import { academyQueries } from 'entities/academy'
 import {
   createJobPost,
   JobPostDetail,
+  updateJobPost,
   updateJobPostDraft,
 } from 'entities/job-post'
 import { JobPostingForm, SidePanel } from 'features/job-posting-form'
@@ -32,6 +34,8 @@ export const UpdateJobPostingDraftPage = ({
   jobPostId,
   jobPostDetail,
 }: Props) => {
+  const t = useTranslations()
+
   const router = useRouter()
 
   const { data: academyMe } = useQuery(academyQueries.me())
@@ -52,13 +56,16 @@ export const UpdateJobPostingDraftPage = ({
 
   const handleRegisterJobPostingSuccess = () => {
     router.push('/business/job-posting')
-    toast.success('공고를 등록했어요')
+    toast.success(t('create-job-posting.success.job-posting-register'))
   }
 
   const registerJobPosting = async () => {
     const values = form.getValues()
 
-    const response = await createJobPost(convertToCreateJobPostDTO(values))
+    const response = await updateJobPost({
+      jobPostId,
+      jobPost: convertToCreateJobPostDTO(values),
+    })
 
     if (isServerError(response)) {
       handleServerError(response)
@@ -69,7 +76,7 @@ export const UpdateJobPostingDraftPage = ({
 
   const handleSaveJobPostingDraftSuccess = () => {
     router.push('/business/job-posting')
-    toast.success('임시 저장된 공고를 수정했어요')
+    toast.success(t('create-job-posting.success.job-posting-draft-update'))
   }
 
   const saveJobPostingDraft = async () => {
@@ -90,7 +97,7 @@ export const UpdateJobPostingDraftPage = ({
   return (
     <Layout wide>
       <h1 className="display-small mb-10 text-center font-bold text-gray-900">
-        공고 등록
+        {t('create-job-posting.create-title')}
       </h1>
       <Form {...form} className="flex gap-[20px]">
         <JobPostingForm className="flex-grow" />

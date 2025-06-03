@@ -15,8 +15,9 @@ const handleError = (error: Error) => {
   const isHttpError = error instanceof HttpError
   if (!isHttpError) throw error
 
-  return errorHandler.toast('An error occurred while creating job post', {
+  return errorHandler.toast('create-job-posting.error.job-posting-register', {
     error,
+    translate: true,
   })
 }
 

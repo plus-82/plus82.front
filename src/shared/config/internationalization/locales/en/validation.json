@@ -54,6 +54,13 @@
       "required": "Please enter the detailed address",
       "maxLength": "Please enter less than 100 characters"
     },
+    "academyDescription": {
+      "required": "Please enter the academy description",
+      "maxLength": "Please enter less than 1000 characters"
+    },
+    "images": {
+      "required": "Please upload at least one introduction image"
+    },
     "businessRegistrationNumber": {
       "required": "Please enter the business registration number",
       "length": "Please enter 10 digits",

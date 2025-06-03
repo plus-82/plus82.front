@@ -1,13 +1,17 @@
+import { useTranslations } from 'next-intl'
+
 import { fieldCss, Form } from 'shared/form'
 import { Label } from 'shared/ui'
 
 export const Description = () => {
+  const t = useTranslations('field')
+
   return (
     <div className={fieldCss.fieldWrapper({ className: 'not-last:mb-8' })}>
-      <Label required>학원 소개</Label>
+      <Label required>{t('academy-description.label')}</Label>
       <Form.Control name="description">
         <Form.TextArea
-          placeholder="영어로 입력해 주세요"
+          placeholder={t('academy-description.placeholder')}
           fullWidth
           className="h-[128px]"
         />

@@ -1,4 +1,5 @@
 import { isEqual } from 'lodash-es'
+import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 
 import { Button } from 'shared/ui'
@@ -16,6 +17,7 @@ type Props = {
 }
 
 export const SidePanel = ({ type, onRegister, onSave }: Props) => {
+  const t = useTranslations('create-job-posting')
   const { handleSubmit, control, getValues } = useFormContext<FormValues>()
 
   const [
@@ -45,15 +47,13 @@ export const SidePanel = ({ type, onRegister, onSave }: Props) => {
 
   return (
     <div className="h-fit w-[340px] shrink-0 rounded-2xl border border-gray-300 p-6">
-      <p className="body-large mb-2 text-blue-800">
-        공고 내용은 영어로 작성해주세요.
-      </p>
+      <p className="body-large mb-2 text-blue-800">{t('side-panel.title')}</p>
       <div className="mb-6">
         <p className="body-medium text-gray-700">
-          입력한 정보는 검색에 반영돼요.
+          {t('side-panel.description1')}
         </p>
         <p className="body-medium text-gray-700">
-          중요한 정보를 빠뜨리지 않았는지 확인해 주세요.
+          {t('side-panel.description2')}
         </p>
       </div>
       <div className="space-y-2">
@@ -73,7 +73,7 @@ export const SidePanel = ({ type, onRegister, onSave }: Props) => {
             })
           }
         >
-          등록하기
+          {t('button.register-job-posting')}
         </Button>
         {type === 'register' && (
           <Button
@@ -83,7 +83,7 @@ export const SidePanel = ({ type, onRegister, onSave }: Props) => {
             disabled={canSave}
             onClick={onSave}
           >
-            임시 저장
+            {t('button.save-job-posting-draft')}
           </Button>
         )}
       </div>

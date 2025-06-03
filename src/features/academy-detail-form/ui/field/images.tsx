@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 
 import { Label } from 'shared/ui'
@@ -6,6 +7,8 @@ import { FormValues } from '../../model/form-values'
 import { ImageUploader } from '../image-uploader'
 
 export const Images = () => {
+  const t = useTranslations('field')
+
   const {
     control,
     formState: { errors },
@@ -39,9 +42,9 @@ export const Images = () => {
 
   return (
     <div>
-      <Label required>소개 이미지</Label>
+      <Label required>{t('introduction-image.label')}</Label>
       <p className="body-large mb-4 mt-0.5 font-normal text-gray-500">
-        소개 이미지는 최소 1장 이상 등록해 주세요.
+        {t('introduction-image.description')}
       </p>
       <ul className="flex flex-wrap justify-between gap-y-5">
         {fields.map((field, index) => (

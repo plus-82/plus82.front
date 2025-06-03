@@ -141,13 +141,16 @@ export const BusinessJobPostingListPage = () => {
                           'hover:bg-white': status === JobFilter.SAVED,
                         })}
                       >
-                        <Table.Cell>{jobPost.title}</Table.Cell>
-                        <Table.Cell>{jobPost.resumeCount}명</Table.Cell>
+                        <Table.Cell>{jobPost.title ?? '-'}</Table.Cell>
+                        <Table.Cell>
+                          {jobPost.resumeCount}
+                          {t('application-count')}
+                        </Table.Cell>
                         <Table.Cell>
                           {formatCurrency({
                             number: jobPost.salary,
-                            code: '만원',
-                          })}
+                            code: t('currency-unit'),
+                          }) ?? '-'}
                         </Table.Cell>
                         <Table.Cell
                           className={cn(!jobPost.openDate && 'text-blue-800')}

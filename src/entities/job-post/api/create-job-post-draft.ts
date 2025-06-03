@@ -15,9 +15,13 @@ const handleError = (error: Error) => {
   const isHttpError = error instanceof HttpError
   if (!isHttpError) throw error
 
-  return errorHandler.toast('An error occurred while creating job post draft', {
-    error,
-  })
+  return errorHandler.toast(
+    'create-job-posting.error.job-posting-draft-register',
+    {
+      error,
+      translate: true,
+    },
+  )
 }
 
 export const createJobPostDraft = async (jobPost: CreateJobPost) => {

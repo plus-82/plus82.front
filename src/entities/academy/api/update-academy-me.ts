@@ -21,8 +21,9 @@ const handleError = (error: Error): ServerError => {
   const isHttpError = error instanceof HttpError
   if (!isHttpError) throw error
 
-  return errorHandler.toast('업데이트에 실패했어요', {
+  return errorHandler.toast('academy-detail.error.register', {
     error,
+    translate: true,
   })
 }
 

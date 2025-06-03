@@ -12,7 +12,7 @@ export const MyAcademyPage = async () => {
         <h2 className="title-large font-bold text-gray-900">{academy.name}</h2>
         <div className="flex items-center gap-1">
           <p className="body-large text-gray-700">담당자</p>
-          <p className="body-large text-gray-900">{user.firstName}</p>
+          <p className="body-large text-gray-900">{user?.fullName}</p>
         </div>
       </div>
       <div className="flex gap-2">
