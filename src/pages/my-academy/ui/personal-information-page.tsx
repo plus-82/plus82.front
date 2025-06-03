@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -21,6 +22,8 @@ type Props = {
 }
 
 export const PersonalInformationPage = ({ user }: Props) => {
+  const t = useTranslations('my-account')
+
   const form = useForm<UpdateUserMeFormValues>({
     defaultValues: convertToUpdateUserMeFormValues(user),
     reValidateMode: 'onSubmit',
@@ -29,7 +32,7 @@ export const PersonalInformationPage = ({ user }: Props) => {
   const { handleServerError } = useServerErrorHandler()
 
   const handleSuccess = () => {
-    toast.success('Your personal information has been updated')
+    toast.success(t('success.save'))
   }
 
   const submitForm = (data: UpdateUserMeFormValues) => {
@@ -46,7 +49,7 @@ export const PersonalInformationPage = ({ user }: Props) => {
     <div className="flex flex-grow justify-center p-10">
       <div>
         <h2 className="title-large mb-10 text-center font-bold text-gray-900">
-          개인 정보
+          {t('title')}
         </h2>
         <Form {...form} className="mb-6 w-fit">
           <div className="mb-9">
@@ -59,7 +62,7 @@ export const PersonalInformationPage = ({ user }: Props) => {
             fullWidth
             onClick={form.handleSubmit(submitForm)}
           >
-            저장하기
+            {t('button.save')}
           </Button>
         </Form>
         <DeleteUserButton />

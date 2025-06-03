@@ -3,6 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { signOut } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -24,6 +25,8 @@ import {
 } from '../model/form-values'
 
 export const ChangePasswordPage = () => {
+  const t = useTranslations('reset-password')
+
   const queryClient = useQueryClient()
   const router = useRouter()
 
@@ -42,7 +45,7 @@ export const ChangePasswordPage = () => {
     !isEmptyString(currentPassword) && !isEmptyString(newPassword)
 
   const handleChangePasswordSuccess = async () => {
-    toast.success('비밀번호가 변경되었어요. 다시 로그인 해주세요.')
+    toast.success(t('success.update-password'))
 
     queryClient.removeQueries()
     await businessSignOut()
@@ -64,11 +67,11 @@ export const ChangePasswordPage = () => {
   return (
     <div className="flex flex-grow justify-center p-10">
       <div className="flex flex-col items-center gap-10">
-        <h2 className="title-large font-bold text-gray-900">비밀번호 변경</h2>
+        <h2 className="title-large font-bold text-gray-900">{t('title')}</h2>
         <Form {...form} className="flex flex-col gap-10">
           <div>
             <div className={fieldCss.fieldWrapper()}>
-              <Label>현재 비밀번호</Label>
+              <Label>{t('label.current-password')}</Label>
               <Form.Control name="currentPassword" rules={currentPasswordRules}>
                 <Form.PasswordField autoComplete="one-time-code" showToggle />
                 <Form.ErrorMessage />
@@ -76,7 +79,7 @@ export const ChangePasswordPage = () => {
             </div>
 
             <div className={fieldCss.fieldWrapper()}>
-              <Label>새 비밀번호</Label>
+              <Label>{t('label.new-password')}</Label>
               <div className={fieldCss.field()}>
                 <Form.PasswordField
                   name="newPassword"
@@ -94,7 +97,7 @@ export const ChangePasswordPage = () => {
             onClick={form.handleSubmit(submitForm)}
             disabled={!canSubmit}
           >
-            변경하기
+            {t('button.reset-password')}
           </Button>
         </Form>
       </div>

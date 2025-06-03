@@ -19,19 +19,30 @@ const handleError = (error: HttpError) => {
   if (!isHttpError) throw error
 
   if (error.code === AuthExceptionCode.PW_NOT_CORRECT) {
-    return errorHandler.form({
-      currentPassword: 'The current password is incorrect',
-    })
+    return errorHandler.form(
+      {
+        currentPassword: 'reset-password.error.incorrect',
+      },
+      {
+        translate: true,
+      },
+    )
   } else if (
     error.code === InvalidInputValueExceptionCode.INVALID_INPUT_VALUE
   ) {
-    return errorHandler.form({
-      currentPassword: 'The current password is incorrect',
-    })
+    return errorHandler.form(
+      {
+        currentPassword: 'reset-password.error.incorrect',
+      },
+      {
+        translate: true,
+      },
+    )
   }
 
-  return errorHandler.toast('An error occurred while changing the password', {
+  return errorHandler.toast('reset-password.error.reset-password', {
     error,
+    translate: true,
   })
 }
 
