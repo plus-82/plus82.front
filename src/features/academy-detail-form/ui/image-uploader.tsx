@@ -10,6 +10,7 @@ import { Icon, Image } from 'shared/ui'
 
 type Props = {
   src: string | null
+  external?: boolean
   onChange: (file: File, url: string) => void
   onDelete?: () => void
   className?: string
@@ -17,6 +18,7 @@ type Props = {
 
 export const ImageUploader = ({
   src,
+  external = false,
   onChange,
   onDelete,
   className,
@@ -69,50 +71,44 @@ export const ImageUploader = ({
     >
       <ImageUploadInput ref={fileInputRef} onChange={handleFileChange} />
 
-      {(() => {
-        if (hasImage) {
-          return (
-            <div
-              className="relative"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-            >
-              <Image
-                src={src}
-                useCDN={false}
-                alt="academy image"
-                className="h-[174px] w-[300px] border-none"
-              />
-              {isHovering && (
-                <div className="absolute bottom-0 right-0 flex h-[174px] w-[300px] justify-end rounded-lg bg-black/50 p-3">
-                  <button className="h-fit" onClick={handleDeleteButtonClick}>
-                    <Icon
-                      name="Close"
-                      size="custom"
-                      color={colors.white}
-                      className="h-8 w-8"
-                    />
-                  </button>
-                </div>
-              )}
+      {hasImage ? (
+        <div
+          className="relative"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <Image
+            src={src}
+            useCDN={external}
+            alt="academy image"
+            className="h-[174px] w-[300px] border-none"
+          />
+          {isHovering && (
+            <div className="absolute bottom-0 right-0 flex h-[174px] w-[300px] justify-end rounded-lg bg-black/50 p-3">
+              <button className="h-fit" onClick={handleDeleteButtonClick}>
+                <Icon
+                  name="Close"
+                  size="custom"
+                  color={colors.white}
+                  className="h-8 w-8"
+                />
+              </button>
             </div>
-          )
-        }
-
-        return (
-          <button
-            className="flex h-full w-full flex-col items-center justify-center gap-2"
-            onClick={handleUploadButtonClick}
-          >
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
-              <Icon name="Plus" size="large" color={colors.gray[700]} />
-            </div>
-            <p className="body-large font-normal text-gray-900">
-              {t('introduction-image.placeholder')}
-            </p>
-          </button>
-        )
-      })()}
+          )}
+        </div>
+      ) : (
+        <button
+          className="flex h-full w-full flex-col items-center justify-center gap-2"
+          onClick={handleUploadButtonClick}
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
+            <Icon name="Plus" size="large" color={colors.gray[700]} />
+          </div>
+          <p className="body-large font-normal text-gray-900">
+            {t('introduction-image.placeholder')}
+          </p>
+        </button>
+      )}
     </div>
   )
 }

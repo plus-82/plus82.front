@@ -20,21 +20,21 @@ export const Images = () => {
   })
 
   const handleImageChange = (index: number) => (image: File, url: string) => {
-    update(index, { image, url })
+    update(index, { imageId: null, image, url })
 
     const canAddImage = index < 5
 
     if (canAddImage) {
-      append({ image: null, url: null })
+      append({ imageId: null, image: null, url: null })
     }
   }
 
   const handleImageDelete = (id: number) => () => {
-    const lastImage = fields.at(-1)?.image
+    const lastImage = fields.at(-1)
     const maxLength = fields.length === 6
 
-    if (lastImage && maxLength) {
-      append({ image: null, url: null })
+    if ((lastImage?.image || lastImage?.url) && maxLength) {
+      append({ imageId: null, image: null, url: null })
     }
 
     remove(id)
@@ -51,6 +51,7 @@ export const Images = () => {
           <li key={field.id}>
             <ImageUploader
               src={field.url}
+              external={!!field.imageId}
               onChange={handleImageChange(index)}
               onDelete={handleImageDelete(index)}
               className={errors.images && 'border-red-500'}

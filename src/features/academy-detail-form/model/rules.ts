@@ -68,7 +68,10 @@ export const studentType = {
 
 export const images = {
   validate: (value: { image: File | null; url: string | null }[]) => {
-    if (value.length === 0 || value.every(({ image }) => image === null)) {
+    if (
+      value.length === 0 ||
+      value.every(({ image, url }) => image === null && url === null)
+    ) {
       return 'validation.images.required'
     }
 

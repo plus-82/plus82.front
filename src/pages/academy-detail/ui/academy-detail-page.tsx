@@ -20,7 +20,7 @@ export const AcademyDetailPage = ({ academyDetail }: Props) => {
   const t = useTranslations()
 
   const form = useForm({
-    defaultValues: convertToFormValues(academyDetail),
+    values: convertToFormValues(academyDetail),
   })
 
   return (

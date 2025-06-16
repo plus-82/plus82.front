@@ -6,16 +6,19 @@ import type { AcademyDetail, UpdateAcademyDetail } from 'entities/academy'
 import { Location } from 'entities/auth'
 import { convertStudentType } from 'entities/job-post'
 
+type Image = {
+  imageId: number | null
+  image: File | null
+  url: string | null
+}
+
 export type FormValues = {
   name: string
   nameEn: string
   representativeName: string
   description: string
   studentType: string[] | null
-  images: {
-    image: File | null
-    url: string | null
-  }[]
+  images: Image[]
   locationType: Location | null
   address: string
   detailedAddress: string
@@ -25,6 +28,20 @@ export type FormValues = {
 }
 
 export const convertToFormValues = (academyDetail: AcademyDetail) => {
+  const images: Image[] = academyDetail.imageList.map(({ id, path }) => ({
+    imageId: id,
+    image: null,
+    url: path,
+  }))
+
+  if (images.length < 6) {
+    images.push({
+      imageId: null,
+      image: null,
+      url: null,
+    })
+  }
+
   return {
     name: academyDetail.name,
     nameEn: academyDetail.nameEn,
@@ -37,14 +54,9 @@ export const convertToFormValues = (academyDetail: AcademyDetail) => {
       forHighSchool: academyDetail.forHighSchool,
       forAdult: academyDetail.forAdult,
     }),
-    images: [
-      {
-        image: null,
-        url: null,
-      },
-    ],
+    images,
     locationType: academyDetail.locationType,
-    address: academyDetail.detailedAddress,
+    address: academyDetail.address,
     detailedAddress: academyDetail.detailedAddress,
     lat: academyDetail.lat,
     lng: academyDetail.lng,
@@ -61,20 +73,31 @@ export const convertToUpdateAcademyDetail = ({
   lat,
   lng,
   locationType,
-  address,
-  detailedAddress,
   businessRegistrationNumber,
   ...restFormValues
 }: FormValues): UpdateAcademyDetail => {
+  const [newImages, oldImageIds] = (() => {
+    const newImages: File[] = []
+    const oldImageIds: string[] = []
+
+    for (const { imageId, image } of restFormValues.images) {
+      if (imageId) {
+        oldImageIds.push(imageId.toString())
+      } else if (image) {
+        newImages.push(image!)
+      }
+    }
+
+    return [newImages, oldImageIds]
+  })()
+
   return {
     ...restFormValues,
-    detailedAddress,
     lat: lat!,
     lng: lng!,
     locationType: locationType!,
-    images: restFormValues.images
-      .filter(({ image }) => image)
-      .map(({ image }) => image!),
+    newImages,
+    oldImageIds: oldImageIds.join(','),
     forKindergarten: studentType?.includes('Kindergarten') ?? false,
     forElementary: studentType?.includes('Elementary') ?? false,
     forMiddleSchool: studentType?.includes('MiddleSchool') ?? false,
@@ -97,9 +120,14 @@ export const canRegisterForm = (
   >,
 ) => {
   return (
+    formValues.name &&
+    formValues.nameEn &&
+    formValues.representativeName &&
+    formValues.address &&
+    formValues.detailedAddress &&
     formValues.description &&
     !isNil(formValues.studentType) &&
     formValues.studentType.length > 0 &&
-    formValues.images.filter(({ image }) => image).length > 0
+    formValues.images.filter(({ url, image }) => url || image).length > 0
   )
 }

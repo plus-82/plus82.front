@@ -5,9 +5,11 @@ export type AcademyDetail = {
   name: string
   nameEn: string
   representativeName: string
+  representativeEmail: string
   description: string
   businessRegistrationNumber: string
   locationType: Location
+  address: string
   detailedAddress: string
   lat: number
   lng: number
@@ -16,12 +18,16 @@ export type AcademyDetail = {
   forMiddleSchool: boolean
   forHighSchool: boolean
   forAdult: boolean
-  imageUrls: string[]
+  imageList: {
+    id: number
+    path: string
+  }[]
 }
 
 export type UpdateAcademyDetail = Omit<
   AcademyDetail,
-  'id' | 'imageUrls' | 'businessRegistrationNumber'
+  'id' | 'imageList' | 'businessRegistrationNumber' | 'representativeEmail'
 > & {
-  images: File[]
+  newImages: File[]
+  oldImageIds: string
 }
