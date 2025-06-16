@@ -24,9 +24,9 @@ export const JobPostingForm = ({ className }: Props) => {
     clearErrors,
   } = useFormContext<FormValues>()
 
-  const [studentType, noExpirationDate] = useWatch({
+  const [title, studentType, noExpirationDate] = useWatch({
     control,
-    name: ['studentType', 'noExpirationDate'],
+    name: ['title', 'studentType', 'noExpirationDate'],
   })
 
   const studentTypeOptions = [
@@ -66,9 +66,17 @@ export const JobPostingForm = ({ className }: Props) => {
         <Form.Control name="title" rules={rules.title}>
           <Form.TextField
             placeholder={t('field.job-posting-title.placeholder')}
+            maxLength={40}
             fullWidth
           />
-          <Form.ErrorMessage />
+          <div className="flex justify-between">
+            <div>
+              <Form.ErrorMessage name="title" />
+            </div>
+            <div className="body-small font-medium text-gray-700">
+              {title.length}/40 자 {/* TODO: 번역 */}
+            </div>
+          </div>
         </Form.Control>
       </div>
       <div className={fieldCss.fieldWrapper({ className: 'not-last:mb-8' })}>

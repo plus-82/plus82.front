@@ -101,7 +101,7 @@ export const convertToJobDetail = (
     academyDetailedAddress: academy.detailedAddress,
     lat: academy.lat,
     lng: academy.lng,
-    academyImageUrls: academy.imageUrls,
+    academyImageUrls: academy.imageList.map(image => image.path),
     id: academy.id,
   }
 }

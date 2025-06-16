@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react'
 import clsx from 'clsx'
-import { SpoqaHanSansNeo } from '../src/app/styles'
+
+import { pretendard } from '../src/app/styles'
 import '../app/globals.css'
 
 const preview: Preview = {
@@ -31,8 +32,8 @@ const preview: Preview = {
     Story => (
       <div
         className={clsx(
-          SpoqaHanSansNeo.variable,
-          'font-spoqa-han-sans-neo',
+          pretendard.className,
+          'font-pretendard',
           'flex',
           'justify-center',
           'items-center',

@@ -24,6 +24,6 @@ export const convertToJobPostingDetail = ({
     forElementary: academyDetail.forElementary,
     forMiddleSchool: academyDetail.forMiddleSchool,
     forHighSchool: academyDetail.forHighSchool,
-    academyImageUrls: academyDetail.imageUrls,
+    academyImageUrls: academyDetail.imageList.map(image => image.path),
   }
 }

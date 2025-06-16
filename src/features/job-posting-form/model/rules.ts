@@ -3,7 +3,7 @@ import { isNull } from 'lodash-es'
 export const title = {
   required: 'validation.jobPostingTitle.required',
   maxLength: {
-    value: 100,
+    value: 40,
     message: 'validation.jobPostingTitle.maxLength',
   },
 }
