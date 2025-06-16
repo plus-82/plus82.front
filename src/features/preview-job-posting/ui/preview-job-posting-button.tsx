@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { MouseEvent } from 'react'
 
-import { getJobPost } from 'entities/job-post'
+import { getBusinessJobPost } from 'entities/job-post'
 import { JobPostDetail } from 'entities/job-post'
 import { colors } from 'shared/config'
 import { cn } from 'shared/lib'
@@ -33,7 +33,7 @@ export const PreviewJobPostingButton = ({
     event.preventDefault()
 
     if (jobPostId) {
-      const jobPost = await getJobPost({ jobPostId })
+      const jobPost = await getBusinessJobPost({ jobPostId })
       setPreviewJobPosting(jobPost)
     } else {
       const jobPost = await onLoad?.()
