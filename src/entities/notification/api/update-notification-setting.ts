@@ -1,11 +1,17 @@
 'use server'
 
+import { revalidateTag } from 'next/cache'
+
 import { getTeacherSession, getBusinessSession } from 'entities/auth'
 import { apiClient, HttpError, errorHandler } from 'shared/api'
 
 import { NotificationSetting } from '../model/setting'
 
 type UpdateNotificationSettingRequest = NotificationSetting
+
+const handleSuccess = () => {
+  revalidateTag('notification-setting')
+}
 
 const handleError = (error: Error) => {
   const isHttpError = error instanceof HttpError
@@ -33,6 +39,8 @@ export const updateTeacherNotificationSetting = async ({
       },
       body: null,
     })
+
+    handleSuccess()
   } catch (error) {
     return handleError(error as Error)
   }
@@ -54,6 +62,8 @@ export const updateBusinessNotificationSetting = async ({
       },
       body: null,
     })
+
+    handleSuccess()
   } catch (error) {
     return handleError(error as Error)
   }
