@@ -9,7 +9,7 @@ import { cn } from 'shared/lib'
 import { Button } from 'shared/ui'
 
 import * as Navigation from './navigation'
-import { NotificationButton } from './notification'
+import { NotificationButton } from './teacher-notification/button'
 import { UserButton } from './user-button'
 import * as css from './variants'
 
