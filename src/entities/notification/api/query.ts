@@ -1,5 +1,9 @@
-import { infiniteQueryOptions } from '@tanstack/react-query'
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 
+import {
+  getBusinessNotificationUnreadCount,
+  getTeacherNotificationUnreadCount,
+} from './get-notification-unread-count'
 import {
   getBusinessNotifications,
   getTeacherNotifications,
@@ -31,5 +35,15 @@ export const notificationQueries = {
 
         return lastPage.pageable.pageNumber + 1
       },
+    }),
+  teacherUnreadCount: () =>
+    queryOptions({
+      queryKey: [...notificationQueries.lists(), 'teacher', 'unread-count'],
+      queryFn: getTeacherNotificationUnreadCount,
+    }),
+  businessUnreadCount: () =>
+    queryOptions({
+      queryKey: [...notificationQueries.lists(), 'business', 'unread-count'],
+      queryFn: getBusinessNotificationUnreadCount,
     }),
 }

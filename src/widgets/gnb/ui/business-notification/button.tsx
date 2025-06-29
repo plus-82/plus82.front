@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 
 import { notificationQueries } from 'entities/notification'
@@ -8,11 +9,17 @@ import { useDropdown } from 'shared/lib'
 import { Dropdown, Icon } from 'shared/ui'
 
 import { BusinessNotificationList, NoNotification } from './list'
+import { useBusinessNotificationUnreadCount } from '../../api/get-business-notification-unread-count'
 
 export const NotificationButton = () => {
+  const pathname = usePathname()
+
   const queryClient = useQueryClient()
 
   const { isOpen, toggleIsOpen, close, dropdownRef } = useDropdown()
+
+  const { hasUnreadNotification, refetch } =
+    useBusinessNotificationUnreadCount()
 
   const handleClick = () => {
     toggleIsOpen()
@@ -26,13 +33,20 @@ export const NotificationButton = () => {
     }
   }, [isOpen, queryClient])
 
+  useEffect(() => {
+    void refetch()
+  }, [pathname, refetch])
+
   return (
     <div
       ref={dropdownRef}
       className="relative flex items-center justify-center"
     >
-      <button onClick={handleClick}>
+      <button onClick={handleClick} className="relative">
         <Icon name="Bell" size="large" color={colors.gray[900]} />
+        {hasUnreadNotification && (
+          <span className="absolute right-0.5 top-0 h-2 w-2 rounded-full border border-white bg-blue-800" />
+        )}
       </button>
       {isOpen && (
         <Dropdown
@@ -42,7 +56,7 @@ export const NotificationButton = () => {
           displayLimit={15}
         >
           <EmptyBoundary trigger={isOpen} fallback={<NoNotification />}>
-            <BusinessNotificationList close={close} />
+            <BusinessNotificationList close={close} updateCount={refetch} />
           </EmptyBoundary>
         </Dropdown>
       )}

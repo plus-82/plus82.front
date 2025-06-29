@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 import { cn } from 'shared/lib'
 import { Dropdown } from 'shared/ui'
@@ -8,13 +9,20 @@ import { formatNotificationDate } from '../../lib/format-date'
 
 type Props = {
   close: () => void
+  updateCount: () => void
 }
 
-export const BusinessNotificationList = ({ close }: Props) => {
+export const BusinessNotificationList = ({ close, updateCount }: Props) => {
   const router = useRouter()
 
   const { data, isLoading, hasNextPage, fetchNextPage } =
     useBusinessNotifications()
+
+  useEffect(() => {
+    if (!isLoading) {
+      void updateCount()
+    }
+  }, [isLoading, updateCount])
 
   if (isLoading) {
     return <NotificationSkeleton />
