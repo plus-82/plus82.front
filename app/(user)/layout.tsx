@@ -7,7 +7,7 @@ import { AppProviders } from 'app/providers'
 import { pretendard } from 'app/styles'
 import { GoogleAnalytics } from 'shared/config/google-analytics'
 import { cn } from 'shared/lib'
-import { GNB } from 'shared/ui'
+import { GNB } from 'widgets/gnb'
 
 import '../globals.css'
 

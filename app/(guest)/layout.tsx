@@ -6,7 +6,7 @@ import { ReactNode } from 'react'
 import { pretendard } from 'app/styles'
 import { GoogleAnalytics } from 'shared/config/google-analytics'
 import { cn } from 'shared/lib'
-import { GuestGNB } from 'shared/ui'
+import { GuestGNB } from 'widgets/gnb'
 
 import '../globals.css'
 
