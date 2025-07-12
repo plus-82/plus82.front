@@ -57,7 +57,7 @@ export const FeedItem = ({
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <button className="flex h-10 w-10 items-center justify-center">
+          <button className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100">
             <Icon
               name="Heart"
               size="custom"
@@ -65,7 +65,7 @@ export const FeedItem = ({
               className="h-6 w-6"
             />
           </button>
-          <button className="flex h-10 w-10 items-center justify-center">
+          <button className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100">
             <Icon
               name="Comment"
               size="custom"
@@ -73,7 +73,7 @@ export const FeedItem = ({
               className="h-6 w-6"
             />
           </button>
-          <button className="flex h-10 w-10 items-center justify-center">
+          <button className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100">
             <Icon
               name="Share"
               size="custom"
