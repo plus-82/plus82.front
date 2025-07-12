@@ -1,37 +1,34 @@
+import { Feed } from 'entities/feed'
 import { colors } from 'shared/config'
 import { Image, Icon, linkVariants } from 'shared/ui'
 
 import { ExpandableText } from './expandable-text'
+import { formatDateFromNow } from '../lib/date'
 
-const content = `customary lie bit protection ever test clear guide wheel abroad
-          destructive mad temperature accord bank generous approve size to worth
-          thin disease whole appearance yet eastern kingdom rock photograph way
-          especially ability reward beauty reference turn surround wash wide
-          perform enemy song especially heart veil green battle flour cry remain
-          weak into bowl flatten force circle storm protection replace election
-          reflection furnish none lazy near reproduction winter ornament
-          afternoon toe inside film divide guide excuse soften waiter feather
-          copper advance star important supper suggest chimney why trip chair
-          homemade imitation branch contain solution hammer wind customary lie
-          bit protection ever test clear guide wheel abroad destructive mad
-          temperature accord bank generous approve size to worth thin disease
-          whole appearance yet eastern kingdom rock photograph way especially
-          ability reward beauty reference turn surround wash wide perform enemy
-          song especially heart veil green battle flour cry remain weak into
-          bowl flatten force circle storm protection replace election reflection
-          furnish none lazy near reproduction winter ornament afternoon toe
-          inside film divide guide excuse soften waiter feather copper advance
-          star important supper suggest chimney why trip chair homemade
-          imitation branch contain solution hammer wind`
+type Props = Feed
 
-export const FeedItem = () => {
+export const FeedItem = ({
+  content,
+  createdAt,
+  creatorName,
+  creatorProfileImagePath,
+  imagePath,
+  commentCount,
+  likeCount,
+}: Props) => {
   return (
     <div className="pb-10 not-last:border-b not-last:border-gray-200 not-first:pt-10">
       <div className="mb-3 flex items-center gap-3">
-        <Image src="" alt="community" className="h-12 w-12 rounded-full" />
+        <Image
+          src={creatorProfileImagePath ?? ''}
+          alt="community"
+          className="h-12 w-12 rounded-full"
+        />
         <div className="grow">
-          <p className="title-small font-medium text-gray-900">Name</p>
-          <p className="body-large font-normal text-gray-500">6시간 전</p>
+          <p className="title-small font-medium text-gray-900">{creatorName}</p>
+          <p className="body-large font-normal text-gray-500">
+            {formatDateFromNow(createdAt)}
+          </p>
         </div>
         <button className="flex h-12 w-12 items-center justify-center">
           <Icon
@@ -44,7 +41,15 @@ export const FeedItem = () => {
       </div>
 
       <div className="mb-3 space-y-3">
-        <div className="h-[500px] w-full rounded-xl bg-gray-100" />
+        {imagePath && (
+          <div className="h-[500px] w-full rounded-xl">
+            <Image
+              src={imagePath ?? ''}
+              alt="community"
+              className="h-full w-full rounded-xl object-cover"
+            />
+          </div>
+        )}
         <div>
           <ExpandableText lineClamp={10} content={content} />
         </div>
@@ -79,11 +84,11 @@ export const FeedItem = () => {
         </div>
         <div className="flex items-center gap-2">
           <button className={linkVariants({ variant: 'secondary' })}>
-            2 Likes
+            {likeCount} Likes
           </button>
           <span className="h-[3px] w-[3px] rounded-full bg-gray-500" />
           <button className={linkVariants({ variant: 'secondary' })}>
-            1 Comments
+            {commentCount} Comments
           </button>
         </div>
       </div>
