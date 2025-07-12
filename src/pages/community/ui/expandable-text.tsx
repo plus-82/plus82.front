@@ -56,18 +56,18 @@ export const ExpandableText = ({ content, lineClamp = 2 }: Props) => {
         {!isOverflown
           ? null
           : !expanding && (
-              <button
-                className="z-1 text-primary title-small absolute bottom-0 right-0 block bg-gradient-to-r from-transparent via-white via-30% to-white pl-8 font-normal text-gray-700 hover:underline"
-                onClick={handleButtonClick}
-              >
-                ...더보기
-              </button>
               // <button
-              //   className="z-1 text-primary title-small absolute bottom-0 right-0 block bg-gradient-to-r from-transparent via-white via-20% to-white pl-8 font-normal text-gray-700 hover:underline"
+              //   className="z-1 text-primary title-small absolute bottom-0 right-0 block bg-gradient-to-r from-transparent via-white via-30% to-white pl-8 font-normal text-gray-700 hover:text-gray-900 hover:underline"
               //   onClick={handleButtonClick}
               // >
-              //   ...Show more
+              //   ...더보기
               // </button>
+              <button
+                className="z-1 text-primary title-small absolute bottom-0 right-0 block bg-gradient-to-r from-transparent via-white via-20% to-white pl-8 font-normal text-gray-700 hover:text-gray-900 hover:underline"
+                onClick={handleButtonClick}
+              >
+                ...Show more
+              </button>
             )}
       </p>
     </>
