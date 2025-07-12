@@ -9,7 +9,7 @@ export const SidePanel = () => {
         and enjoy more features
       </p>
       <div className="space-y-2">
-        <Button variant="primary" size="large" fullWidth>
+        <Button variant="primary" size="large" fullWidth as="a" href="/sign-in">
           Sign In
         </Button>
       </div>
