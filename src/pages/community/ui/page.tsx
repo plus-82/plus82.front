@@ -1,6 +1,5 @@
 import { Layout } from 'shared/ui'
 
-import { FeedItem } from './feed-item'
 import { FeedList } from './feed-list'
 import { SidePanel } from './side-panel'
 

@@ -1,4 +1,5 @@
 import { Feed } from 'entities/feed'
+import { LikeButton } from 'features/like-feed'
 import { colors } from 'shared/config'
 import { Image, Icon, linkVariants } from 'shared/ui'
 
@@ -8,6 +9,7 @@ import { formatDateFromNow } from '../lib/date'
 type Props = Feed
 
 export const FeedItem = ({
+  id,
   content,
   createdAt,
   creatorName,
@@ -15,6 +17,7 @@ export const FeedItem = ({
   imagePath,
   commentCount,
   likeCount,
+  isLiked,
 }: Props) => {
   return (
     <div className="pb-10 not-last:border-b not-last:border-gray-200 not-first:pt-10">
@@ -57,14 +60,7 @@ export const FeedItem = ({
 
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <button className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100">
-            <Icon
-              name="Heart"
-              size="custom"
-              color={colors.gray[700]}
-              className="h-6 w-6"
-            />
-          </button>
+          <LikeButton feedId={id} isLiked={isLiked} />
           <button className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100">
             <Icon
               name="Comment"
