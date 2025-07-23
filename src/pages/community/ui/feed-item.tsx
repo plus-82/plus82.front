@@ -3,6 +3,7 @@ import { LikeButton } from 'features/like-feed'
 import { colors } from 'shared/config'
 import { Image, Icon, linkVariants } from 'shared/ui'
 
+import { AnimatedCount } from './animated-count'
 import { ExpandableText } from './expandable-text'
 import { formatDateFromNow } from '../lib/date'
 
@@ -80,11 +81,11 @@ export const FeedItem = ({
         </div>
         <div className="flex items-center gap-2">
           <button className={linkVariants({ variant: 'secondary' })}>
-            {likeCount} Likes
+            <AnimatedCount count={likeCount} /> Likes
           </button>
           <span className="h-[3px] w-[3px] rounded-full bg-gray-500" />
           <button className={linkVariants({ variant: 'secondary' })}>
-            {commentCount} Comments
+            <AnimatedCount count={commentCount} /> Comments
           </button>
         </div>
       </div>
