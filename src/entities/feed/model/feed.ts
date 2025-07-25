@@ -10,3 +10,11 @@ export type Feed = {
   isLiked: boolean
   isCommented: boolean
 }
+
+export type FeedLike = {
+  id: number
+  createdAt: string
+  userId: number
+  name: string
+  profileImagePath: string
+}

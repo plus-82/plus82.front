@@ -1,5 +1,5 @@
 import { Feed } from 'entities/feed'
-import { LikeButton } from 'features/like-feed'
+import { LikeButton, LikedPeopleButton } from 'features/like-feed'
 import { colors } from 'shared/config'
 import { Image, Icon, linkVariants } from 'shared/ui'
 
@@ -80,9 +80,7 @@ export const FeedItem = ({
           </button>
         </div>
         <div className="flex items-center gap-2">
-          <button className={linkVariants({ variant: 'secondary' })}>
-            <AnimatedCount count={likeCount} /> Likes
-          </button>
+          <LikedPeopleButton feedId={id} likeCount={likeCount} />
           <span className="h-[3px] w-[3px] rounded-full bg-gray-500" />
           <button className={linkVariants({ variant: 'secondary' })}>
             <AnimatedCount count={commentCount} /> Comments

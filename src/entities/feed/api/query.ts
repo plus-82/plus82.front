@@ -1,5 +1,6 @@
-import { infiniteQueryOptions } from '@tanstack/react-query'
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 
+import { getFeedLike, GetFeedLikeRequest } from './get-feed-like'
 import { getFeeds, GetFeedsRequest } from './get-feeds'
 
 export const feedQueries = {
@@ -15,5 +16,11 @@ export const feedQueries = {
 
         return lastPage.pageable.pageNumber + 1
       },
+    }),
+  likes: () => [...feedQueries.all(), 'like'],
+  like: (params: GetFeedLikeRequest) =>
+    queryOptions({
+      queryKey: [...feedQueries.likes(), params],
+      queryFn: () => getFeedLike(params),
     }),
 }
