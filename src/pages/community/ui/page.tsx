@@ -1,13 +1,19 @@
 import { Layout } from 'shared/ui'
 
 import { FeedList } from './feed-list'
+import { Search } from './search'
 import { SidePanel } from './side-panel'
 
-export const CommunityPage = () => {
+type Props = {
+  isPublic: boolean
+}
+
+export const CommunityPage = async ({ isPublic }: Props) => {
   return (
     <Layout wide className="flex">
       <SidePanel />
       <div className="flex-1">
+        {!isPublic && <Search />}
         <FeedList />
       </div>
     </Layout>

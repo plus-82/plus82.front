@@ -3,16 +3,21 @@ import { useSearchParams } from 'next/navigation'
 
 import { feedQueries } from 'entities/feed'
 
-export const useGetFeeds = () => {
-  const searchParams = useSearchParams()
-  const keyword = searchParams?.get('keyword') ?? ''
+type Props = {
+  keyword?: string
+}
 
-  const { data } = useInfiniteQuery({
-    ...feedQueries.list({ keyword }),
+export const useGetFeeds = ({ keyword: keywordProp }: Props = {}) => {
+  const searchParams = useSearchParams()
+  const keyword = searchParams?.get('search') ?? ''
+
+  const { data, isLoading } = useInfiniteQuery({
+    ...feedQueries.list({ keyword: keywordProp ?? keyword }),
     select: data => data.pages.flatMap(page => page.content),
   })
 
   return {
     feeds: data,
+    isLoading,
   }
 }
