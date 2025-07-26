@@ -11,13 +11,17 @@ export const useGetFeeds = ({ keyword: keywordProp }: Props = {}) => {
   const searchParams = useSearchParams()
   const keyword = searchParams?.get('search') ?? ''
 
-  const { data, isLoading } = useInfiniteQuery({
-    ...feedQueries.list({ keyword: keywordProp ?? keyword }),
-    select: data => data.pages.flatMap(page => page.content),
-  })
+  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      ...feedQueries.list({ keyword: keywordProp ?? keyword }),
+      select: data => data.pages.flatMap(page => page.content),
+    })
 
   return {
     feeds: data,
     isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
   }
 }

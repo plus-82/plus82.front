@@ -2,13 +2,26 @@
 
 import { isEmpty } from 'lodash-es'
 
+import { useObserver } from 'shared/lib'
 import { Spinner } from 'shared/ui'
 
 import { FeedItem } from './feed-item'
 import { useGetFeeds } from '../api/get-feeds'
 
 const EmptyFeeds = () => {
-  const { feeds } = useGetFeeds({ keyword: '' })
+  const { feeds, isFetchingNextPage, fetchNextPage, hasNextPage } = useGetFeeds(
+    { keyword: '' },
+  )
+
+  const handleIntersect = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }
+
+  const targetRef = useObserver({
+    callback: handleIntersect,
+  })
 
   return (
     <>
@@ -18,29 +31,50 @@ const EmptyFeeds = () => {
         Create a post and share it!
       </div>
       {feeds?.map(feed => <FeedItem key={feed.id} {...feed} />)}
+      {isFetchingNextPage ? <Loading /> : <div ref={targetRef} />}
     </>
   )
 }
 
+const Loading = () => {
+  return (
+    <div className="relative mt-[80px] flex justify-center">
+      <Spinner />
+    </div>
+  )
+}
+
 export const FeedList = () => {
-  const { feeds, isLoading } = useGetFeeds()
+  const { feeds, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useGetFeeds()
+
+  const handleIntersect = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }
+
+  const targetRef = useObserver({
+    callback: handleIntersect,
+  })
 
   return (
     <div className="mx-auto w-[530px]">
       {(() => {
         if (isLoading) {
-          return (
-            <div className="relative mt-[80px] flex justify-center">
-              <Spinner />
-            </div>
-          )
+          return <Loading />
         }
 
         if (isEmpty(feeds)) {
           return <EmptyFeeds />
         }
 
-        return feeds?.map(feed => <FeedItem key={feed.id} {...feed} />)
+        return (
+          <>
+            {feeds?.map(feed => <FeedItem key={feed.id} {...feed} />)}
+            {isFetchingNextPage ? <Loading /> : <div ref={targetRef} />}
+          </>
+        )
       })()}
     </div>
   )
