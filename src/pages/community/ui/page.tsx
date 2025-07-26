@@ -11,7 +11,7 @@ type Props = {
 export const CommunityPage = async ({ isPublic }: Props) => {
   return (
     <Layout wide className="flex">
-      <SidePanel />
+      <SidePanel isPublic={isPublic} />
       <div className="flex-1">
         {!isPublic && <Search />}
         <FeedList />
