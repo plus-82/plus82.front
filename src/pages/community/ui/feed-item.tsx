@@ -25,8 +25,18 @@ export const FeedItem = ({
       <div className="mb-3 flex items-center gap-3">
         <Image
           src={creatorProfileImagePath ?? ''}
-          alt="community"
+          alt={`${creatorName} profile image`}
           className="h-12 w-12 rounded-full"
+          fallback={
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-300">
+              <Icon
+                name="User"
+                size="custom"
+                className="h-10 w-10"
+                color={colors.gray[700]}
+              />
+            </div>
+          }
         />
         <div className="grow">
           <p className="title-small font-medium text-gray-900">{creatorName}</p>
