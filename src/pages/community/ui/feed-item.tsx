@@ -9,6 +9,7 @@ import { colors } from 'shared/config'
 import { Image, Icon, linkVariants } from 'shared/ui'
 
 import { AnimatedCount } from './animated-count'
+import { DeleteFeedModal } from './delete-feed-modal'
 import { ExpandableText } from './expandable-text'
 import { OpenMenuButton } from './menu/open-menu-button'
 import { formatDateFromNow } from '../lib/date'
@@ -30,9 +31,14 @@ export const FeedItem = ({
   isPublic,
 }: Props) => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const openEditDialog = () => {
     setIsEditDialogOpen(true)
+  }
+
+  const openDeleteDialog = () => {
+    setIsDeleteDialogOpen(true)
   }
 
   return (
@@ -66,6 +72,7 @@ export const FeedItem = ({
             isPublic={isPublic}
             creatorId={5}
             openEditDialog={openEditDialog}
+            openDeleteDialog={openDeleteDialog}
           />
         </div>
 
@@ -118,6 +125,12 @@ export const FeedItem = ({
         feedId={id}
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
+      />
+
+      <DeleteFeedModal
+        feedId={id}
+        isOpen={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
       />
     </>
   )

@@ -9,17 +9,24 @@ type Props = ComponentProps<typeof Dropdown> & {
   isUserMe: boolean
   onClick: () => void
   openEditDialog: () => void
+  openDeleteDialog: () => void
 }
 
 export const FeedMenu = ({
   isUserMe,
   onClick,
   openEditDialog,
+  openDeleteDialog,
   className,
   ...props
 }: Props) => {
   const handleEditButtonClick = () => {
     openEditDialog()
+    onClick()
+  }
+
+  const handleDeleteButtonClick = () => {
+    openDeleteDialog()
     onClick()
   }
 
@@ -55,6 +62,7 @@ export const FeedMenu = ({
         <button
           type="button"
           className="body-large w-full px-3 py-3.5 text-left font-medium text-error"
+          onClick={handleDeleteButtonClick}
         >
           Delete
         </button>

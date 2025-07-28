@@ -15,12 +15,14 @@ type Props = {
   isPublic: boolean
   creatorId: number
   openEditDialog: () => void
+  openDeleteDialog: () => void
 }
 
 export const OpenMenuButton = ({
   isPublic,
   creatorId,
   openEditDialog,
+  openDeleteDialog,
 }: Props) => {
   const { data: userMe } = useQuery({
     ...userQueries.teacherMe(),
@@ -72,6 +74,7 @@ export const OpenMenuButton = ({
           isUserMe={isUserMe}
           onClick={handleDropdownItemClick}
           openEditDialog={openEditDialog}
+          openDeleteDialog={openDeleteDialog}
         />
       )}
     </div>
