@@ -26,6 +26,7 @@ import EyesOn from './eyes-on.svg'
 import Filter from './filter.svg'
 import HeartFilled from './heart-filled.svg'
 import Heart from './heart.svg'
+import Image from './image.svg'
 import Language from './language.svg'
 import LocationFilled from './location-filled.svg'
 import Message from './message.svg'
@@ -69,6 +70,7 @@ export const IconComponent = {
   Filter,
   HeartFilled,
   Heart,
+  Image,
   Language,
   LocationFilled,
   Message,

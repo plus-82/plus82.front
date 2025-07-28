@@ -1,8 +1,10 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 
 import { userQueries } from 'entities/user'
+import { FeedFormDialog } from 'features/feed-form'
 import { colors } from 'shared/config'
 import { Button, Icon, Image } from 'shared/ui'
 
@@ -15,6 +17,12 @@ export const SidePanel = ({ isPublic }: Props) => {
     ...userQueries.teacherMe(),
     enabled: !isPublic,
   })
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+  const handleWritePostButtonClick = () => {
+    setIsDialogOpen(true)
+  }
 
   if (isPublic) {
     return (
@@ -57,15 +65,19 @@ export const SidePanel = ({ isPublic }: Props) => {
             </div>
           }
         />
-        <div className="grow">
-          <p className="title-small font-medium text-gray-900">
-            {userMe?.firstName} {userMe?.lastName}
-          </p>
-        </div>
+        <p className="title-small font-medium text-gray-900">
+          {userMe?.firstName} {userMe?.lastName}
+        </p>
       </div>
-      <Button variant="tonal" size="large" fullWidth>
+      <Button
+        variant="tonal"
+        size="large"
+        fullWidth
+        onClick={handleWritePostButtonClick}
+      >
         Write a post
       </Button>
+      <FeedFormDialog isOpen={isDialogOpen} onOpenChange={setIsDialogOpen} />
     </div>
   )
 }
