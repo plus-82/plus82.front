@@ -18,6 +18,10 @@ export const FeedFormDialog = ({ isOpen, onOpenChange }: Props) => {
     ...userQueries.teacherMe(),
   })
 
+  const handleSuccess = () => {
+    onOpenChange(false)
+  }
+
   return (
     <Modal open={isOpen} onOpenChange={onOpenChange}>
       <Modal.Content className="flex h-[704px] w-[740px] flex-col gap-0">
@@ -42,7 +46,7 @@ export const FeedFormDialog = ({ isOpen, onOpenChange }: Props) => {
             {userMe?.firstName} {userMe?.lastName}
           </p>
         </div>
-        <FeedForm />
+        <FeedForm onSuccess={handleSuccess} />
       </Modal.Content>
     </Modal>
   )

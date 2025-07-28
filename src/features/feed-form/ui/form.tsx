@@ -9,7 +9,11 @@ import { ImageUploader } from './image-uploader'
 import { PostButton } from './post-button'
 import { defaultValues, type FormValues } from '../model/form-values'
 
-export const FeedForm = () => {
+type Props = {
+  onSuccess: () => void
+}
+
+export const FeedForm = ({ onSuccess }: Props) => {
   const form = useForm<FormValues>({
     defaultValues,
   })
@@ -64,7 +68,7 @@ export const FeedForm = () => {
             Cancel
           </Button>
         </Modal.Close>
-        <PostButton />
+        <PostButton onSuccess={onSuccess} />
       </Modal.Footer>
     </Form>
   )
