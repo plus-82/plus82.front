@@ -9,11 +9,12 @@ import { Icon, Image, Modal } from 'shared/ui'
 import { FeedForm } from './form'
 
 type Props = {
+  feedId?: number
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
 }
 
-export const FeedFormDialog = ({ isOpen, onOpenChange }: Props) => {
+export const FeedFormDialog = ({ feedId, isOpen, onOpenChange }: Props) => {
   const { data: userMe } = useQuery({
     ...userQueries.teacherMe(),
   })
@@ -23,7 +24,7 @@ export const FeedFormDialog = ({ isOpen, onOpenChange }: Props) => {
   }
 
   return (
-    <Modal open={isOpen} onOpenChange={onOpenChange}>
+    <Modal open={isOpen} onOpenChange={onOpenChange} modal>
       <Modal.Content className="flex h-[704px] w-[740px] flex-col gap-0">
         <Modal.Title className="hidden">Write a post</Modal.Title>
         <div className="mb-4 flex items-start gap-3">
@@ -46,7 +47,7 @@ export const FeedFormDialog = ({ isOpen, onOpenChange }: Props) => {
             {userMe?.firstName} {userMe?.lastName}
           </p>
         </div>
-        <FeedForm onSuccess={handleSuccess} />
+        <FeedForm feedId={feedId} onSuccess={handleSuccess} />
       </Modal.Content>
     </Modal>
   )

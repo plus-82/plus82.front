@@ -6,7 +6,7 @@ import { cn, isNilOrEmptyString } from 'shared/lib'
 import { Icon, Image } from 'shared/ui'
 
 type ImageData = {
-  imageId: string | null
+  imageId: number | null
   image: File | null
   url: string | null
 }

@@ -1,21 +1,37 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
+import { isNumber } from 'lodash-es'
 import { useForm, useWatch } from 'react-hook-form'
 
+import { feedQueries } from 'entities/feed'
 import { fieldCss, Form } from 'shared/form'
 import { Button, Label, Modal } from 'shared/ui'
 
+import { EditButton } from './edit-button'
 import { ImageUploader } from './image-uploader'
 import { PostButton } from './post-button'
+import { convertFeedToFormValues } from '../model/converter'
 import { defaultValues, type FormValues } from '../model/form-values'
 
 type Props = {
+  feedId?: number
   onSuccess: () => void
 }
 
-export const FeedForm = ({ onSuccess }: Props) => {
+export const FeedForm = ({ feedId, onSuccess }: Props) => {
+  const isEditMode = isNumber(feedId)
+
+  const { data: feed } = useQuery({
+    ...feedQueries.item(feedId!),
+    enabled: isEditMode,
+    select: data => convertFeedToFormValues(data),
+  })
+
+  const formValues = feed ?? defaultValues
+
   const form = useForm<FormValues>({
-    defaultValues,
+    values: formValues,
   })
 
   const { control, setValue } = form
@@ -68,7 +84,8 @@ export const FeedForm = ({ onSuccess }: Props) => {
             Cancel
           </Button>
         </Modal.Close>
-        <PostButton onSuccess={onSuccess} />
+        {!isEditMode && <PostButton onSuccess={onSuccess} />}
+        {isEditMode && <EditButton feedId={feedId} onSuccess={onSuccess} />}
       </Modal.Footer>
     </Form>
   )

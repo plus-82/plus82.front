@@ -1,7 +1,7 @@
 export type FormValues = {
   content: string
   image: {
-    imageId: string | null
+    imageId: number | null
     image: File | null
     url: string | null
   }
