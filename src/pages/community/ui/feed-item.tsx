@@ -5,9 +5,12 @@ import { Image, Icon, linkVariants } from 'shared/ui'
 
 import { AnimatedCount } from './animated-count'
 import { ExpandableText } from './expandable-text'
+import { MenuButton } from './feed-menu'
 import { formatDateFromNow } from '../lib/date'
 
-type Props = Feed
+type Props = Feed & {
+  isPublic: boolean
+}
 
 export const FeedItem = ({
   id,
@@ -19,6 +22,7 @@ export const FeedItem = ({
   commentCount,
   likeCount,
   isLiked,
+  isPublic,
 }: Props) => {
   return (
     <div className="pb-10 not-last:border-b not-last:border-gray-200 not-first:pt-10">
@@ -44,14 +48,7 @@ export const FeedItem = ({
             {formatDateFromNow(createdAt)}
           </p>
         </div>
-        <button className="flex h-12 w-12 items-center justify-center">
-          <Icon
-            name="Dot"
-            size="custom"
-            color={colors.gray[700]}
-            className="h-8 w-8 rotate-90"
-          />
-        </button>
+        <MenuButton isPublic={isPublic} creatorId={5} />
       </div>
 
       <div className="mb-3 space-y-3">

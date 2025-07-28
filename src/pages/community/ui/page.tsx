@@ -14,7 +14,7 @@ export const CommunityPage = async ({ isPublic }: Props) => {
       <SidePanel isPublic={isPublic} />
       <div className="flex-1">
         {!isPublic && <Search />}
-        <FeedList />
+        <FeedList isPublic={isPublic} />
       </div>
     </Layout>
   )
