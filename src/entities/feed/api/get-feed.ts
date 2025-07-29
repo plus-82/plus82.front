@@ -3,13 +3,13 @@
 import { getNullableTeacherSession } from 'entities/auth'
 import { apiClient } from 'shared/api'
 
-import { Feed } from '../model/feed'
+import { FeedDetail } from '../model/feed'
 
 export type GetFeedsRequest = {
   feedId: number
 }
 
-type GetFeedsResponse = Feed
+type GetFeedsResponse = FeedDetail
 
 export const getFeed = async ({ feedId }: GetFeedsRequest) => {
   const session = await getNullableTeacherSession()

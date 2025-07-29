@@ -10,7 +10,6 @@ export type Comment = {
 
 export type Feed = {
   id: number
-  feedVisibility: 'PUBLIC' | 'PRIVATE'
   content: string
   createdAt: string
   creatorName: string
@@ -20,6 +19,10 @@ export type Feed = {
   likeCount: number
   isLiked: boolean
   isCommented: boolean
+}
+
+export type FeedDetail = Feed & {
+  feedVisibility: 'PUBLIC' | 'PRIVATE'
   comments: Comment[]
 }
 

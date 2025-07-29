@@ -9,6 +9,7 @@ import { colors } from 'shared/config'
 import { Image, Icon, linkVariants } from 'shared/ui'
 
 import { AnimatedCount } from './animated-count'
+import { Comment } from './comment'
 import { DeleteFeedModal } from './delete-feed-modal'
 import { ExpandableText } from './expandable-text'
 import { OpenMenuButton } from './menu/open-menu-button'
@@ -33,12 +34,18 @@ export const FeedItem = ({
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
+  const [isCommentOpen, setIsCommentOpen] = useState(false)
+
   const openEditDialog = () => {
     setIsEditDialogOpen(true)
   }
 
   const openDeleteDialog = () => {
     setIsDeleteDialogOpen(true)
+  }
+
+  const toggleComment = () => {
+    setIsCommentOpen(!isCommentOpen)
   }
 
   return (
@@ -94,7 +101,10 @@ export const FeedItem = ({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <LikeButton feedId={id} isLiked={isLiked} />
-            <button className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100">
+            <button
+              className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
+              onClick={toggleComment}
+            >
               <Icon
                 name="Comment"
                 size="custom"
@@ -114,11 +124,15 @@ export const FeedItem = ({
           <div className="flex items-center gap-2">
             <LikedPeopleButton feedId={id} likeCount={likeCount} />
             <span className="h-[3px] w-[3px] rounded-full bg-gray-500" />
-            <button className={linkVariants({ variant: 'secondary' })}>
+            <button
+              className={linkVariants({ variant: 'secondary' })}
+              onClick={toggleComment}
+            >
               <AnimatedCount count={commentCount} /> Comments
             </button>
           </div>
         </div>
+        {isCommentOpen && <Comment feedId={id} commentCount={commentCount} />}
       </div>
 
       <FeedFormDialog
