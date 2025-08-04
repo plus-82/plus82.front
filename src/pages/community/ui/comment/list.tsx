@@ -15,7 +15,7 @@ export const CommentList = ({ comments }: Props) => {
   }
 
   return (
-    <ul className="mt-5">
+    <ul className="mt-5 space-y-5">
       {comments.map(comment => (
         <li key={comment.id} className="flex gap-3">
           <Image
