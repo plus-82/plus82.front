@@ -12,11 +12,18 @@ type Props = {
   feedId?: number
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
+  isPublic: boolean
 }
 
-export const FeedFormDialog = ({ feedId, isOpen, onOpenChange }: Props) => {
+export const FeedFormDialog = ({
+  feedId,
+  isOpen,
+  onOpenChange,
+  isPublic,
+}: Props) => {
   const { data: userMe } = useQuery({
     ...userQueries.teacherMe(),
+    enabled: !isPublic,
   })
 
   const handleSuccess = () => {

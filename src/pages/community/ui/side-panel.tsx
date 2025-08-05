@@ -77,7 +77,11 @@ export const SidePanel = ({ isPublic }: Props) => {
       >
         Write a post
       </Button>
-      <FeedFormDialog isOpen={isDialogOpen} onOpenChange={setIsDialogOpen} />
+      <FeedFormDialog
+        isOpen={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        isPublic={isPublic}
+      />
     </div>
   )
 }

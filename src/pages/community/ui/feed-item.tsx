@@ -13,6 +13,7 @@ import { Comment } from './comment'
 import { DeleteFeedModal } from './delete-feed-modal'
 import { ExpandableText } from './expandable-text'
 import { OpenMenuButton } from './feed-menu/open-menu-button'
+import { ReportPostModal } from './report-post-modal'
 import { formatDateFromNow } from '../lib/date'
 
 type Props = Feed & {
@@ -33,6 +34,7 @@ export const FeedItem = ({
 }: Props) => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isReportPostModalOpen, setIsReportPostModalOpen] = useState(false)
 
   const [isCommentOpen, setIsCommentOpen] = useState(false)
 
@@ -42,6 +44,10 @@ export const FeedItem = ({
 
   const openDeleteDialog = () => {
     setIsDeleteDialogOpen(true)
+  }
+
+  const openReportPostModal = () => {
+    setIsReportPostModalOpen(true)
   }
 
   const toggleComment = () => {
@@ -77,9 +83,10 @@ export const FeedItem = ({
           </div>
           <OpenMenuButton
             isPublic={isPublic}
-            creatorId={5}
+            creatorId={21}
             openEditDialog={openEditDialog}
             openDeleteDialog={openDeleteDialog}
+            openReportPostModal={openReportPostModal}
           />
         </div>
 
@@ -139,12 +146,19 @@ export const FeedItem = ({
         feedId={id}
         isOpen={isEditDialogOpen}
         onOpenChange={setIsEditDialogOpen}
+        isPublic={isPublic}
       />
 
       <DeleteFeedModal
         feedId={id}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
+      />
+
+      <ReportPostModal
+        feedId={id}
+        isOpen={isReportPostModalOpen}
+        onOpenChange={setIsReportPostModalOpen}
       />
     </>
   )
