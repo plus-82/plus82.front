@@ -4,10 +4,11 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 type Props = {
+  className?: string
   count: number
 }
 
-export const AnimatedCount = ({ count }: Props) => {
+export const AnimatedCount = ({ count, className }: Props) => {
   const [prevCount, setPrevCount] = useState(count)
   const isIncreasing = count > prevCount
 
@@ -17,6 +18,7 @@ export const AnimatedCount = ({ count }: Props) => {
 
   return (
     <span
+      className={className}
       style={{
         display: 'inline-block',
         overflow: 'hidden',

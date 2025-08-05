@@ -131,7 +131,12 @@ export const CommentItem = ({
         ) : (
           <p className="body-large font-normal text-gray-900">{comment}</p>
         )}
-        <LikeCommentButton isLiked={isLiked} count={likeCount} />
+        <LikeCommentButton
+          isLiked={isLiked}
+          count={likeCount}
+          commentId={id}
+          feedId={feedId}
+        />
       </div>
 
       <DeleteCommentModal
