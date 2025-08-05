@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Feed } from 'entities/feed'
 import { FeedFormDialog } from 'features/feed-form'
@@ -14,6 +15,7 @@ import { ExpandableText } from './expandable-text'
 import { OpenMenuButton } from './feed-menu/open-menu-button'
 import { ReportPostModal } from './report-post-modal'
 import { ReportUserModal } from './report-user-modal'
+import { copy } from '../lib/copy'
 import { formatDateFromNow } from '../lib/date'
 
 type Props = Feed & {
@@ -57,6 +59,16 @@ export const FeedItem = ({
 
   const toggleComment = () => {
     setIsCommentOpen(!isCommentOpen)
+  }
+
+  const handleShareButtonClick = async () => {
+    const shareUrl = `${window.location.origin}/community/${id}`
+
+    const { success } = await copy(shareUrl)
+
+    if (success) {
+      toast.success('Link copied successfully')
+    }
   }
 
   return (
@@ -125,7 +137,10 @@ export const FeedItem = ({
                 className="h-6 w-6"
               />
             </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100">
+            <button
+              className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
+              onClick={handleShareButtonClick}
+            >
               <Icon
                 name="Share"
                 size="custom"
