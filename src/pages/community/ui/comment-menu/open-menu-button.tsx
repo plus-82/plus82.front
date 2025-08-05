@@ -17,6 +17,7 @@ type Props = {
   openEditForm: () => void
   openDeleteDialog: () => void
   openReportCommentModal: () => void
+  openReportUserModal: () => void
 }
 
 export const OpenMenuButton = ({
@@ -25,6 +26,7 @@ export const OpenMenuButton = ({
   openEditForm,
   openDeleteDialog,
   openReportCommentModal,
+  openReportUserModal,
 }: Props) => {
   const { data: userMe } = useQuery({
     ...userQueries.teacherMe(),
@@ -78,6 +80,7 @@ export const OpenMenuButton = ({
           openEditForm={openEditForm}
           openDeleteDialog={openDeleteDialog}
           openReportCommentModal={openReportCommentModal}
+          openReportUserModal={openReportUserModal}
         />
       )}
     </div>

@@ -13,6 +13,7 @@ import { OpenMenuButton } from '../comment-menu/open-menu-button'
 import { DeleteCommentModal } from '../delete-comment-modal'
 import { CommentForm } from './comment-form'
 import { ReportCommentModal } from '../report-comment-modal'
+import { ReportUserModal } from '../report-user-modal'
 
 type Props = Comment & {
   feedId: number
@@ -35,6 +36,7 @@ export const CommentItem = ({
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [isReportCommentModalOpen, setIsReportCommentModalOpen] =
     useState(false)
+  const [isReportUserModalOpen, setIsReportUserModalOpen] = useState(false)
 
   const { handleServerError } = useServerErrorHandler()
 
@@ -48,6 +50,10 @@ export const CommentItem = ({
 
   const openReportCommentModal = () => {
     setIsReportCommentModalOpen(true)
+  }
+
+  const openReportUserModal = () => {
+    setIsReportUserModalOpen(true)
   }
 
   const handleCommentUpdateCancel = () => {
@@ -113,6 +119,7 @@ export const CommentItem = ({
             openEditForm={openEditForm}
             openDeleteDialog={openDeleteDialog}
             openReportCommentModal={openReportCommentModal}
+            openReportUserModal={openReportUserModal}
           />
         </div>
         {isEditMode ? (
@@ -138,6 +145,12 @@ export const CommentItem = ({
         commentId={id}
         isOpen={isReportCommentModalOpen}
         onOpenChange={setIsReportCommentModalOpen}
+      />
+
+      <ReportUserModal
+        userId={21}
+        isOpen={isReportUserModalOpen}
+        onOpenChange={setIsReportUserModalOpen}
       />
     </>
   )

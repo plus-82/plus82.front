@@ -11,6 +11,7 @@ type Props = ComponentProps<typeof Dropdown> & {
   openEditDialog: () => void
   openDeleteDialog: () => void
   openReportPostModal: () => void
+  openReportUserModal: () => void
 }
 
 export const FeedMenu = ({
@@ -19,6 +20,7 @@ export const FeedMenu = ({
   openEditDialog,
   openDeleteDialog,
   openReportPostModal,
+  openReportUserModal,
   className,
   ...props
 }: Props) => {
@@ -34,6 +36,11 @@ export const FeedMenu = ({
 
   const handleReportPostButtonClick = () => {
     openReportPostModal()
+    onClick()
+  }
+
+  const handleReportUserButtonClick = () => {
+    openReportUserModal()
     onClick()
   }
 
@@ -53,6 +60,7 @@ export const FeedMenu = ({
           <button
             type="button"
             className="body-large w-full px-3 py-3.5 text-left font-medium text-error"
+            onClick={handleReportUserButtonClick}
           >
             Report User
           </button>
