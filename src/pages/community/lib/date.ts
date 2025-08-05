@@ -9,7 +9,7 @@ export const formatDateFromNow = (date: Date | string): string => {
   // 24시간 이내
   if (diffMinutes < 1) return '1 minutes ago'
   if (diffMinutes < 60) return `${diffMinutes} minitues ago`
-  if (diffHours < 24) return `${String(diffHours).padStart(2, '0')} hours ago`
+  if (diffHours < 24) return `${diffHours} hours ago`
 
   // 24시간 이후
   if (diffDays <= 6) return `${diffDays} days ago`
