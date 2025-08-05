@@ -10,6 +10,7 @@ type Props = ComponentProps<typeof Dropdown> & {
   onClick: () => void
   openEditForm: () => void
   openDeleteDialog: () => void
+  openReportCommentModal: () => void
 }
 
 export const CommentMenu = ({
@@ -17,6 +18,7 @@ export const CommentMenu = ({
   onClick,
   openEditForm,
   openDeleteDialog,
+  openReportCommentModal,
   className,
   ...props
 }: Props) => {
@@ -30,6 +32,11 @@ export const CommentMenu = ({
     onClick()
   }
 
+  const handleReportCommentButtonClick = () => {
+    openReportCommentModal()
+    onClick()
+  }
+
   if (!isUserMe) {
     return (
       <Dropdown {...props} className={cn('w-[144px]', className)}>
@@ -37,6 +44,7 @@ export const CommentMenu = ({
           <button
             type="button"
             className="body-large w-full px-3 py-3.5 text-left font-medium text-error"
+            onClick={handleReportCommentButtonClick}
           >
             Report Comment
           </button>

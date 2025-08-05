@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { isNil } from 'lodash-es'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Comment, feedQueries, updateComment } from 'entities/feed'
 import { isServerError, useServerErrorHandler } from 'shared/api'
@@ -12,6 +12,7 @@ import { formatDateFromNow } from '../../lib/date'
 import { OpenMenuButton } from '../comment-menu/open-menu-button'
 import { DeleteCommentModal } from '../delete-comment-modal'
 import { CommentForm } from './comment-form'
+import { ReportCommentModal } from '../report-comment-modal'
 
 type Props = Comment & {
   feedId: number
@@ -32,6 +33,8 @@ export const CommentItem = ({
 
   const [isEditMode, setIsEditMode] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isReportCommentModalOpen, setIsReportCommentModalOpen] =
+    useState(false)
 
   const { handleServerError } = useServerErrorHandler()
 
@@ -41,6 +44,10 @@ export const CommentItem = ({
 
   const openDeleteDialog = () => {
     setIsDeleteDialogOpen(true)
+  }
+
+  const openReportCommentModal = () => {
+    setIsReportCommentModalOpen(true)
   }
 
   const handleCommentUpdateCancel = () => {
@@ -102,9 +109,10 @@ export const CommentItem = ({
           </div>
           <OpenMenuButton
             isPublic={isPublic}
-            creatorId={5}
+            creatorId={21}
             openEditForm={openEditForm}
             openDeleteDialog={openDeleteDialog}
+            openReportCommentModal={openReportCommentModal}
           />
         </div>
         {isEditMode ? (
@@ -124,6 +132,12 @@ export const CommentItem = ({
         commentId={id}
         isOpen={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
+      />
+
+      <ReportCommentModal
+        commentId={id}
+        isOpen={isReportCommentModalOpen}
+        onOpenChange={setIsReportCommentModalOpen}
       />
     </>
   )

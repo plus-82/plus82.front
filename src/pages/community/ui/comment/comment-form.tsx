@@ -30,6 +30,7 @@ export const CommentForm = ({ defaultValue, onCancel, onSubmit }: Props) => {
   }
 
   const handleSubmit = () => {
+    setValue('')
     onSubmit(value)
   }
 
