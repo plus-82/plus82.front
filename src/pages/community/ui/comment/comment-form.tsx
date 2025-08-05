@@ -1,5 +1,6 @@
 'use client'
 
+import { isString } from 'lodash-es'
 import { ChangeEvent, useState } from 'react'
 
 import { Button, TextArea } from 'shared/ui'
@@ -7,19 +8,29 @@ import { Button, TextArea } from 'shared/ui'
 export const MAX_LENGTH = 200
 
 type Props = {
+  defaultValue?: string
+  onCancel?: () => void
   onSubmit: (comment: string) => void
 }
 
-export const CommentForm = ({ onSubmit }: Props) => {
-  const [value, setValue] = useState('')
+export const CommentForm = ({ defaultValue, onCancel, onSubmit }: Props) => {
+  const [value, setValue] = useState(defaultValue ?? '')
+
+  const isEditMode = isString(defaultValue)
+
+  const isDisabled = value.length === 0
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(event.target.value)
   }
 
+  const handleCancel = () => {
+    setValue('')
+    onCancel?.()
+  }
+
   const handleSubmit = () => {
     onSubmit(value)
-    setValue('')
   }
 
   return (
@@ -36,11 +47,22 @@ export const CommentForm = ({ onSubmit }: Props) => {
         <span className="body-small text-gray-500">
           {value.length}/{MAX_LENGTH}
         </span>
+        {isEditMode && (
+          <Button
+            variant="lined"
+            className="w-[62px]"
+            size="small"
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+        )}
         <Button
           variant="primary"
           size="small"
-          className="w-[62px]"
+          className="w-[62px] [&:disabled]:bg-blue-100"
           onClick={handleSubmit}
+          disabled={isDisabled}
         >
           Post
         </Button>

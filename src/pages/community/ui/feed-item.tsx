@@ -12,7 +12,7 @@ import { AnimatedCount } from './animated-count'
 import { Comment } from './comment'
 import { DeleteFeedModal } from './delete-feed-modal'
 import { ExpandableText } from './expandable-text'
-import { OpenMenuButton } from './menu/open-menu-button'
+import { OpenMenuButton } from './feed-menu/open-menu-button'
 import { formatDateFromNow } from '../lib/date'
 
 type Props = Feed & {

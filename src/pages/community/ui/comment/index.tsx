@@ -25,6 +25,9 @@ export const Comment = ({ feedId, commentCount }: Props) => {
     queryClient.invalidateQueries({
       queryKey: feedQueries.item(feedId).queryKey,
     })
+    queryClient.invalidateQueries({
+      queryKey: feedQueries.lists(),
+    })
   }
 
   const addComment = async (comment: string) => {
@@ -45,7 +48,7 @@ export const Comment = ({ feedId, commentCount }: Props) => {
           <Spinner size="medium" />
         </div>
       ) : (
-        comments && <CommentList comments={comments} />
+        comments && <CommentList feedId={feedId} comments={comments} />
       )}
     </div>
   )
