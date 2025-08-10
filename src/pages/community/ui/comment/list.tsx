@@ -5,9 +5,10 @@ import { CommentItem } from './item'
 export type Props = {
   feedId: number
   comments: Comment[]
+  isPublic: boolean
 }
 
-export const CommentList = ({ feedId, comments }: Props) => {
+export const CommentList = ({ feedId, comments, isPublic }: Props) => {
   if (comments.length === 0) {
     return null
   }
@@ -20,7 +21,7 @@ export const CommentList = ({ feedId, comments }: Props) => {
             key={comment.id}
             feedId={feedId}
             {...comment}
-            isPublic={false}
+            isPublic={isPublic}
           />
         </li>
       ))}

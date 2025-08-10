@@ -10,9 +10,10 @@ import { CommentList } from './list'
 type Props = {
   feedId: number
   commentCount: number
+  isPublic: boolean
 }
 
-export const Comment = ({ feedId, commentCount }: Props) => {
+export const Comment = ({ feedId, commentCount, isPublic }: Props) => {
   const queryClient = useQueryClient()
   const { handleServerError } = useServerErrorHandler()
 
@@ -42,13 +43,25 @@ export const Comment = ({ feedId, commentCount }: Props) => {
 
   return (
     <div className="mt-5">
-      <CommentForm onSubmit={addComment} />
+      {isPublic ? (
+        <p className="body-large rounded-lg bg-gray-100 p-3 font-medium text-gray-500">
+          Sign in and join the comments
+        </p>
+      ) : (
+        <CommentForm onSubmit={addComment} />
+      )}
       {isLoading && commentCount > 0 ? (
         <div className="relative mt-10 flex justify-center">
           <Spinner size="medium" />
         </div>
       ) : (
-        comments && <CommentList feedId={feedId} comments={comments} />
+        comments && (
+          <CommentList
+            feedId={feedId}
+            comments={comments}
+            isPublic={isPublic}
+          />
+        )
       )}
     </div>
   )

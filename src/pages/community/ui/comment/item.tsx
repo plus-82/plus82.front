@@ -146,6 +146,7 @@ export const CommentItem = ({
           count={likeCount}
           commentId={id}
           feedId={feedId}
+          isPublic={isPublic}
         />
       </div>
 

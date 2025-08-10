@@ -76,6 +76,7 @@ export const OpenMenuButton = ({
           style={styles.popper}
           {...attributes.popper}
           isUserMe={isUserMe}
+          isPublic={isPublic}
           onClick={handleDropdownItemClick}
           openEditForm={openEditForm}
           openDeleteDialog={openDeleteDialog}

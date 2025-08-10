@@ -135,7 +135,7 @@ export const FeedItem = ({
 
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
-            <LikeButton feedId={id} isLiked={isLiked} />
+            <LikeButton feedId={id} isLiked={isLiked} isPublic={isPublic} />
             <button
               className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-gray-100"
               onClick={toggleComment}
@@ -170,7 +170,13 @@ export const FeedItem = ({
             </button>
           </div>
         </div>
-        {isCommentOpen && <Comment feedId={id} commentCount={commentCount} />}
+        {isCommentOpen && (
+          <Comment
+            feedId={id}
+            commentCount={commentCount}
+            isPublic={isPublic}
+          />
+        )}
       </div>
 
       <FeedFormDialog

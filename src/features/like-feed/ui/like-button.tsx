@@ -3,6 +3,7 @@
 import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import { ComponentProps, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { Feed, feedQueries, likeFeed, unlikeFeed } from 'entities/feed'
 import { isServerError, Pagination, useServerErrorHandler } from 'shared/api'
@@ -12,11 +13,16 @@ import { Icon } from 'shared/ui'
 type Props = {
   feedId: number
   isLiked: boolean
+  isPublic: boolean
 }
 
 const FILLED_HEART_COLOR = '#F44336'
 
-export const LikeButton = ({ feedId, isLiked: isLikedProp = false }: Props) => {
+export const LikeButton = ({
+  feedId,
+  isLiked: isLikedProp = false,
+  isPublic,
+}: Props) => {
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
   const keyword = searchParams?.get('keyword')
@@ -61,6 +67,12 @@ export const LikeButton = ({ feedId, isLiked: isLikedProp = false }: Props) => {
   }
 
   const handleClick = async () => {
+    if (isPublic) {
+      toast.error('You have to sign in')
+
+      return
+    }
+
     const prevLiked = isLiked
     setIsLiked(!isLiked)
 

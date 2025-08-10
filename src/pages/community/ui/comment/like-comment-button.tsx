@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { ComponentProps, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { feedQueries, likeComment, unlikeComment } from 'entities/feed'
 import { isServerError, useServerErrorHandler } from 'shared/api'
@@ -11,6 +12,7 @@ type Props = {
   count: number
   commentId: number
   feedId: number
+  isPublic: boolean
 }
 
 const FILLED_HEART_COLOR = '#F44336'
@@ -20,6 +22,7 @@ export const LikeCommentButton = ({
   count,
   commentId,
   feedId,
+  isPublic,
 }: Props) => {
   const queryClient = useQueryClient()
 
@@ -34,6 +37,12 @@ export const LikeCommentButton = ({
   }
 
   const handleClick = async () => {
+    if (isPublic) {
+      toast.error('You have to sign in')
+
+      return
+    }
+
     const prevLiked = isLiked
     setIsLiked(!isLiked)
 

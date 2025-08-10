@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react'
+import { toast } from 'react-toastify'
 
 import { cn } from 'shared/lib'
 import { Dropdown } from 'shared/ui'
@@ -7,6 +8,7 @@ import { EditButton } from './edit-button'
 
 type Props = ComponentProps<typeof Dropdown> & {
   isUserMe: boolean
+  isPublic: boolean
   onClick: () => void
   openEditForm: () => void
   openDeleteDialog: () => void
@@ -16,6 +18,7 @@ type Props = ComponentProps<typeof Dropdown> & {
 
 export const CommentMenu = ({
   isUserMe,
+  isPublic,
   onClick,
   openEditForm,
   openDeleteDialog,
@@ -24,22 +27,46 @@ export const CommentMenu = ({
   className,
   ...props
 }: Props) => {
+  const checkPublicUser = () => {
+    if (isPublic) {
+      toast.error('You have to sign in')
+    }
+
+    return isPublic
+  }
+
   const handleEditButtonClick = () => {
+    if (checkPublicUser()) {
+      return
+    }
+
     openEditForm()
     onClick()
   }
 
   const handleDeleteButtonClick = () => {
+    if (checkPublicUser()) {
+      return
+    }
+
     openDeleteDialog()
     onClick()
   }
 
   const handleReportCommentButtonClick = () => {
+    if (checkPublicUser()) {
+      return
+    }
+
     openReportCommentModal()
     onClick()
   }
 
   const handleReportUserButtonClick = () => {
+    if (checkPublicUser()) {
+      return
+    }
+
     openReportUserModal()
     onClick()
   }
