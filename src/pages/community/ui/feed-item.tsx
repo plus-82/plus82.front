@@ -1,9 +1,11 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { Feed } from 'entities/feed'
+import { userQueries } from 'entities/user'
 import { FeedFormDialog } from 'features/feed-form'
 import { LikeButton, LikedPeopleButton } from 'features/like-feed'
 import { colors } from 'shared/config'
@@ -26,6 +28,7 @@ export const FeedItem = ({
   id,
   content,
   createdAt,
+  creatorId,
   creatorName,
   creatorProfileImagePath,
   imagePath,
@@ -40,6 +43,13 @@ export const FeedItem = ({
   const [isReportUserModalOpen, setIsReportUserModalOpen] = useState(false)
 
   const [isCommentOpen, setIsCommentOpen] = useState(false)
+
+  const { data: userMe } = useQuery({
+    ...userQueries.teacherMe(),
+    enabled: !isPublic,
+  })
+
+  const isMyPost = userMe?.id === creatorId
 
   const openEditDialog = () => {
     setIsEditDialogOpen(true)
@@ -92,7 +102,7 @@ export const FeedItem = ({
           />
           <div className="grow">
             <p className="title-small font-medium text-gray-900">
-              {creatorName}
+              {creatorName} {isMyPost && '(Me)'}
             </p>
             <p className="body-large font-normal text-gray-500">
               {formatDateFromNow(createdAt)}
@@ -100,7 +110,7 @@ export const FeedItem = ({
           </div>
           <OpenMenuButton
             isPublic={isPublic}
-            creatorId={21}
+            creatorId={creatorId}
             openEditDialog={openEditDialog}
             openDeleteDialog={openDeleteDialog}
             openReportPostModal={openReportPostModal}

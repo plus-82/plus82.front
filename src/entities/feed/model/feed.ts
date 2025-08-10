@@ -6,12 +6,14 @@ export type Comment = {
   userId: number
   userName: string
   isLiked: boolean
+  profileImagePath: string | null
 }
 
 export type Feed = {
   id: number
   content: string
   createdAt: string
+  creatorId: number
   creatorName: string
   creatorProfileImagePath: string | null
   imagePath: string | null
@@ -21,9 +23,13 @@ export type Feed = {
   isCommented: boolean
 }
 
-export type FeedDetail = Feed & {
+export type FeedDetail = Omit<Feed, 'creatorId' | 'imagePath'> & {
   feedVisibility: 'PUBLIC' | 'PRIVATE'
   comments: Comment[]
+  image: {
+    id: number
+    path: string
+  } | null
 }
 
 export type FeedLike = {

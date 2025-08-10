@@ -5,19 +5,19 @@ import { apiClient } from 'shared/api'
 
 import { FeedDetail } from '../model/feed'
 
-export type GetFeedsRequest = {
+export type GetFeedRequest = {
   feedId: number
 }
 
-type GetFeedsResponse = FeedDetail
+type GetFeedResponse = FeedDetail
 
-export const getFeed = async ({ feedId }: GetFeedsRequest) => {
+export const getFeed = async ({ feedId }: GetFeedRequest) => {
   const session = await getNullableTeacherSession()
 
   const hasSession = !!session
   const endpoint = hasSession ? `/feeds/${feedId}` : `/feeds/public/${feedId}`
 
-  const response = await apiClient.get<GetFeedsResponse>({
+  const response = await apiClient.get<GetFeedResponse>({
     endpoint,
     ...(hasSession
       ? { option: { authorization: `Bearer ${session.accessToken}` } }

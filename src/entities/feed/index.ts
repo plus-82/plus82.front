@@ -1,4 +1,4 @@
-export type { Feed, Comment } from './model/feed'
+export type { Feed, Comment, FeedDetail } from './model/feed'
 export { feedQueries } from './api/query'
 export { likeFeed } from './api/like-feed'
 export { unlikeFeed } from './api/unlike-feed'

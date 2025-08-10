@@ -1,8 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { isNil } from 'lodash-es'
 import { useState } from 'react'
 
 import { Comment, feedQueries, updateComment } from 'entities/feed'
+import { userQueries } from 'entities/user'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { colors } from 'shared/config'
 import { Icon, Image } from 'shared/ui'
@@ -26,7 +27,9 @@ export const CommentItem = ({
   comment,
   isLiked,
   likeCount,
+  userId,
   userName,
+  profileImagePath,
   createdAt,
   isPublic,
 }: Props) => {
@@ -39,6 +42,13 @@ export const CommentItem = ({
   const [isReportUserModalOpen, setIsReportUserModalOpen] = useState(false)
 
   const { handleServerError } = useServerErrorHandler()
+
+  const { data: userMe } = useQuery({
+    ...userQueries.teacherMe(),
+    enabled: !isPublic,
+  })
+
+  const isMyComment = userMe?.id === userId
 
   const openEditForm = () => {
     setIsEditMode(true)
@@ -89,7 +99,7 @@ export const CommentItem = ({
   return (
     <>
       <Image
-        src=""
+        src={profileImagePath ?? ''}
         alt={`${userName} profile image`}
         className="h-[38px] w-[38px] rounded-full"
         fallback={
@@ -107,7 +117,7 @@ export const CommentItem = ({
         <div className="flex flex-grow justify-between">
           <div className="flex flex-col">
             <strong className="body-large font-medium text-gray-900">
-              {userName}
+              {userName} {isMyComment && '(Me)'}
             </strong>
             <span className="body-medium font-normal text-gray-500">
               {formatDateFromNow(createdAt)}
@@ -115,7 +125,7 @@ export const CommentItem = ({
           </div>
           <OpenMenuButton
             isPublic={isPublic}
-            creatorId={21}
+            creatorId={userId}
             openEditForm={openEditForm}
             openDeleteDialog={openDeleteDialog}
             openReportCommentModal={openReportCommentModal}

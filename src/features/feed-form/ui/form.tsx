@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'react-hook-form'
 
 import { feedQueries } from 'entities/feed'
 import { fieldCss, Form } from 'shared/form'
-import { Button, Label, Modal } from 'shared/ui'
+import { Button, Label, Modal, Spinner } from 'shared/ui'
 
 import { EditButton } from './edit-button'
 import { ImageUploader } from './image-uploader'
@@ -22,7 +22,7 @@ type Props = {
 export const FeedForm = ({ feedId, onSuccess }: Props) => {
   const isEditMode = isNumber(feedId)
 
-  const { data: feed } = useQuery({
+  const { data: feed, isLoading } = useQuery({
     ...feedQueries.item(feedId!),
     enabled: isEditMode,
     select: data => convertFeedToFormValues(data),
@@ -49,13 +49,20 @@ export const FeedForm = ({ feedId, onSuccess }: Props) => {
     setValue('image', { imageId: null, image: null, url: null })
   }
 
+  if (isLoading)
+    return (
+      <div className="relative h-full">
+        <Spinner />
+      </div>
+    )
+
   return (
     <Form {...form} className="flex flex-grow flex-col">
       <Form.Control name="content">
         <Form.TextArea
           placeholder="Please enter the content you want to share"
           fullWidth
-          className="h-[248px] border-none p-0 text-[16px] font-normal leading-7"
+          className="mb-6 h-[248px] border-none p-0 text-[16px] font-normal leading-7"
           maxLength={3000}
         />
       </Form.Control>

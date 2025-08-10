@@ -1,4 +1,4 @@
-import { Feed } from 'entities/feed'
+import { FeedDetail } from 'entities/feed'
 
 import { FormValues } from './form-values'
 
@@ -10,13 +10,13 @@ export const convertFormValuesToAddFeedValues = (data: FormValues) => {
   }
 }
 
-export const convertFeedToFormValues = (data: Feed) => {
+export const convertFeedToFormValues = (data: FeedDetail) => {
   return {
     content: data.content,
     image: {
-      imageId: data.imagePath ? 1 : null, // TODO: 이미지 ID 수정 필요
+      imageId: data.image?.id ?? null,
       image: null,
-      url: data.imagePath,
+      url: data.image?.path ?? null,
     },
     feedVisibility: data.feedVisibility,
   }
