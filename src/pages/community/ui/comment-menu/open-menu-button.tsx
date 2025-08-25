@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 import { useState, MouseEvent } from 'react'
 import { usePopper } from 'react-popper'
 
@@ -28,8 +29,11 @@ export const OpenMenuButton = ({
   openReportCommentModal,
   openReportUserModal,
 }: Props) => {
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const { data: userMe } = useQuery({
-    ...userQueries.teacherMe(),
+    ...(isBusiness ? userQueries.businessMe() : userQueries.teacherMe()),
     enabled: !isPublic,
   })
 

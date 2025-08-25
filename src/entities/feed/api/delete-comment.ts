@@ -1,6 +1,6 @@
 'use server'
 
-import { getTeacherSession } from 'entities/auth'
+import { getBusinessSession, getTeacherSession } from 'entities/auth'
 import { apiClient, errorHandler, HttpError } from 'shared/api'
 
 const handleError = (error: Error) => {
@@ -22,6 +22,24 @@ export const deleteComment = async (feedId: number, commentId: number) => {
         authorization: `Bearer ${accessToken}`,
       },
       body: null,
+    })
+  } catch (error) {
+    return handleError(error as Error)
+  }
+}
+
+export const deleteBusinessComment = async (
+  feedId: number,
+  commentId: number,
+) => {
+  const { accessToken } = await getBusinessSession()
+
+  try {
+    await apiClient.delete<null, null>({
+      endpoint: `/feeds/${feedId}/comments/${commentId}`,
+      option: {
+        authorization: `Bearer ${accessToken}`,
+      },
     })
   } catch (error) {
     return handleError(error as Error)

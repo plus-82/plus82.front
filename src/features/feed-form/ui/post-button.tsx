@@ -1,8 +1,9 @@
-import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { usePathname, useRouter } from 'next/navigation'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
-import { addFeed } from 'entities/feed'
+import { addBusinessFeed, addFeed, feedQueries } from 'entities/feed'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Button } from 'shared/ui'
 
@@ -14,7 +15,11 @@ type Props = {
 }
 
 export const PostButton = ({ onSuccess }: Props) => {
+  const queryClient = useQueryClient()
   const router = useRouter()
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const { control, handleSubmit } = useFormContext<FormValues>()
 
   const { handleServerError } = useServerErrorHandler()
@@ -29,12 +34,17 @@ export const PostButton = ({ onSuccess }: Props) => {
   const handleSuccess = () => {
     onSuccess()
     toast.success('Post added successfully')
+    queryClient.invalidateQueries({
+      queryKey: isBusiness ? feedQueries.businessLists() : feedQueries.lists(),
+    })
     router.refresh()
   }
 
   const submitForm = async (data: FormValues) => {
     const convertedValues = convertFormValuesToAddFeedValues(data)
-    const response = await addFeed(convertedValues)
+    const response = await (isBusiness
+      ? addBusinessFeed(convertedValues)
+      : addFeed(convertedValues))
 
     if (isServerError(response)) {
       handleServerError(response)

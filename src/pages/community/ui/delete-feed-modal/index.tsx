@@ -1,7 +1,8 @@
-import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { usePathname, useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 
-import { deleteFeed } from 'entities/feed'
+import { deleteBusinessFeed, deleteFeed, feedQueries } from 'entities/feed'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Button, Modal } from 'shared/ui'
 
@@ -12,17 +13,26 @@ type Props = {
 }
 
 export const DeleteFeedModal = ({ isOpen, onOpenChange, feedId }: Props) => {
+  const queryClient = useQueryClient()
   const router = useRouter()
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const { handleServerError } = useServerErrorHandler()
 
   const handleSuccess = () => {
     onOpenChange(false)
     toast.success('Post deleted successfully')
+    queryClient.invalidateQueries({
+      queryKey: isBusiness ? feedQueries.businessLists() : feedQueries.lists(),
+    })
     router.refresh()
   }
 
   const handleDeleteButtonClick = async () => {
-    const response = await deleteFeed(feedId)
+    const response = await (isBusiness
+      ? deleteBusinessFeed(feedId)
+      : deleteFeed(feedId))
 
     if (isServerError(response)) {
       handleServerError(response)

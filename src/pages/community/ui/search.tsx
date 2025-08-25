@@ -1,7 +1,7 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { ChangeEvent, KeyboardEvent, useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 
 import { colors } from 'shared/config'
 import { Slot } from 'shared/lib'
@@ -9,7 +9,12 @@ import { Icon, TextField } from 'shared/ui'
 
 export const Search = () => {
   const router = useRouter()
-  const [search, setSearch] = useState('')
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+  const searchParams = useSearchParams()
+  const searchParam = searchParams?.get('search') ?? ''
+
+  const [search, setSearch] = useState(searchParam)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value)
@@ -18,9 +23,15 @@ export const Search = () => {
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const params = search ? `?search=${search}` : ''
-      router.push(`/community${params}`)
+      router.push(
+        isBusiness ? `/business/community${params}` : `/community${params}`,
+      )
     }
   }
+
+  useEffect(() => {
+    setSearch(searchParam)
+  }, [searchParam])
 
   return (
     <TextField

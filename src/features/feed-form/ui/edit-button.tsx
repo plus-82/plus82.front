@@ -1,9 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
-import { feedQueries, updateFeed } from 'entities/feed'
+import { feedQueries, updateBusinessFeed, updateFeed } from 'entities/feed'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Button } from 'shared/ui'
 
@@ -17,6 +17,8 @@ type Props = {
 
 export const EditButton = ({ feedId, onSuccess }: Props) => {
   const queryClient = useQueryClient()
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
 
   const router = useRouter()
   const { control, handleSubmit } = useFormContext<FormValues>()
@@ -34,7 +36,12 @@ export const EditButton = ({ feedId, onSuccess }: Props) => {
     onSuccess()
     toast.success('Post updated successfully')
     queryClient.invalidateQueries({
-      queryKey: feedQueries.item(feedId!).queryKey,
+      queryKey: isBusiness ? feedQueries.businessLists() : feedQueries.lists(),
+    })
+    queryClient.invalidateQueries({
+      queryKey: isBusiness
+        ? feedQueries.businessItem(feedId!).queryKey
+        : feedQueries.item(feedId!).queryKey,
     })
     router.refresh()
   }
@@ -43,10 +50,15 @@ export const EditButton = ({ feedId, onSuccess }: Props) => {
     if (!feedId) return
 
     const convertedValues = convertFormValuesToUpdateFeedValues(data)
-    const response = await updateFeed({
-      feedId,
-      ...convertedValues,
-    })
+    const response = isBusiness
+      ? await updateBusinessFeed({
+          feedId,
+          ...convertedValues,
+        })
+      : await updateFeed({
+          feedId,
+          ...convertedValues,
+        })
 
     if (isServerError(response)) {
       handleServerError(response)

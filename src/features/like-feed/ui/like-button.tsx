@@ -1,11 +1,18 @@
 'use client'
 
 import { InfiniteData, useQueryClient } from '@tanstack/react-query'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { ComponentProps, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { Feed, feedQueries, likeFeed, unlikeFeed } from 'entities/feed'
+import {
+  Feed,
+  feedQueries,
+  likeBusinessFeed,
+  likeFeed,
+  unlikeBusinessFeed,
+  unlikeFeed,
+} from 'entities/feed'
 import { isServerError, Pagination, useServerErrorHandler } from 'shared/api'
 import { colors } from 'shared/config'
 import { Icon } from 'shared/ui'
@@ -23,6 +30,9 @@ export const LikeButton = ({
   isLiked: isLikedProp = false,
   isPublic,
 }: Props) => {
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
   const keyword = searchParams?.get('keyword')
@@ -33,7 +43,9 @@ export const LikeButton = ({
 
   const handleSuccess = () => {
     queryClient.setQueryData(
-      feedQueries.list({ keyword: keyword ?? '' }).queryKey,
+      isBusiness
+        ? feedQueries.businessList({ keyword: keyword ?? '' }).queryKey
+        : feedQueries.list({ keyword: keyword ?? '' }).queryKey,
       (old: InfiniteData<Pagination<Feed>> | undefined) => {
         if (!old) return old
 
@@ -79,9 +91,13 @@ export const LikeButton = ({
     let response
 
     if (isLiked) {
-      response = await unlikeFeed(feedId)
+      response = await (isBusiness
+        ? unlikeBusinessFeed(feedId)
+        : unlikeFeed(feedId))
     } else {
-      response = await likeFeed(feedId)
+      response = await (isBusiness
+        ? likeBusinessFeed(feedId)
+        : likeFeed(feedId))
     }
 
     if (isServerError(response)) {

@@ -1,7 +1,12 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 import { toast } from 'react-toastify'
 
-import { deleteComment, feedQueries } from 'entities/feed'
+import {
+  deleteBusinessComment,
+  deleteComment,
+  feedQueries,
+} from 'entities/feed'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Button, Modal } from 'shared/ui'
 
@@ -18,6 +23,9 @@ export const DeleteCommentModal = ({
   feedId,
   commentId,
 }: Props) => {
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const queryClient = useQueryClient()
   const { handleServerError } = useServerErrorHandler()
 
@@ -25,15 +33,19 @@ export const DeleteCommentModal = ({
     onOpenChange(false)
     toast.success('Comment deleted successfully')
     queryClient.invalidateQueries({
-      queryKey: feedQueries.item(feedId).queryKey,
+      queryKey: isBusiness
+        ? feedQueries.businessItem(feedId).queryKey
+        : feedQueries.item(feedId).queryKey,
     })
     queryClient.invalidateQueries({
-      queryKey: feedQueries.lists(),
+      queryKey: isBusiness ? feedQueries.businessLists() : feedQueries.lists(),
     })
   }
 
   const handleDeleteButtonClick = async () => {
-    const response = await deleteComment(feedId, commentId)
+    const response = await (isBusiness
+      ? deleteBusinessComment(feedId, commentId)
+      : deleteComment(feedId, commentId))
 
     if (isServerError(response)) {
       handleServerError(response)

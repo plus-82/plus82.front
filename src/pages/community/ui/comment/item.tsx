@@ -1,8 +1,14 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { isNil } from 'lodash-es'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
-import { Comment, feedQueries, updateComment } from 'entities/feed'
+import {
+  Comment,
+  feedQueries,
+  updateBusinessComment,
+  updateComment,
+} from 'entities/feed'
 import { userQueries } from 'entities/user'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { colors } from 'shared/config'
@@ -34,6 +40,8 @@ export const CommentItem = ({
   isPublic,
 }: Props) => {
   const queryClient = useQueryClient()
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
 
   const [isEditMode, setIsEditMode] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -44,7 +52,7 @@ export const CommentItem = ({
   const { handleServerError } = useServerErrorHandler()
 
   const { data: userMe } = useQuery({
-    ...userQueries.teacherMe(),
+    ...(isBusiness ? userQueries.businessMe() : userQueries.teacherMe()),
     enabled: !isPublic,
   })
 
@@ -73,21 +81,29 @@ export const CommentItem = ({
   const handleSuccess = () => {
     setIsEditMode(false)
     queryClient.invalidateQueries({
-      queryKey: feedQueries.item(feedId!).queryKey,
+      queryKey: isBusiness
+        ? feedQueries.businessItem(feedId!).queryKey
+        : feedQueries.item(feedId!).queryKey,
     })
     queryClient.invalidateQueries({
-      queryKey: feedQueries.lists(),
+      queryKey: isBusiness ? feedQueries.businessLists() : feedQueries.lists(),
     })
   }
 
   const submitForm = async (comment: string) => {
     if (isNil(feedId) || isNil(id)) return
 
-    const response = await updateComment({
-      feedId,
-      commentId: id,
-      comment,
-    })
+    const response = await (isBusiness
+      ? updateBusinessComment({
+          feedId,
+          commentId: id,
+          comment,
+        })
+      : updateComment({
+          feedId,
+          commentId: id,
+          comment,
+        }))
 
     if (isServerError(response)) {
       handleServerError(response)

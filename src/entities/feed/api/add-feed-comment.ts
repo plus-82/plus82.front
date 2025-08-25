@@ -1,6 +1,6 @@
 'use server'
 
-import { getTeacherSession } from 'entities/auth'
+import { getBusinessSession, getTeacherSession } from 'entities/auth'
 import { apiClient, errorHandler, HttpError } from 'shared/api'
 
 type AddFeedCommentRequest = {
@@ -22,6 +22,27 @@ export const addFeedComment = async ({
   comment,
 }: AddFeedCommentRequest) => {
   const { accessToken } = await getTeacherSession()
+
+  try {
+    await apiClient.post<null, Omit<AddFeedCommentRequest, 'feedId'>>({
+      endpoint: `/feeds/${feedId}/comments`,
+      option: {
+        authorization: `Bearer ${accessToken}`,
+      },
+      body: {
+        comment,
+      },
+    })
+  } catch (error) {
+    return handleError(error as Error)
+  }
+}
+
+export const addBusinessFeedComment = async ({
+  feedId,
+  comment,
+}: AddFeedCommentRequest) => {
+  const { accessToken } = await getBusinessSession()
 
   try {
     await apiClient.post<null, Omit<AddFeedCommentRequest, 'feedId'>>({

@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 
 import { userQueries } from 'entities/user'
 import { colors } from 'shared/config'
@@ -21,10 +22,17 @@ export const FeedFormDialog = ({
   onOpenChange,
   isPublic,
 }: Props) => {
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const { data: userMe } = useQuery({
-    ...userQueries.teacherMe(),
+    ...(isBusiness ? userQueries.businessMe() : userQueries.teacherMe()),
     enabled: !isPublic,
   })
+
+  const userName = isBusiness
+    ? `${userMe?.fullName}`
+    : `${userMe?.firstName} ${userMe?.lastName}`
 
   const handleSuccess = () => {
     onOpenChange(false)
@@ -37,7 +45,7 @@ export const FeedFormDialog = ({
         <div className="mb-4 flex items-start gap-3">
           <Image
             src={userMe?.profileImagePath ?? ''}
-            alt={`${userMe?.firstName} ${userMe?.lastName} profile image`}
+            alt={`${userName} profile image`}
             className="h-14 w-14 rounded-full"
             fallback={
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-300">
@@ -50,9 +58,7 @@ export const FeedFormDialog = ({
               </div>
             }
           />
-          <p className="title-small font-medium text-gray-900">
-            {userMe?.firstName} {userMe?.lastName}
-          </p>
+          <p className="title-small font-medium text-gray-900">{userName}</p>
         </div>
         <FeedForm feedId={feedId} onSuccess={handleSuccess} />
       </Modal.Content>

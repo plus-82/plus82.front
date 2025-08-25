@@ -1,6 +1,6 @@
 'use server'
 
-import { getTeacherSession } from 'entities/auth'
+import { getBusinessSession, getTeacherSession } from 'entities/auth'
 import { apiClient, errorHandler, HttpError } from 'shared/api'
 
 type ReportCommentRequest = {
@@ -23,6 +23,25 @@ export const reportComment = async ({
   ...body
 }: ReportCommentRequest) => {
   const { accessToken } = await getTeacherSession()
+
+  try {
+    await apiClient.post<null, Omit<ReportCommentRequest, 'commentId'>>({
+      endpoint: `/reports/comments/${commentId}`,
+      option: {
+        authorization: `Bearer ${accessToken}`,
+      },
+      body,
+    })
+  } catch (error) {
+    return handleError(error as Error)
+  }
+}
+
+export const reportBusinessComment = async ({
+  commentId,
+  ...body
+}: ReportCommentRequest) => {
+  const { accessToken } = await getBusinessSession()
 
   try {
     await apiClient.post<null, Omit<ReportCommentRequest, 'commentId'>>({

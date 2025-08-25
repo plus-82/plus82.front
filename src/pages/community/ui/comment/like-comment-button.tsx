@@ -1,8 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 import { ComponentProps, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { feedQueries, likeComment, unlikeComment } from 'entities/feed'
+import {
+  feedQueries,
+  likeBusinessComment,
+  likeComment,
+  unlikeBusinessComment,
+  unlikeComment,
+} from 'entities/feed'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { colors } from 'shared/config'
 import { AnimatedCount, Icon } from 'shared/ui'
@@ -25,6 +32,8 @@ export const LikeCommentButton = ({
   isPublic,
 }: Props) => {
   const queryClient = useQueryClient()
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
 
   const [isLiked, setIsLiked] = useState(isLikedProp)
 
@@ -32,7 +41,9 @@ export const LikeCommentButton = ({
 
   const handleSuccess = () => {
     queryClient.invalidateQueries({
-      queryKey: feedQueries.item(feedId).queryKey,
+      queryKey: isBusiness
+        ? feedQueries.businessItem(feedId).queryKey
+        : feedQueries.item(feedId).queryKey,
     })
   }
 
@@ -49,9 +60,13 @@ export const LikeCommentButton = ({
     let response
 
     if (isLiked) {
-      response = await unlikeComment({ commentId, feedId })
+      response = await (isBusiness
+        ? unlikeBusinessComment({ commentId, feedId })
+        : unlikeComment({ commentId, feedId }))
     } else {
-      response = await likeComment({ commentId, feedId })
+      response = await (isBusiness
+        ? likeBusinessComment({ commentId, feedId })
+        : likeComment({ commentId, feedId }))
     }
 
     if (isServerError(response)) {

@@ -1,9 +1,9 @@
 import { isEmpty, isNil } from 'lodash-es'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
-import { reportUser } from 'entities/report'
+import { reportBusinessUser, reportUser } from 'entities/report'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { isNilOrEmptyString } from 'shared/lib'
 import { Button } from 'shared/ui'
@@ -16,6 +16,9 @@ type Props = {
 export const ReportButton = ({ userId, onSuccess }: Props) => {
   const router = useRouter()
   const { handleServerError } = useServerErrorHandler()
+
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
 
   const { control } = useFormContext()
 
@@ -36,11 +39,17 @@ export const ReportButton = ({ userId, onSuccess }: Props) => {
   }
 
   const handleReportButtonClick = async () => {
-    const response = await reportUser({
-      userId,
-      reason: reason[0],
-      otherReason: otherReason ?? '',
-    })
+    const response = await (isBusiness
+      ? reportBusinessUser({
+          userId,
+          reason: reason[0],
+          otherReason: otherReason ?? '',
+        })
+      : reportUser({
+          userId,
+          reason: reason[0],
+          otherReason: otherReason ?? '',
+        }))
 
     if (isServerError(response)) {
       handleServerError(response)

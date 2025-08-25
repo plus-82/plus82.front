@@ -1,6 +1,11 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 
-import { addFeedComment, feedQueries } from 'entities/feed'
+import {
+  addBusinessFeedComment,
+  addFeedComment,
+  feedQueries,
+} from 'entities/feed'
 import { isServerError, useServerErrorHandler } from 'shared/api'
 import { Spinner } from 'shared/ui'
 
@@ -15,24 +20,33 @@ type Props = {
 
 export const Comment = ({ feedId, commentCount, isPublic }: Props) => {
   const queryClient = useQueryClient()
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const { handleServerError } = useServerErrorHandler()
 
   const { data: comments, isLoading } = useQuery({
-    ...feedQueries.item(feedId),
+    ...(isBusiness
+      ? feedQueries.businessItem(feedId)
+      : feedQueries.item(feedId)),
     select: data => data?.comments,
   })
 
   const handleSuccess = () => {
     queryClient.invalidateQueries({
-      queryKey: feedQueries.item(feedId).queryKey,
+      queryKey: isBusiness
+        ? feedQueries.businessItem(feedId).queryKey
+        : feedQueries.item(feedId).queryKey,
     })
     queryClient.invalidateQueries({
-      queryKey: feedQueries.lists(),
+      queryKey: isBusiness ? feedQueries.businessLists() : feedQueries.lists(),
     })
   }
 
   const addComment = async (comment: string) => {
-    const response = await addFeedComment({ feedId, comment })
+    const response = await (isBusiness
+      ? addBusinessFeedComment({ feedId, comment })
+      : addFeedComment({ feedId, comment }))
 
     if (isServerError(response)) {
       handleServerError(response)

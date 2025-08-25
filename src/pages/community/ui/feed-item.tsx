@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -37,6 +38,9 @@ export const FeedItem = ({
   isLiked,
   isPublic,
 }: Props) => {
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [isReportPostModalOpen, setIsReportPostModalOpen] = useState(false)
@@ -45,7 +49,7 @@ export const FeedItem = ({
   const [isCommentOpen, setIsCommentOpen] = useState(false)
 
   const { data: userMe } = useQuery({
-    ...userQueries.teacherMe(),
+    ...(isBusiness ? userQueries.businessMe() : userQueries.teacherMe()),
     enabled: !isPublic,
   })
 
@@ -72,7 +76,7 @@ export const FeedItem = ({
   }
 
   const handleShareButtonClick = async () => {
-    const shareUrl = `${window.location.origin}/community/${id}`
+    const shareUrl = `${window.location.origin}/${isBusiness ? 'business/' : ''}community/${id}`
 
     const { success } = await copy(shareUrl)
 

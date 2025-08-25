@@ -1,6 +1,6 @@
 'use server'
 
-import { getTeacherSession } from 'entities/auth'
+import { getBusinessSession, getTeacherSession } from 'entities/auth'
 import { apiClient, errorHandler, HttpError } from 'shared/api'
 
 type ReportFeedRequest = {
@@ -20,6 +20,25 @@ const handleError = (error: Error) => {
 
 export const reportFeed = async ({ feedId, ...body }: ReportFeedRequest) => {
   const { accessToken } = await getTeacherSession()
+
+  try {
+    await apiClient.post<null, Omit<ReportFeedRequest, 'feedId'>>({
+      endpoint: `/reports/feeds/${feedId}`,
+      option: {
+        authorization: `Bearer ${accessToken}`,
+      },
+      body,
+    })
+  } catch (error) {
+    return handleError(error as Error)
+  }
+}
+
+export const reportBusinessFeed = async ({
+  feedId,
+  ...body
+}: ReportFeedRequest) => {
+  const { accessToken } = await getBusinessSession()
 
   try {
     await apiClient.post<null, Omit<ReportFeedRequest, 'feedId'>>({

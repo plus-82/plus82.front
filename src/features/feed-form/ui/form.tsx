@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { isNumber } from 'lodash-es'
+import { usePathname } from 'next/navigation'
 import { useForm, useWatch } from 'react-hook-form'
 
 import { feedQueries } from 'entities/feed'
@@ -20,10 +21,15 @@ type Props = {
 }
 
 export const FeedForm = ({ feedId, onSuccess }: Props) => {
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const isEditMode = isNumber(feedId)
 
   const { data: feed, isLoading } = useQuery({
-    ...feedQueries.item(feedId!),
+    ...(isBusiness
+      ? feedQueries.businessItem(feedId!)
+      : feedQueries.item(feedId!)),
     enabled: isEditMode,
     select: data => convertFeedToFormValues(data),
   })

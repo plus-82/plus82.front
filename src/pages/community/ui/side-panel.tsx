@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 import { userQueries } from 'entities/user'
@@ -13,8 +14,11 @@ type Props = {
 }
 
 export const SidePanel = ({ isPublic }: Props) => {
+  const pathname = usePathname()
+  const isBusiness = pathname?.includes('business')
+
   const { data: userMe } = useQuery({
-    ...userQueries.teacherMe(),
+    ...(isBusiness ? userQueries.businessMe() : userQueries.teacherMe()),
     enabled: !isPublic,
   })
 
@@ -23,6 +27,10 @@ export const SidePanel = ({ isPublic }: Props) => {
   const handleWritePostButtonClick = () => {
     setIsDialogOpen(true)
   }
+
+  const userName = isBusiness
+    ? `${userMe?.fullName}`
+    : `${userMe?.firstName} ${userMe?.lastName}`
 
   if (isPublic) {
     return (
@@ -38,7 +46,7 @@ export const SidePanel = ({ isPublic }: Props) => {
             size="large"
             fullWidth
             as="a"
-            href="/sign-in"
+            href={isBusiness ? '/business/sign-in' : '/sign-in'}
           >
             Sign In
           </Button>
@@ -52,7 +60,7 @@ export const SidePanel = ({ isPublic }: Props) => {
       <div className="flex items-start gap-3">
         <Image
           src={userMe?.profileImagePath ?? ''}
-          alt={`${userMe?.firstName} ${userMe?.lastName} profile image`}
+          alt={`${userName} profile image`}
           className="h-14 w-14 rounded-full"
           fallback={
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-300">
@@ -65,9 +73,7 @@ export const SidePanel = ({ isPublic }: Props) => {
             </div>
           }
         />
-        <p className="title-small font-medium text-gray-900">
-          {userMe?.firstName} {userMe?.lastName}
-        </p>
+        <p className="title-small font-medium text-gray-900">{userName}</p>
       </div>
       <Button
         variant="tonal"

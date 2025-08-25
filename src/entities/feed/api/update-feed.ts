@@ -1,6 +1,6 @@
 'use server'
 
-import { getTeacherSession } from 'entities/auth'
+import { getBusinessSession, getTeacherSession } from 'entities/auth'
 import { apiClient, ContentType, errorHandler, HttpError } from 'shared/api'
 
 type UpdateFeedRequest = {
@@ -22,6 +22,26 @@ const handleError = (error: Error) => {
 
 export const updateFeed = async ({ feedId, ...feed }: UpdateFeedRequest) => {
   const { accessToken } = await getTeacherSession()
+
+  try {
+    await apiClient.put<null, Omit<UpdateFeedRequest, 'feedId'>>({
+      endpoint: `/feeds/${feedId}`,
+      option: {
+        contentType: ContentType.MULTIPART,
+        authorization: `Bearer ${accessToken}`,
+      },
+      body: feed,
+    })
+  } catch (error) {
+    return handleError(error as Error)
+  }
+}
+
+export const updateBusinessFeed = async ({
+  feedId,
+  ...feed
+}: UpdateFeedRequest) => {
+  const { accessToken } = await getBusinessSession()
 
   try {
     await apiClient.put<null, Omit<UpdateFeedRequest, 'feedId'>>({
