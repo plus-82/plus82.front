@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { ComponentProps, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -31,6 +32,8 @@ export const LikeCommentButton = ({
   feedId,
   isPublic,
 }: Props) => {
+  const t = useTranslations()
+
   const queryClient = useQueryClient()
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
@@ -49,7 +52,7 @@ export const LikeCommentButton = ({
 
   const handleClick = async () => {
     if (isPublic) {
-      toast.error('You have to sign in')
+      toast.error(t('feed-list.feed-menu.error.public'))
 
       return
     }

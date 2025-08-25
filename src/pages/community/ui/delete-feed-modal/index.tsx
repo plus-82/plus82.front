@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { toast } from 'react-toastify'
 
 import { deleteBusinessFeed, deleteFeed, feedQueries } from 'entities/feed'
@@ -13,6 +14,8 @@ type Props = {
 }
 
 export const DeleteFeedModal = ({ isOpen, onOpenChange, feedId }: Props) => {
+  const t = useTranslations()
+
   const queryClient = useQueryClient()
   const router = useRouter()
   const pathname = usePathname()
@@ -22,7 +25,7 @@ export const DeleteFeedModal = ({ isOpen, onOpenChange, feedId }: Props) => {
 
   const handleSuccess = () => {
     onOpenChange(false)
-    toast.success('Post deleted successfully')
+    toast.success(t('feed-list.feed-item.delete-feed-modal.success'))
     queryClient.invalidateQueries({
       queryKey: isBusiness ? feedQueries.businessLists() : feedQueries.lists(),
     })
@@ -45,17 +48,15 @@ export const DeleteFeedModal = ({ isOpen, onOpenChange, feedId }: Props) => {
     <Modal open={isOpen} onOpenChange={onOpenChange}>
       <Modal.Content className="h-[256px] w-[500px] gap-0">
         <Modal.Title className="title-large mb-2 mt-3 h-7 text-center font-bold text-gray-900">
-          Delete Post
+          {t('feed-list.feed-item.delete-feed-modal.title')}
         </Modal.Title>
-        <Modal.Description className="title-small mb-10 text-center font-medium text-gray-900">
-          Do you really want to delete this post?
-          <br />
-          Once deleted, it can&apos;t be undone.
+        <Modal.Description className="title-small mb-10 whitespace-break-spaces text-center font-medium text-gray-900">
+          {t('feed-list.feed-item.delete-feed-modal.description')}
         </Modal.Description>
         <Modal.Footer>
           <Modal.Close asChild>
             <Button variant="lined" size="large" className="w-[93px]">
-              Cancel
+              {t('feed-list.feed-item.delete-feed-modal.button.cancel')}
             </Button>
           </Modal.Close>
           <Button
@@ -64,7 +65,7 @@ export const DeleteFeedModal = ({ isOpen, onOpenChange, feedId }: Props) => {
             className="w-[93px]"
             onClick={handleDeleteButtonClick}
           >
-            Delete
+            {t('feed-list.feed-item.delete-feed-modal.button.delete')}
           </Button>
         </Modal.Footer>
       </Modal.Content>

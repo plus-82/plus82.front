@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useTranslations } from 'next-intl'
 
 import { feedQueries } from 'entities/feed'
 import { colors } from 'shared/config'
@@ -9,6 +10,8 @@ type Props = {
 }
 
 export const LikedPeopleList = ({ feedId }: Props) => {
+  const t = useTranslations()
+
   const { data, isLoading } = useQuery({
     ...feedQueries.like({ feedId }),
   })
@@ -20,7 +23,7 @@ export const LikedPeopleList = ({ feedId }: Props) => {
   if (!data || data.length === 0) {
     return (
       <div className="title-small flex h-[50px] items-center justify-center font-normal text-gray-500">
-        There&apos;s no one who likes this post
+        {t('feed-list.feed-item.liked-people-modal.empty')}
       </div>
     )
   }

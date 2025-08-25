@@ -1,6 +1,9 @@
 'use client'
 
+import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
+
+import { cn } from 'shared/lib'
 
 export type Props = {
   content: string
@@ -8,6 +11,9 @@ export type Props = {
 }
 
 export const ExpandableText = ({ content, lineClamp = 2 }: Props) => {
+  const t = useTranslations()
+  const locale = useLocale()
+
   const pRef = useRef<HTMLParagraphElement>(null)
   const [lineHeight, setLineHeight] = useState<number | null>(null)
   const [expanding, setExpanding] = useState(false)
@@ -56,17 +62,14 @@ export const ExpandableText = ({ content, lineClamp = 2 }: Props) => {
         {!isOverflown
           ? null
           : !expanding && (
-              // <button
-              //   className="z-1 text-primary title-small absolute bottom-0 right-0 block bg-gradient-to-r from-transparent via-white via-30% to-white pl-8 font-normal text-gray-700 hover:text-gray-900 hover:underline"
-              //   onClick={handleButtonClick}
-              // >
-              //   ...더보기
-              // </button>
               <button
-                className="z-1 text-primary title-small absolute bottom-0 right-0 block bg-gradient-to-r from-transparent via-white via-20% to-white pl-8 font-normal text-gray-700 hover:text-gray-900 hover:underline"
+                className={cn(
+                  'z-1 text-primary title-small absolute bottom-0 right-0 block bg-gradient-to-r from-transparent via-white to-white pl-8 font-normal text-gray-700 hover:text-gray-900 hover:underline',
+                  locale === 'ko' ? 'via-30%' : 'via-20%',
+                )}
                 onClick={handleButtonClick}
               >
-                ...Show more
+                {t('feed-list.feed-item.button.show-more')}
               </button>
             )}
       </p>

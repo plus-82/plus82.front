@@ -1,5 +1,6 @@
 import { isEmpty, isNil } from 'lodash-es'
 import { usePathname, useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -14,6 +15,8 @@ type Props = {
 }
 
 export const ReportButton = ({ userId, onSuccess }: Props) => {
+  const t = useTranslations()
+
   const router = useRouter()
   const { handleServerError } = useServerErrorHandler()
 
@@ -33,7 +36,7 @@ export const ReportButton = ({ userId, onSuccess }: Props) => {
     (reason?.includes('Other') && isNilOrEmptyString(otherReason))
 
   const handleSuccess = () => {
-    toast.success('Your report has been successfully submitted')
+    toast.success(t('feed-list.feed-item.report-user-modal.success'))
     router.refresh()
     onSuccess()
   }
@@ -66,7 +69,7 @@ export const ReportButton = ({ userId, onSuccess }: Props) => {
       onClick={handleReportButtonClick}
       disabled={isDisabled}
     >
-      Report
+      {t('feed-list.feed-item.report-user-modal.button.report')}
     </Button>
   )
 }

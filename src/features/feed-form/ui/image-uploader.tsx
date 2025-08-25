@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { useRef, useState } from 'react'
 
 import { ImageUploadInput } from 'features/upload-image'
@@ -24,6 +25,8 @@ export const ImageUploader = ({
   onDelete,
   className,
 }: ImageUploaderProps) => {
+  const t = useTranslations()
+
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isHovering, setIsHovering] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
@@ -137,7 +140,7 @@ export const ImageUploader = ({
             color={colors.gray[500]}
           />
           <p className="title-small font-normal text-gray-500">
-            Up to 0MB, image files only
+            {t('field.feed-image.placeholder')}
           </p>
         </div>
       </button>

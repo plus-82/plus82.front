@@ -1,6 +1,7 @@
 'use client'
 
 import { isEmpty } from 'lodash-es'
+import { useTranslations } from 'next-intl'
 
 import { useObserver } from 'shared/lib'
 import { Spinner } from 'shared/ui'
@@ -13,6 +14,8 @@ type Props = {
 }
 
 const EmptyFeeds = ({ isPublic }: Props) => {
+  const t = useTranslations('feed-list')
+
   const { feeds, isFetchingNextPage, fetchNextPage, hasNextPage } = useGetFeeds(
     { keyword: '' },
   )
@@ -29,10 +32,8 @@ const EmptyFeeds = ({ isPublic }: Props) => {
 
   return (
     <>
-      <div className="title-large mb-[100px] pt-5 text-center font-medium text-gray-700">
-        There are no posts yet,
-        <br />
-        Create a post and share it!
+      <div className="title-large mb-[100px] whitespace-break-spaces pt-5 text-center font-medium text-gray-700">
+        {t('feed-list.empty')}
       </div>
       {feeds?.map(feed => (
         <FeedItem key={feed.id} {...feed} isPublic={isPublic} />

@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import {
   addBusinessFeedComment,
@@ -19,6 +20,8 @@ type Props = {
 }
 
 export const Comment = ({ feedId, commentCount, isPublic }: Props) => {
+  const t = useTranslations()
+
   const queryClient = useQueryClient()
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
@@ -59,7 +62,7 @@ export const Comment = ({ feedId, commentCount, isPublic }: Props) => {
     <div className="mt-5">
       {isPublic ? (
         <p className="body-large rounded-lg bg-gray-100 p-3 font-medium text-gray-500">
-          Sign in and join the comments
+          {t('feed-list.feed-item.comment.sign-in')}
         </p>
       ) : (
         <CommentForm onSubmit={addComment} />

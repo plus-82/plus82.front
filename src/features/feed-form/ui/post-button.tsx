@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { usePathname, useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useFormContext, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -15,6 +16,8 @@ type Props = {
 }
 
 export const PostButton = ({ onSuccess }: Props) => {
+  const t = useTranslations('feed-list')
+
   const queryClient = useQueryClient()
   const router = useRouter()
   const pathname = usePathname()
@@ -33,7 +36,7 @@ export const PostButton = ({ onSuccess }: Props) => {
 
   const handleSuccess = () => {
     onSuccess()
-    toast.success('Post added successfully')
+    toast.success(t('feed-form.success.post'))
     queryClient.invalidateQueries({
       queryKey: isBusiness ? feedQueries.businessLists() : feedQueries.lists(),
     })
@@ -60,7 +63,7 @@ export const PostButton = ({ onSuccess }: Props) => {
       disabled={isDisabled}
       onClick={handleSubmit(submitForm)}
     >
-      Post
+      {t('feed-form.button.post')}
     </Button>
   )
 }

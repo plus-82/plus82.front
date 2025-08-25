@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { toast } from 'react-toastify'
 
 import {
@@ -23,6 +24,7 @@ export const DeleteCommentModal = ({
   feedId,
   commentId,
 }: Props) => {
+  const t = useTranslations()
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
 
@@ -31,7 +33,7 @@ export const DeleteCommentModal = ({
 
   const handleSuccess = () => {
     onOpenChange(false)
-    toast.success('Comment deleted successfully')
+    toast.success(t('feed-list.feed-item.delete-comment-modal.success'))
     queryClient.invalidateQueries({
       queryKey: isBusiness
         ? feedQueries.businessItem(feedId).queryKey
@@ -58,17 +60,15 @@ export const DeleteCommentModal = ({
     <Modal open={isOpen} onOpenChange={onOpenChange}>
       <Modal.Content className="h-[256px] w-[500px] gap-0">
         <Modal.Title className="title-large mb-2 mt-3 h-7 text-center font-bold text-gray-900">
-          Delete comment
+          {t('feed-list.feed-item.delete-comment-modal.title')}
         </Modal.Title>
-        <Modal.Description className="title-small mb-10 text-center font-medium text-gray-900">
-          Do you really want to delete this comment?
-          <br />
-          Once deleted, it can&apos;t be undone.
+        <Modal.Description className="title-small mb-10 whitespace-break-spaces text-center font-medium text-gray-900">
+          {t('feed-list.feed-item.delete-comment-modal.description')}
         </Modal.Description>
         <Modal.Footer>
           <Modal.Close asChild>
             <Button variant="lined" size="large" className="w-[93px]">
-              Cancel
+              {t('feed-list.feed-item.delete-comment-modal.button.cancel')}
             </Button>
           </Modal.Close>
           <Button
@@ -77,7 +77,7 @@ export const DeleteCommentModal = ({
             className="w-[93px]"
             onClick={handleDeleteButtonClick}
           >
-            Delete
+            {t('feed-list.feed-item.delete-comment-modal.button.delete')}
           </Button>
         </Modal.Footer>
       </Modal.Content>

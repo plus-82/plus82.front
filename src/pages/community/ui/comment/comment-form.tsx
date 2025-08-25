@@ -1,6 +1,7 @@
 'use client'
 
 import { isString } from 'lodash-es'
+import { useTranslations } from 'next-intl'
 import { ChangeEvent, useState } from 'react'
 
 import { Button, TextArea } from 'shared/ui'
@@ -14,6 +15,8 @@ type Props = {
 }
 
 export const CommentForm = ({ defaultValue, onCancel, onSubmit }: Props) => {
+  const t = useTranslations()
+
   const [value, setValue] = useState(defaultValue ?? '')
 
   const isEditMode = isString(defaultValue)
@@ -39,7 +42,7 @@ export const CommentForm = ({ defaultValue, onCancel, onSubmit }: Props) => {
       <TextArea
         value={value}
         onChange={handleChange}
-        placeholder="Enter a comment"
+        placeholder={t('field.comment-content.placeholder')}
         fullWidth
         className="body-large h-full cursor-text overflow-scroll rounded-lg border-none bg-gray-100 p-0"
         maxLength={MAX_LENGTH}
@@ -55,7 +58,7 @@ export const CommentForm = ({ defaultValue, onCancel, onSubmit }: Props) => {
             size="small"
             onClick={handleCancel}
           >
-            Cancel
+            {t('feed-list.feed-item.comment.button.cancel')}
           </Button>
         )}
         <Button
@@ -65,7 +68,7 @@ export const CommentForm = ({ defaultValue, onCancel, onSubmit }: Props) => {
           onClick={handleSubmit}
           disabled={isDisabled}
         >
-          Post
+          {t('feed-list.feed-item.comment.button.post')}
         </Button>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { ComponentProps } from 'react'
 import { toast } from 'react-toastify'
 
@@ -27,9 +28,11 @@ export const FeedMenu = ({
   className,
   ...props
 }: Props) => {
+  const t = useTranslations()
+
   const checkPublicUser = () => {
     if (isPublic) {
-      toast.error('You have to sign in')
+      toast.error(t('feed-list.feed-menu.error.public'))
     }
 
     return isPublic
@@ -80,7 +83,7 @@ export const FeedMenu = ({
             className="body-large w-full px-3 py-3.5 text-left font-medium text-error"
             onClick={handleReportPostButtonClick}
           >
-            Report Post
+            {t('feed-list.feed-menu.button.report-post')}
           </button>
         </Dropdown.Item>
         <Dropdown.Item className="p-0">
@@ -89,7 +92,7 @@ export const FeedMenu = ({
             className="body-large w-full px-3 py-3.5 text-left font-medium text-error"
             onClick={handleReportUserButtonClick}
           >
-            Report User
+            {t('feed-list.feed-menu.button.report-user')}
           </button>
         </Dropdown.Item>
       </Dropdown>
@@ -107,7 +110,7 @@ export const FeedMenu = ({
           className="body-large w-full px-3 py-3.5 text-left font-medium text-error"
           onClick={handleDeleteButtonClick}
         >
-          Delete
+          {t('feed-list.feed-menu.button.delete')}
         </button>
       </Dropdown.Item>
     </Dropdown>

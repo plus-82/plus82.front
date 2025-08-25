@@ -2,6 +2,7 @@
 
 import { InfiniteData, useQueryClient } from '@tanstack/react-query'
 import { usePathname, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { ComponentProps, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -30,6 +31,8 @@ export const LikeButton = ({
   isLiked: isLikedProp = false,
   isPublic,
 }: Props) => {
+  const t = useTranslations()
+
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
 
@@ -80,7 +83,7 @@ export const LikeButton = ({
 
   const handleClick = async () => {
     if (isPublic) {
-      toast.error('You have to sign in')
+      toast.error(t('feed-list.feed-menu.error.public'))
 
       return
     }

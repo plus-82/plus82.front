@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 
 import { colors } from 'shared/config'
@@ -8,6 +9,8 @@ import { Slot } from 'shared/lib'
 import { Icon, TextField } from 'shared/ui'
 
 export const Search = () => {
+  const t = useTranslations('feed-list')
+
   const router = useRouter()
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
@@ -39,7 +42,7 @@ export const Search = () => {
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       className="mx-auto mb-10 w-[530px]"
-      placeholder="Try searching with keywords you’re interested in"
+      placeholder={t('search.placeholder')}
     >
       <Slot name="left">
         <Icon name="Search" size="large" color={colors.gray[700]} />

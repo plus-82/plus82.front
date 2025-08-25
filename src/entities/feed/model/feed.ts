@@ -23,7 +23,7 @@ export type Feed = {
   isCommented: boolean
 }
 
-export type FeedDetail = Omit<Feed, 'creatorId' | 'imagePath'> & {
+export type FeedDetail = Omit<Feed, 'imagePath'> & {
   feedVisibility: 'PUBLIC' | 'PRIVATE'
   comments: Comment[]
   image: {

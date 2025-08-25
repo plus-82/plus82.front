@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 import { Modal } from 'shared/ui'
 
 import { ReportPostForm } from './form'
@@ -9,6 +11,8 @@ type Props = {
 }
 
 export const ReportPostModal = ({ isOpen, onOpenChange, feedId }: Props) => {
+  const t = useTranslations()
+
   const handleSuccess = () => {
     onOpenChange(false)
   }
@@ -17,9 +21,11 @@ export const ReportPostModal = ({ isOpen, onOpenChange, feedId }: Props) => {
     <Modal open={isOpen} onOpenChange={onOpenChange}>
       <Modal.Content className="h-[492px] w-[500px] gap-0">
         <Modal.Title className="title-large mb-8 mt-3 h-7 text-center font-bold text-gray-900">
-          Report Post
+          {t('feed-list.feed-item.report-post-modal.title')}
         </Modal.Title>
-        <Modal.Description className="hidden">Report post</Modal.Description>
+        <Modal.Description className="hidden">
+          {t('feed-list.feed-item.report-post-modal.description')}
+        </Modal.Description>
         <ReportPostForm onSuccess={handleSuccess} feedId={feedId} />
       </Modal.Content>
     </Modal>

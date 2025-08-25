@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 import { userQueries } from 'entities/user'
@@ -14,6 +15,7 @@ type Props = {
 }
 
 export const SidePanel = ({ isPublic }: Props) => {
+  const t = useTranslations('feed-list.side-panel')
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
 
@@ -35,10 +37,8 @@ export const SidePanel = ({ isPublic }: Props) => {
   if (isPublic) {
     return (
       <div className="sticky top-10 h-fit w-[270px] shrink-0 space-y-4 rounded-xl border border-gray-300 p-5">
-        <p className="body-large text-center font-medium text-gray-900">
-          Sign in for Plus 82
-          <br />
-          and enjoy more features
+        <p className="body-large whitespace-break-spaces text-center font-medium text-gray-900">
+          {t('sign-in')}
         </p>
         <div className="space-y-2">
           <Button
@@ -48,7 +48,7 @@ export const SidePanel = ({ isPublic }: Props) => {
             as="a"
             href={isBusiness ? '/business/sign-in' : '/sign-in'}
           >
-            Sign In
+            {t('button.sign-in')}
           </Button>
         </div>
       </div>
@@ -81,7 +81,7 @@ export const SidePanel = ({ isPublic }: Props) => {
         fullWidth
         onClick={handleWritePostButtonClick}
       >
-        Write a post
+        {t('button.write-post')}
       </Button>
       <FeedFormDialog
         isOpen={isDialogOpen}

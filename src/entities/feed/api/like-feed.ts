@@ -7,8 +7,9 @@ const handleError = (error: Error) => {
   const isHttpError = error instanceof HttpError
   if (!isHttpError) throw error
 
-  return errorHandler.toast('An error occurred while liking feed', {
+  return errorHandler.toast('feed-list.feed-form.error.like', {
     error,
+    translate: true,
   })
 }
 

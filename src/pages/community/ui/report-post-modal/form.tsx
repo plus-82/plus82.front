@@ -1,4 +1,5 @@
 import { isUndefined } from 'lodash-es'
+import { useTranslations } from 'next-intl'
 import { useForm, useWatch } from 'react-hook-form'
 
 import { Form } from 'shared/form'
@@ -17,11 +18,11 @@ const defaultValues: FormValues = {
 }
 
 const reasonOptions = [
-  'Pornographic content',
-  'Spam promotion/flooding posts',
-  'Profanity/hate/discriminatory language',
-  'Promotional/commercial posts',
-  'Other',
+  'field.report-post-reason.option.pornographic-content',
+  'field.report-post-reason.option.spam-promotion-flooding-posts',
+  'field.report-post-reason.option.profanity-hate-discriminatory-language',
+  'field.report-post-reason.option.promotional-commercial-posts',
+  'field.report-post-reason.option.other',
 ]
 
 const reasonRules = {
@@ -34,6 +35,8 @@ type Props = {
 }
 
 export const ReportPostForm = ({ onSuccess, feedId }: Props) => {
+  const t = useTranslations()
+
   const form = useForm<FormValues>({
     defaultValues,
   })
@@ -71,15 +74,15 @@ export const ReportPostForm = ({ onSuccess, feedId }: Props) => {
         {reasonOptions.map(reason => (
           <Form.Checkbox
             key={reason}
-            label={reason}
-            value={reason}
+            label={t(reason)}
+            value={t(reason)}
             className="mt-3 first:mt-0"
           />
         ))}
       </Form.CheckboxGroup>
       <Form.Control name="otherReason">
         <Form.TextArea
-          placeholder="Please enter the reason for reporting"
+          placeholder={t('field.report-post-other-reason.placeholder')}
           className="mt-2 h-[84px] w-[404px] py-3"
           disabled={isOtherReasonDisabled}
         />
@@ -87,7 +90,7 @@ export const ReportPostForm = ({ onSuccess, feedId }: Props) => {
       <Modal.Footer className="mt-10 w-[428px]">
         <Modal.Close asChild>
           <Button variant="lined" size="large" className="w-[93px]">
-            Cancel
+            {t('feed-list.feed-item.report-post-modal.button.cancel')}
           </Button>
         </Modal.Close>
         <ReportButton feedId={feedId} onSuccess={onSuccess} />

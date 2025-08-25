@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { isNumber } from 'lodash-es'
 import { usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { useForm, useWatch } from 'react-hook-form'
 
 import { feedQueries } from 'entities/feed'
@@ -21,6 +22,8 @@ type Props = {
 }
 
 export const FeedForm = ({ feedId, onSuccess }: Props) => {
+  const t = useTranslations()
+
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
 
@@ -66,14 +69,14 @@ export const FeedForm = ({ feedId, onSuccess }: Props) => {
     <Form {...form} className="flex flex-grow flex-col">
       <Form.Control name="content">
         <Form.TextArea
-          placeholder="Please enter the content you want to share"
+          placeholder={t('field.feed-content.placeholder')}
           fullWidth
           className="mb-6 h-[248px] border-none p-0 text-[16px] font-normal leading-7"
           maxLength={3000}
         />
       </Form.Control>
       <div className={fieldCss.fieldWrapper()}>
-        <Label>Upload image</Label>
+        <Label>{t('field.feed-image.label')}</Label>
         <Form.Control name="image">
           <ImageUploader
             value={image}
@@ -83,18 +86,24 @@ export const FeedForm = ({ feedId, onSuccess }: Props) => {
         </Form.Control>
       </div>
       <div className={fieldCss.fieldWrapper()}>
-        <Label>Post visibility settings</Label>
+        <Label>{t('field.feed-visibility.label')}</Label>
         <Form.Control name="feedVisibility">
           <Form.RadioGroup className={fieldCss.radioFieldWrapper()}>
-            <Form.Radio label="Public" value="PUBLIC" />
-            <Form.Radio label="Members Only" value="PRIVATE" />
+            <Form.Radio
+              label={t('field.feed-visibility.option.public')}
+              value="PUBLIC"
+            />
+            <Form.Radio
+              label={t('field.feed-visibility.option.members-only')}
+              value="PRIVATE"
+            />
           </Form.RadioGroup>
         </Form.Control>
       </div>
       <Modal.Footer className="flex flex-grow items-end">
         <Modal.Close asChild>
           <Button variant="lined" className="w-[93px]" size="large">
-            Cancel
+            {t('feed-list.feed-form.button.cancel')}
           </Button>
         </Modal.Close>
         {!isEditMode && <PostButton onSuccess={onSuccess} />}

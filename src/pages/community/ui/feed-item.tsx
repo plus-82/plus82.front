@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { usePathname } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
@@ -38,6 +39,9 @@ export const FeedItem = ({
   isLiked,
   isPublic,
 }: Props) => {
+  const t = useTranslations()
+  const locale = useLocale()
+
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
 
@@ -81,7 +85,7 @@ export const FeedItem = ({
     const { success } = await copy(shareUrl)
 
     if (success) {
-      toast.success('Link copied successfully')
+      toast.success(t('feed-list.feed-menu.link-copied'))
     }
   }
 
@@ -106,10 +110,10 @@ export const FeedItem = ({
           />
           <div className="grow">
             <p className="title-small font-medium text-gray-900">
-              {creatorName} {isMyPost && '(Me)'}
+              {creatorName} {isMyPost && t('feed-list.feed-item.me')}
             </p>
             <p className="body-large font-normal text-gray-500">
-              {formatDateFromNow(createdAt)}
+              {formatDateFromNow(createdAt, locale)}
             </p>
           </div>
           <OpenMenuButton
@@ -170,7 +174,21 @@ export const FeedItem = ({
               className={linkVariants({ variant: 'secondary' })}
               onClick={toggleComment}
             >
-              <AnimatedCount count={commentCount} /> Comments
+              {(() => {
+                if (locale === 'ko') {
+                  return (
+                    <>
+                      댓글 <AnimatedCount count={commentCount} />
+                    </>
+                  )
+                }
+
+                return (
+                  <>
+                    <AnimatedCount count={commentCount} /> Comments
+                  </>
+                )
+              })()}
             </button>
           </div>
         </div>

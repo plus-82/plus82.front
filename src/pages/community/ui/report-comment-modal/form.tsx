@@ -1,4 +1,5 @@
 import { isUndefined } from 'lodash-es'
+import { useTranslations } from 'next-intl'
 import { useForm, useWatch } from 'react-hook-form'
 
 import { Form } from 'shared/form'
@@ -17,11 +18,11 @@ const defaultValues: FormValues = {
 }
 
 const reasonOptions = [
-  'Pornographic content',
-  'Spam promotion/flooding posts',
-  'Profanity/hate/discriminatory language',
-  'Promotional/commercial posts',
-  'Other',
+  'field.report-comment-reason.option.pornographic-content',
+  'field.report-comment-reason.option.spam-promotion-flooding-posts',
+  'field.report-comment-reason.option.profanity-hate-discriminatory-language',
+  'field.report-comment-reason.option.promotional-commercial-posts',
+  'field.report-comment-reason.option.other',
 ]
 
 const reasonRules = {
@@ -34,6 +35,8 @@ type Props = {
 }
 
 export const ReportCommentForm = ({ onSuccess, commentId }: Props) => {
+  const t = useTranslations()
+
   const form = useForm<FormValues>({
     defaultValues,
   })
@@ -71,15 +74,15 @@ export const ReportCommentForm = ({ onSuccess, commentId }: Props) => {
         {reasonOptions.map(reason => (
           <Form.Checkbox
             key={reason}
-            label={reason}
-            value={reason}
+            label={t(reason)}
+            value={t(reason)}
             className="mt-3 first:mt-0"
           />
         ))}
       </Form.CheckboxGroup>
       <Form.Control name="otherReason">
         <Form.TextArea
-          placeholder="Please enter the reason for reporting"
+          placeholder={t('field.report-comment-other-reason.placeholder')}
           className="mt-2 h-[84px] w-[404px] py-3"
           disabled={isOtherReasonDisabled}
         />
@@ -87,7 +90,7 @@ export const ReportCommentForm = ({ onSuccess, commentId }: Props) => {
       <Modal.Footer className="mt-10 w-[428px]">
         <Modal.Close asChild>
           <Button variant="lined" size="large" className="w-[93px]">
-            Cancel
+            {t('feed-list.feed-item.report-comment-modal.button.cancel')}
           </Button>
         </Modal.Close>
         <ReportButton commentId={commentId} onSuccess={onSuccess} />

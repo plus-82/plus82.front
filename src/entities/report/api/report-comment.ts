@@ -13,8 +13,9 @@ const handleError = (error: Error) => {
   const isHttpError = error instanceof HttpError
   if (!isHttpError) throw error
 
-  return errorHandler.toast('An error occurred while adding feed', {
+  return errorHandler.toast('feed-list.feed-item.report-comment-modal.error', {
     error,
+    translate: true,
   })
 }
 

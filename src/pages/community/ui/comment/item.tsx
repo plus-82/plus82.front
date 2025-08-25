@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { isNil } from 'lodash-es'
 import { usePathname } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 import { useState } from 'react'
 
 import {
@@ -39,6 +40,9 @@ export const CommentItem = ({
   createdAt,
   isPublic,
 }: Props) => {
+  const t = useTranslations()
+  const locale = useLocale()
+
   const queryClient = useQueryClient()
   const pathname = usePathname()
   const isBusiness = pathname?.includes('business')
@@ -133,10 +137,10 @@ export const CommentItem = ({
         <div className="flex flex-grow justify-between">
           <div className="flex flex-col">
             <strong className="body-large font-medium text-gray-900">
-              {userName} {isMyComment && '(Me)'}
+              {userName} {isMyComment && t('feed-list.feed-item.me')}
             </strong>
             <span className="body-medium font-normal text-gray-500">
-              {formatDateFromNow(createdAt)}
+              {formatDateFromNow(createdAt, locale)}
             </span>
           </div>
           <OpenMenuButton
@@ -180,7 +184,7 @@ export const CommentItem = ({
       />
 
       <ReportUserModal
-        userId={21}
+        userId={userId}
         isOpen={isReportUserModalOpen}
         onOpenChange={setIsReportUserModalOpen}
       />
