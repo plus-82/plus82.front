@@ -81,10 +81,11 @@ export const FeedList = ({ isPublic }: Props) => {
             {feeds?.map(feed => (
               <FeedItem key={feed.id} {...feed} isPublic={isPublic} />
             ))}
-            {isFetchingNextPage ? <Loading /> : <div ref={targetRef} />}
+            {isFetchingNextPage && <Loading />}
           </>
         )
       })()}
+      <div className="mb-10 h-1" ref={targetRef} />
     </div>
   )
 }

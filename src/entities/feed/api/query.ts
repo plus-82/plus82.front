@@ -7,10 +7,11 @@ import { getBusinessFeeds, getFeeds, GetFeedsRequest } from './get-feeds'
 export const feedQueries = {
   all: () => ['feed'],
   lists: () => [...feedQueries.all(), 'list'],
-  list: (params: GetFeedsRequest) =>
+  list: ({ pageNumber, ...params }: GetFeedsRequest) =>
     infiniteQueryOptions({
       queryKey: [...feedQueries.lists(), params],
-      queryFn: () => getFeeds(params),
+      queryFn: ({ pageParam = pageNumber }) =>
+        getFeeds({ ...params, pageNumber: pageParam }),
       initialPageParam: 0,
       getNextPageParam: lastPage => {
         if (lastPage.last) return undefined
@@ -19,10 +20,11 @@ export const feedQueries = {
       },
     }),
   businessLists: () => [...feedQueries.all(), 'business-list'],
-  businessList: (params: GetFeedsRequest) =>
+  businessList: ({ pageNumber, ...params }: GetFeedsRequest) =>
     infiniteQueryOptions({
       queryKey: [...feedQueries.businessLists(), params],
-      queryFn: () => getBusinessFeeds(params),
+      queryFn: ({ pageParam = pageNumber }) =>
+        getBusinessFeeds({ ...params, pageNumber: pageParam }),
       initialPageParam: 0,
       getNextPageParam: lastPage => {
         if (lastPage.last) return undefined

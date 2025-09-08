@@ -4,17 +4,19 @@ import {
   getNullableBusinessSession,
   getNullableTeacherSession,
 } from 'entities/auth'
-import { apiClient, Pagination } from 'shared/api'
+import { apiClient, Pagination, PaginationParams } from 'shared/api'
 
 import { Feed } from '../model/feed'
 
-export type GetFeedsRequest = {
-  keyword?: string
-}
+export type GetFeedsRequest = Partial<
+  PaginationParams<{
+    keyword?: string
+  }>
+>
 
 type GetFeedsResponse = Pagination<Feed>
 
-export const getFeeds = async ({ keyword }: GetFeedsRequest) => {
+export const getFeeds = async (params: GetFeedsRequest) => {
   const session = await getNullableTeacherSession()
   const hasSession = !!session
   const endpoint = hasSession ? '/feeds' : '/feeds/public'
@@ -22,7 +24,8 @@ export const getFeeds = async ({ keyword }: GetFeedsRequest) => {
   const response = await apiClient.get<GetFeedsResponse>({
     endpoint,
     queryParams: {
-      keyword,
+      ...params,
+      rowCount: 10,
     },
     ...(hasSession
       ? { option: { authorization: `Bearer ${session.accessToken}` } }
@@ -32,7 +35,7 @@ export const getFeeds = async ({ keyword }: GetFeedsRequest) => {
   return response
 }
 
-export const getBusinessFeeds = async ({ keyword }: GetFeedsRequest) => {
+export const getBusinessFeeds = async (params: GetFeedsRequest) => {
   const session = await getNullableBusinessSession()
   const hasSession = !!session
   const endpoint = hasSession ? '/feeds' : '/feeds/public'
@@ -40,7 +43,8 @@ export const getBusinessFeeds = async ({ keyword }: GetFeedsRequest) => {
   const response = await apiClient.get<GetFeedsResponse>({
     endpoint,
     queryParams: {
-      keyword,
+      ...params,
+      rowCount: 10,
     },
     ...(hasSession
       ? { option: { authorization: `Bearer ${session.accessToken}` } }

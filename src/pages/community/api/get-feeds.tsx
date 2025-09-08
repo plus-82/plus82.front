@@ -17,8 +17,12 @@ export const useGetFeeds = ({ keyword: keywordProp }: Props = {}) => {
   const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       ...(isBusiness
-        ? feedQueries.businessList({ keyword: keywordProp ?? keyword })
-        : feedQueries.list({ keyword: keywordProp ?? keyword })),
+        ? feedQueries.businessList({
+            keyword: keywordProp ?? keyword,
+          })
+        : feedQueries.list({
+            keyword: keywordProp ?? keyword,
+          })),
       select: data => data.pages.flatMap(page => page.content),
     })
 
