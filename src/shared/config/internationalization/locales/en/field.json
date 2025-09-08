@@ -150,8 +150,8 @@
       "placeholder": "Please select the start date"
     },
     "job-posting-due-date": {
-      "label": "Expiration Date",
-      "placeholder": "Please select the expiration date"
+      "label": "Application deadline",
+      "placeholder": "Please select the application deadline"
     },
     "job-posting-no-expiration-date": {
       "label": "Open Recruitment"

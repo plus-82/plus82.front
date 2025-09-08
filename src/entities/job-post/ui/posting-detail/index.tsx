@@ -69,7 +69,7 @@ export const PostingDetail = ({ jobPost }: Props) => {
       </li>
       <li className="flex flex-col gap-[6px]">
         <h4 className="title-large font-medium text-gray-900">
-          Expiration date
+          Application deadline
         </h4>
         <p className="title-small font-normal text-gray-900">
           {formatDate(jobPost.dueDate)}

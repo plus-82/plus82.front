@@ -13,7 +13,7 @@
       "application": "Application",
       "salary": "Salary",
       "posted-date": "Posted Date",
-      "expiration-date": "Expiration Date",
+      "expiration-date": "Application deadline",
       "no-data": "No job postings have been registered yet",
       "no-expiration-date": "Open Recruitment",
       "draft": "Not Posted"
