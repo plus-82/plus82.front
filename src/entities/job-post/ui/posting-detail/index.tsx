@@ -1,6 +1,7 @@
 import { useLocale } from 'next-intl'
 
-import { formatDate, formatCurrency, toDisplayValue } from 'shared/lib'
+import { formatDate, toDisplayValue } from 'shared/lib'
+import { formatCurrencyWithRule } from 'shared/lib/format'
 
 import type { JobPostDetail } from '../../model/job-post-detail'
 import AcademyAddress from '../academy-address'
@@ -10,9 +11,7 @@ type Props = {
 }
 
 export const PostingDetail = ({ jobPost }: Props) => {
-  const local = useLocale()
-
-  const code = local === 'ko' ? '만원' : 'in 10,000 KRW'
+  const locale = useLocale()
 
   return (
     <ul className="flex flex-col gap-8">
@@ -57,7 +56,9 @@ export const PostingDetail = ({ jobPost }: Props) => {
       <li className="flex flex-col gap-[6px]">
         <h4 className="title-large font-medium text-gray-900">Salary</h4>
         <p className="title-small font-normal text-gray-900">
-          {toDisplayValue(formatCurrency({ number: jobPost.salary, code }))}
+          {toDisplayValue(
+            formatCurrencyWithRule({ number: jobPost.salary, locale }),
+          )}
         </p>
       </li>
       <li className="flex flex-col gap-[6px]">
