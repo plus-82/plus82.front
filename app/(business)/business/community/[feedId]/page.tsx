@@ -27,6 +27,8 @@ const Page = async ({ params }: { params: Promise<Params> }) => {
       queryClient.prefetchQuery(userQueries.businessMe()),
       queryClient.prefetchQuery(feedQueries.businessItem(Number(feedId))),
     ])
+  } else {
+    await queryClient.prefetchQuery(feedQueries.businessItem(Number(feedId)))
   }
 
   return (
