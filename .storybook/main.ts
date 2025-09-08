@@ -13,12 +13,6 @@ const config: StorybookConfig = {
     name: '@storybook/nextjs',
     options: {},
   },
-  staticDirs: [
-    {
-      from: '../public/fonts',
-      to: '/public/fonts',
-    },
-  ],
   webpackFinal: async config => {
     if (!config.module || !config.module.rules) {
       return config
@@ -32,6 +26,7 @@ const config: StorybookConfig = {
         if (rule.test && /svg/.test(String(rule.test))) {
           return { ...rule, exclude: /\.svg$/i }
         }
+
         return rule
       }),
       {
