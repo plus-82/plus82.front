@@ -142,7 +142,11 @@ export const BusinessJobPostingListPage = () => {
                           'hover:bg-white': status === JobFilter.SAVED,
                         })}
                       >
-                        <Table.Cell>{jobPost.title ?? '-'}</Table.Cell>
+                        <Table.Cell>
+                          <div className="line-clamp-1 w-[392px]">
+                            {jobPost.title ?? '-'}
+                          </div>
+                        </Table.Cell>
                         <Table.Cell>
                           {jobPost.resumeCount}
                           {t('application-count')}
@@ -152,6 +156,8 @@ export const BusinessJobPostingListPage = () => {
                             number: jobPost.salary,
                             locale,
                           }) ?? '-'}
+                          {jobPost?.salaryNegotiable &&
+                            ` (${t('table.salary-negotiable')})`}
                         </Table.Cell>
                         <Table.Cell
                           className={cn(!jobPost.openDate && 'text-blue-800')}

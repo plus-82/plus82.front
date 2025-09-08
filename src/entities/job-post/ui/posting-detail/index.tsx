@@ -12,6 +12,7 @@ type Props = {
 
 export const PostingDetail = ({ jobPost }: Props) => {
   const locale = useLocale()
+  const negotiable = locale === 'ko' ? '협의 가능' : 'Negotiable'
 
   return (
     <ul className="flex flex-col gap-8">
@@ -59,6 +60,7 @@ export const PostingDetail = ({ jobPost }: Props) => {
           {toDisplayValue(
             formatCurrencyWithRule({ number: jobPost.salary, locale }),
           )}
+          {jobPost.salaryNegotiable && ` (${negotiable})`}
         </p>
       </li>
       <li className="flex flex-col gap-[6px]">
