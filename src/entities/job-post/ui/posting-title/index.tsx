@@ -1,9 +1,9 @@
-import { format } from 'date-fns'
+import { differenceInDays, format } from 'date-fns'
 import { lowerCase } from 'lodash-es'
 import { useTranslations } from 'next-intl'
 
 import { colors } from 'shared/config'
-import { cn } from 'shared/lib'
+import { cn, isNilOrEmptyString } from 'shared/lib'
 import { Icon } from 'shared/ui'
 
 import * as css from './variants'
@@ -61,9 +61,29 @@ export const PostingTitle = ({ jobPost, size }: Props) => {
         <li className={cn(css.description({ size }))}>
           <Icon name="Date" color={colors.gray[500]} size={size} />
           <span>
-            {jobPost.dueDate
-              ? `~${format(jobPost.dueDate, 'yyyy.MM.dd')}`
-              : '-'}
+            {(() => {
+              if (isNilOrEmptyString(jobPost.dueDate)) {
+                return 'Ongoing Recruitment'
+              }
+
+              const dueDate = new Date(jobPost.dueDate).setHours(0, 0, 0, 0)
+              const today = new Date().setHours(0, 0, 0, 0)
+              const diffDays = differenceInDays(dueDate, today)
+
+              if (diffDays >= 8) {
+                return `~${format(dueDate, 'yyyy.MM.dd')}`
+              }
+
+              if (diffDays <= 7 && diffDays > 0) {
+                return `D-${diffDays}`
+              }
+
+              if (diffDays === 0) {
+                return 'Ends Today'
+              }
+
+              return 'Closed'
+            })()}
           </span>
         </li>
       </ul>
