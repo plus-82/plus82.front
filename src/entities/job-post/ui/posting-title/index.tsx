@@ -7,7 +7,7 @@ import { cn } from 'shared/lib'
 import { Icon } from 'shared/ui'
 
 import * as css from './variants'
-import { convertStudentType } from '../../model/convert-to-student-type'
+import { convertStudentTypeToArray } from '../../model/convert-to-student-type'
 import { JobPost } from '../../model/job-post'
 
 type Props = {
@@ -18,13 +18,16 @@ type Props = {
 export const PostingTitle = ({ jobPost, size }: Props) => {
   const t = useTranslations()
 
-  const studentType = convertStudentType({
+  const studentType = convertStudentTypeToArray({
     forKindergarten: jobPost.forKindergarten,
     forElementary: jobPost.forElementary,
     forMiddleSchool: jobPost.forMiddleSchool,
     forHighSchool: jobPost.forHighSchool,
     forAdult: jobPost.forAdult,
   })
+
+  const hasMultipleStudentType = studentType.length > 1
+  const hasAllStudentType = studentType.length === 5
 
   return (
     <div className={cn(css.container({ size }))}>
@@ -41,7 +44,19 @@ export const PostingTitle = ({ jobPost, size }: Props) => {
         </li>
         <li className={cn(css.description({ size }))}>
           <Icon name="User" color={colors.gray[500]} size={size} />
-          <span>{studentType ?? '-'}</span>
+          <span>
+            {(() => {
+              if (hasAllStudentType) {
+                return 'All'
+              }
+
+              if (hasMultipleStudentType) {
+                return `${studentType[0]} and Others`
+              }
+
+              return studentType[0]
+            })()}
+          </span>
         </li>
         <li className={cn(css.description({ size }))}>
           <Icon name="Date" color={colors.gray[500]} size={size} />
