@@ -1,7 +1,7 @@
 'use client'
 
 import { format } from 'date-fns'
-import { useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { convertStudentTypeToArray } from 'entities/job-post'
 import { Resume } from 'entities/resume'
@@ -35,10 +35,20 @@ const resumes: Resume[] = [
 ]
 
 export const FindTeacherPage = () => {
-  const [tab, setTab] = useState(TabValue.SHOW_RESUME)
+  const router = useRouter()
+  const pathname = usePathname()
+  const tab = pathname?.includes('history')
+    ? TabValue.SHOW_HISTORY
+    : TabValue.SHOW_RESUME
 
   const handleTabChange = (value: string) => {
-    setTab(value as TabValue)
+    if (value === tab) return
+
+    router.replace(
+      tab === TabValue.SHOW_RESUME
+        ? '/business/find-teacher/history'
+        : '/business/find-teacher/resume',
+    )
   }
 
   const handleItemClick = (id: number) => () => {
@@ -59,10 +69,7 @@ export const FindTeacherPage = () => {
       <div className="flex gap-4">
         <SidePanel />
         <div className="w-[784px]">
-          <Tabs.Root
-            defaultValue={TabValue.SHOW_RESUME}
-            onValueChange={handleTabChange}
-          >
+          <Tabs.Root defaultValue={tab} onValueChange={handleTabChange}>
             <Tabs.List
               size="small"
               width="full"
@@ -198,7 +205,9 @@ export const FindTeacherPage = () => {
                 </Table.Root>
                 {hasNoResume && (
                   <p className="title-large mt-20 text-center font-medium text-gray-700">
-                    조건에 맞는 선생님이 없어요
+                    {tab === TabValue.SHOW_RESUME
+                      ? '조건에 맞는 선생님이 없어요'
+                      : '연락한 선생님이 없어요'}
                   </p>
                 )}
               </div>
