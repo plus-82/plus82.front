@@ -17,7 +17,23 @@ enum TabValue {
 
 const resumes: Resume[] = [
   {
-    id: 1,
+    id: 36,
+    firstName: 'First Name 1',
+    lastName: 'Last Name 1',
+    genderType: 'MALE',
+    birthDate: '2000-01-01',
+    hasVisa: true,
+    visaType: 'E2',
+    forKindergarten: true,
+    forElementary: false,
+    forMiddleSchool: false,
+    forHighSchool: false,
+    forAdult: false,
+    countryNameEn: 'Country Name En 1',
+    createdAt: '2025-01-01',
+  } as Resume,
+  {
+    id: 33,
     firstName: 'First Name 1',
     lastName: 'Last Name 1',
     genderType: 'MALE',
@@ -52,7 +68,11 @@ export const FindTeacherPage = () => {
   }
 
   const handleItemClick = (id: number) => () => {
-    console.log(id)
+    if (tab === TabValue.SHOW_RESUME) {
+      router.push(`/business/find-teacher/resume/${id}`)
+    } else {
+      router.push(`/business/find-teacher/history/${id}`)
+    }
   }
 
   const hasNoResume = false
