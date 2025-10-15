@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl'
 
 import { Modal } from 'shared/ui'
 
-import { ContactForm } from './form'
+import { ContactForm } from '../contact-form'
 
 type Props = {
   isOpen: boolean
@@ -36,6 +36,7 @@ export const ContactModal = ({
           teacherName={teacherName}
           academyName={academyName}
           onSuccess={handleSuccess}
+          className="px-6"
         />
       </Modal.Content>
     </Modal>

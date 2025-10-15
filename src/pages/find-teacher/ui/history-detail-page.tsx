@@ -1,6 +1,7 @@
 import { getBusinessJobPostResumeRelation } from 'entities/job-post-resume-relation'
 import { Layout } from 'shared/ui'
 
+import { ContactForm } from './contact-form'
 import { FileResume } from './file-resume'
 import { FormResume } from './form-resume'
 
@@ -28,6 +29,16 @@ export const HistoryDetailPage = async ({
       ) : (
         <FormResume jobPostResumeRelation={jobPostResumeRelation} />
       )}
+      <div className="pt-20">
+        <h2 className="title-large mb-4 font-medium text-gray-900">
+          선생님한테 보낸 메시지
+        </h2>
+        <ContactForm
+          teacherName={`${jobPostResumeRelation.firstName} ${jobPostResumeRelation.lastName}`}
+          academyName="학원"
+          readOnly
+        />
+      </div>
     </Layout>
   )
 }
