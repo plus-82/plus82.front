@@ -59,3 +59,60 @@ export type ResumeSummary = Omit<
 > & {
   id: number
 }
+
+export type RepresentativeResume = Pick<
+  Resume,
+  | 'id'
+  | 'title'
+  | 'firstName'
+  | 'lastName'
+  | 'email'
+  | 'hasVisa'
+  | 'visaType'
+  | 'genderType'
+  | 'birthDate'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'countryId'
+  | 'countryNameEn'
+  | 'forKindergarten'
+  | 'forElementary'
+  | 'forMiddleSchool'
+  | 'forHighSchool'
+  | 'forAdult'
+> & {
+  countryCode: string
+  userID: number
+}
+
+export type ResumeContactSummary = Pick<
+  Resume,
+  | 'firstName'
+  | 'lastName'
+  | 'email'
+  | 'degree'
+  | 'major'
+  | 'genderType'
+  | 'birthDate'
+  | 'hasVisa'
+  | 'visaType'
+  | 'forKindergarten'
+  | 'forElementary'
+  | 'forMiddleSchool'
+  | 'forHighSchool'
+  | 'forAdult'
+  | 'countryId'
+  | 'countryNameEn'
+  | 'createdAt'
+  | 'updatedAt'
+> & {
+  id: number
+  interestReason: string
+  appealMessage: string
+  additionalMessage: string
+  contactEmail: string
+  resumeId: number
+  resumeTitle: string
+  teacherId: number
+  academyUserId: number
+}

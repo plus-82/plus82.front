@@ -1,1 +1,1 @@
-export { FindTeacherPage as default } from 'pages/find-teacher'
+export { RepresentativeResumePage as default } from 'pages/find-teacher'
