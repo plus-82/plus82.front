@@ -6,11 +6,11 @@ import { apiClient, Pagination, PaginationParams } from 'shared/api'
 import { ResumeContactSummary } from '../model/resume'
 
 export type GetResumeContactListRequest = PaginationParams<{
-  genderType?: 'MALE' | 'FEMALE'
-  fromBirthDate?: string
-  toBirthDate?: string
-  countryIdList?: string[]
-  visaTypeList?: string[]
+  genderType: 'MALE' | 'FEMALE' | null
+  countryIdList: number[]
+  fromAge: number | null
+  toAge: number | null
+  visaTypeList: string[]
   forKindergarten?: boolean
   forElementary?: boolean
   forMiddleSchool?: boolean

@@ -11,9 +11,11 @@ import { SidePanel } from './side-panel'
 import { useResumeContactList } from '../api/use-resume-contact-list'
 import { convertStudentType, convertVisaType } from '../lib/converter'
 import { TabValue, useTab } from '../lib/tab'
+import { defaultFilter, FindTeacherFilter } from '../model/filter'
 
 export const HistoryPage = () => {
   const router = useRouter()
+  const [filter, setFilter] = useState<FindTeacherFilter>(defaultFilter)
 
   const { tab, handleTabChange } = useTab()
 
@@ -21,6 +23,7 @@ export const HistoryPage = () => {
 
   const { resumeContactList, hasNoResumeContact, totalPages, isLoading } =
     useResumeContactList({
+      ...filter,
       pageNumber: currentPage,
       rowCount: 10,
     })
@@ -36,7 +39,7 @@ export const HistoryPage = () => {
   return (
     <Layout wide>
       <div className="flex gap-4">
-        <SidePanel />
+        <SidePanel onChange={setFilter} />
         <div className="w-[784px]">
           <Tabs.Root defaultValue={tab} onValueChange={handleTabChange}>
             <Tabs.List

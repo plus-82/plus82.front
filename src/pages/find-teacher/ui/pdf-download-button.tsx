@@ -3,13 +3,16 @@ import {
   DownloadFileResumeRelationButton,
   DownloadResumeRelationButton,
 } from 'features/download-resume'
+import { isNilOrEmptyString } from 'shared/lib'
 
 type Props = {
   resumeRelation: JobPostRelationDetail
 }
 
 export const PdfDownloadButton = ({ resumeRelation }: Props) => {
-  const hasFile = resumeRelation.filePath !== null
+  const hasFile = !isNilOrEmptyString(resumeRelation.filePath)
+
+  console.log(resumeRelation, hasFile)
 
   return (
     <div className="flex justify-end">

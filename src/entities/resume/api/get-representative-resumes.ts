@@ -3,14 +3,14 @@
 import { getBusinessSession } from 'entities/auth'
 import { apiClient, Pagination, PaginationParams } from 'shared/api'
 
-import { RepresentativeResume } from '../model/resume'
+import { RepresentativeResumeSummary } from '../model/resume'
 
 export type GetRepresentativeResumesRequest = PaginationParams<{
-  genderType?: 'MALE' | 'FEMALE'
-  fromBirthDate?: string
-  toBirthDate?: string
-  countryIdList?: string[]
-  visaTypeList?: string[]
+  genderType: 'MALE' | 'FEMALE' | null
+  countryIdList: number[]
+  fromAge: number | null
+  toAge: number | null
+  visaTypeList: string[]
   forKindergarten?: boolean
   forElementary?: boolean
   forMiddleSchool?: boolean
@@ -18,7 +18,7 @@ export type GetRepresentativeResumesRequest = PaginationParams<{
   forAdult?: boolean
 }>
 
-type GetRepresentativeResumesResponse = Pagination<RepresentativeResume>
+type GetRepresentativeResumesResponse = Pagination<RepresentativeResumeSummary>
 
 export const getRepresentativeResumes = async (
   queryParams: GetRepresentativeResumesRequest,

@@ -1,9 +1,9 @@
-import { getBusinessJobPostResumeRelation } from 'entities/job-post-resume-relation'
+import { getResumeContact } from 'entities/resume'
 import { Layout } from 'shared/ui'
 
 import { ContactForm } from './contact-form'
-import { FileResume } from './file-resume'
 import { FormResume } from './form-resume'
+import { convertResumeContactToJobPostRelationDetail } from '../model/converter'
 
 type Params = {
   historyId: string
@@ -16,26 +16,29 @@ export const HistoryDetailPage = async ({
 }) => {
   const { historyId } = await params
 
-  const jobPostResumeRelation = await getBusinessJobPostResumeRelation({
-    jobPostResumeRelationId: Number(historyId),
-  })
+  const resumeContact = await getResumeContact(historyId)
 
-  const isFileResume = jobPostResumeRelation.filePath !== null
+  const jobPostResumeRelation =
+    convertResumeContactToJobPostRelationDetail(resumeContact)
 
   return (
     <Layout wide>
-      {isFileResume ? (
-        <FileResume jobPostResumeRelation={jobPostResumeRelation} />
-      ) : (
-        <FormResume jobPostResumeRelation={jobPostResumeRelation} />
-      )}
+      <FormResume jobPostResumeRelation={jobPostResumeRelation} />
+
       <div className="pt-20">
         <h2 className="title-large mb-4 font-medium text-gray-900">
           선생님한테 보낸 메시지
         </h2>
         <ContactForm
+          defaultValues={{
+            interestReason: resumeContact.interestReason,
+            appealMessage: resumeContact.appealMessage,
+            additionalMessage: resumeContact.additionalMessage,
+            contactEmail: resumeContact.contactEmail,
+          }}
           teacherName={`${jobPostResumeRelation.firstName} ${jobPostResumeRelation.lastName}`}
           academyName="학원"
+          resumeId={resumeContact.resumeId}
           readOnly
         />
       </div>

@@ -1,9 +1,10 @@
-import { getBusinessJobPostResumeRelation } from 'entities/job-post-resume-relation'
+import { getAcademyMe } from 'entities/academy'
+import { getRepresentativeResume } from 'entities/resume'
 import { Layout } from 'shared/ui'
 
 import { ContactButton } from './contact-button'
-import { FileResume } from './file-resume'
 import { FormResume } from './form-resume'
+import { convertToJobPostRelationDetail } from '../model/converter'
 
 type Params = {
   resumeId: string
@@ -16,22 +17,19 @@ export const ResumeDetailPage = async ({
 }) => {
   const { resumeId } = await params
 
-  const jobPostResumeRelation = await getBusinessJobPostResumeRelation({
-    jobPostResumeRelationId: Number(resumeId),
-  })
+  const resume = await getRepresentativeResume(resumeId)
+  const academyDetail = await getAcademyMe()
 
-  const isFileResume = jobPostResumeRelation.filePath !== null
+  const jobPostRelationDetail = convertToJobPostRelationDetail(resume)
 
   return (
     <Layout wide>
-      {isFileResume ? (
-        <FileResume jobPostResumeRelation={jobPostResumeRelation} />
-      ) : (
-        <FormResume jobPostResumeRelation={jobPostResumeRelation} />
-      )}
+      <FormResume jobPostResumeRelation={jobPostRelationDetail} />
       <ContactButton
-        teacherName={`${jobPostResumeRelation.firstName} ${jobPostResumeRelation.lastName}`}
-        academyName="학원"
+        teacherName={`${resume.firstName} ${resume.lastName}`}
+        academyName={academyDetail.nameEn}
+        academyEmail={academyDetail.representativeEmail}
+        resumeId={resume.id}
       />
     </Layout>
   )

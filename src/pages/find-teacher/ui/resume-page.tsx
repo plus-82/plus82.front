@@ -11,16 +11,21 @@ import { SidePanel } from './side-panel'
 import { useRepresentativeResumes } from '../api/use-representative-resumes'
 import { convertStudentType, convertVisaType } from '../lib/converter'
 import { TabValue, useTab } from '../lib/tab'
+import { defaultFilter, FindTeacherFilter } from '../model/filter'
 
 export const RepresentativeResumePage = () => {
+  const [filter, setFilter] = useState<FindTeacherFilter>(defaultFilter)
   const router = useRouter()
 
   const { tab, handleTabChange } = useTab()
 
   const [currentPage, setCurrentPage] = useState(0)
 
+  console.log(filter)
+
   const { resumes, hasNoResume, totalPages, isLoading } =
     useRepresentativeResumes({
+      ...filter,
       pageNumber: currentPage,
       rowCount: 10,
     })
@@ -36,7 +41,7 @@ export const RepresentativeResumePage = () => {
   return (
     <Layout wide>
       <div className="flex gap-4">
-        <SidePanel />
+        <SidePanel onChange={setFilter} />
         <div className="w-[784px]">
           <Tabs.Root defaultValue={tab} onValueChange={handleTabChange}>
             <Tabs.List

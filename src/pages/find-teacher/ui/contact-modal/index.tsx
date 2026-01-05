@@ -1,5 +1,3 @@
-import { useTranslations } from 'next-intl'
-
 import { Modal } from 'shared/ui'
 
 import { ContactForm } from '../contact-form'
@@ -9,6 +7,8 @@ type Props = {
   onOpenChange: (isOpen: boolean) => void
   teacherName: string
   academyName: string
+  academyEmail: string
+  resumeId: number
 }
 
 export const ContactModal = ({
@@ -16,9 +16,9 @@ export const ContactModal = ({
   onOpenChange,
   teacherName,
   academyName,
+  academyEmail,
+  resumeId,
 }: Props) => {
-  const t = useTranslations()
-
   const handleSuccess = () => {
     onOpenChange(false)
   }
@@ -33,8 +33,15 @@ export const ContactModal = ({
           선생님에게 메시지를 보내려면 아래 양식을 작성해주세요.
         </Modal.Description>
         <ContactForm
+          defaultValues={{
+            interestReason: '',
+            appealMessage: '',
+            additionalMessage: '',
+            contactEmail: academyEmail,
+          }}
           teacherName={teacherName}
           academyName={academyName}
+          resumeId={resumeId}
           onSuccess={handleSuccess}
           className="px-6"
         />

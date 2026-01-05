@@ -16,6 +16,8 @@ export const useRepresentativeResumes = (
     placeholderData: keepPreviousData,
   })
 
+  console.log(params, data)
+
   return {
     isLoading,
     resumes: data?.content ?? [],

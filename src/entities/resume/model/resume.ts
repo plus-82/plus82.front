@@ -60,7 +60,7 @@ export type ResumeSummary = Omit<
   id: number
 }
 
-export type RepresentativeResume = Pick<
+export type RepresentativeResumeSummary = Pick<
   Resume,
   | 'id'
   | 'title'
@@ -115,4 +115,17 @@ export type ResumeContactSummary = Pick<
   resumeTitle: string
   teacherId: number
   academyUserId: number
+}
+
+export type RepresentativeResume = Resume & {
+  isDraft: boolean
+}
+
+export type ResumeContact = Omit<ResumeContactSummary, 'academyUserId'> & {
+  personalIntroduction?: string
+  residenceCountryCode: string
+  residenceCountryCallingCode: string
+  countryCode: string
+  countryCallingCode: string
+  residenceFlag: string
 }

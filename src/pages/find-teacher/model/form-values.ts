@@ -1,15 +1,15 @@
 export type FormValues = {
   genderType: string[] | null
   age: number[]
-  visaType: string[] | null
+  visaTypeList: string[] | null
   studentType: string[] | null
-  countryId: number[] | null
+  countryIdList: number[] | null
 }
 
 export const defaultValues: FormValues = {
   genderType: [],
   age: [0, 50],
-  visaType: [],
+  visaTypeList: [],
   studentType: [],
-  countryId: [],
+  countryIdList: [],
 }

@@ -1,22 +1,30 @@
-import { MouseEvent } from 'react'
+import { MouseEvent, useEffect } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
 import { Country, CountryWithFlag, useCountries } from 'entities/country'
 import { colors } from 'shared/config'
 import { fieldCss, Form } from 'shared/form'
+import { useDebounce } from 'shared/lib'
 import { Chip, Icon, Label } from 'shared/ui'
 
+import { convertFormValuesToFilter } from '../model/converter'
+import { FindTeacherFilter } from '../model/filter'
 import { defaultValues, FormValues } from '../model/form-values'
 
-export const SidePanel = () => {
+type Props = {
+  onChange: (values: FindTeacherFilter) => void
+}
+
+export const SidePanel = ({ onChange }: Props) => {
   const form = useForm<FormValues>({
     defaultValues,
   })
 
-  const age = useWatch({
+  const values = useWatch<FormValues>({
     control: form.control,
-    name: 'age',
   })
+
+  const { debouncedCallback } = useDebounce(onChange, 500)
 
   const { data: countries } = useCountries()
 
@@ -39,6 +47,10 @@ export const SidePanel = () => {
       )
     }
 
+  useEffect(() => {
+    debouncedCallback(convertFormValuesToFilter(values as FormValues))
+  }, [values])
+
   return (
     <div className="h-fit w-[260px] shrink-0 rounded-lg border border-gray-300 px-4 py-6">
       <h1 className="title-large mb-3 font-bold text-gray-900">선생님 찾기</h1>
@@ -57,7 +69,7 @@ export const SidePanel = () => {
         <div className={fieldCss.fieldWrapper({ className: 'not-last:mb-3' })}>
           <Label>국적</Label>
           <Form.Select
-            name="countryId"
+            name="countryIdList"
             placeholder="국적"
             selectionLimit={10}
             render={values => {
@@ -69,7 +81,7 @@ export const SidePanel = () => {
                     </Chip.Label>
                     <Chip.RemoveButton
                       onClick={handleRemoveButtonClick(
-                        'countryId',
+                        'countryIdList',
                         value as number,
                       )}
                     />
@@ -93,7 +105,7 @@ export const SidePanel = () => {
         <div className={fieldCss.fieldWrapper({ className: 'not-last:mb-3' })}>
           <Label>비자</Label>
           <Form.Select
-            name="visaType"
+            name="visaTypeList"
             placeholder="비자"
             selectionLimit={2}
             render={values => {
@@ -106,7 +118,7 @@ export const SidePanel = () => {
                       <Chip.Label>{displayValue}</Chip.Label>
                       <Chip.RemoveButton
                         onClick={handleRemoveButtonClick(
-                          'visaType',
+                          'visaTypeList',
                           value as string,
                         )}
                       />
@@ -182,7 +194,7 @@ export const SidePanel = () => {
             <Label>나이</Label>
             <span className="body-large font-medium text-gray-900">
               {(() => {
-                const [minAge, maxAge] = age
+                const [minAge, maxAge] = values.age ?? [0, 50]
                 if (minAge === 0 && maxAge === 50) {
                   return '전체'
                 }
